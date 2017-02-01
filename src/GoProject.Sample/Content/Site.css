@@ -1,6 +1,6 @@
 ﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+    padding-top: 150px;
+    padding-bottom: 120px;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -22,3 +22,4 @@ select,
 textarea {
     max-width: 280px;
 }
+

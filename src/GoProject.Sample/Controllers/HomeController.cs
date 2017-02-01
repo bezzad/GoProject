@@ -10,6 +10,7 @@ namespace GoProject.Sample.Controllers
     {
         public ActionResult Index()
         {
+            ViewBag.Title = "Home Page";
             return View();
         }
     }

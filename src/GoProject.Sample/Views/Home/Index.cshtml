@@ -1,31 +1,139 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@section scripts{
+    @Styles.Render("~/Content/main")
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+<div class="container-fluid">
+    <div class="row text-center bg-success">
+        <h3>
+            This is not related to main <a href="https://gojs.net/latest/index.html">GoJS Project Company</a>
+        </h3>
+    </div>
+    <div class="row text-center mt30">
+        <div class="col-md-12">
+            <div style="display: inline-block;">
+                <a class="imagelink" href="https://gojs.net/latest/samples/flowchart.html"><img src="https://gojs.net/latest/assets/images/site1.png" class="img-thumbnail" alt="Flowchart" /></a>
+                <a class="imagelink" href="https://gojs.net/latest/samples/stateChart.html"><img src="https://gojs.net/latest/assets/images/site6.png" class="img-thumbnail" alt="State Chart" /></a>
+            </div>
+            <div style="display: inline-block;">
+                <a class="imagelink" href="https://gojs.net/latest/samples/sankey.html"><img src="https://gojs.net/latest/assets/images/site2.png" class="img-thumbnail" alt="Sankey Diagram" /></a>
+                <a class="imagelink" href="https://gojs.net/latest/samples/leaflet.html"><img src="https://gojs.net/latest/assets/images/site5.png" class="img-thumbnail" alt="Leaflet Map" /></a>
+            </div>
+        </div>
+    </div>
+    <div class="row text-center">
+        <div class="col-md-12">
+            <div style="display: inline-block;">
+                <a class="imagelink" href="https://gojs.net/latest/samples/orgChartEditor.html"><img src="https://gojs.net/latest/assets/images/site3.png" class="img-thumbnail" alt="Org Chart" /></a>
+                <a class="imagelink" href="https://gojs.net/latest/samples/dynamicPorts.html"><img src="https://gojs.net/latest/assets/images/site7.png" class="img-thumbnail" alt="Dynamic Ports Demo" /></a>
+            </div>
+            <div style="display: inline-block;">
+                <a class="imagelink" href="https://gojs.net/latest/samples/dataVisualization.html"><img src="https://gojs.net/latest/assets/images/site4.png" class="img-thumbnail" alt="Data Visualization" /></a>
+                <a class="imagelink" href="https://gojs.net/latest/samples/regrouping.html"><img src="https://gojs.net/latest/assets/images/site8.png" class="img-thumbnail" alt="Regrouping Demo" /></a>
+            </div>
+        </div>
+    </div>
 </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
+<div class="container">
+    <div class="row mt30 center-block">
         <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
+            <b>GoJS</b> is a feature-rich JavaScript library for implementing custom interactive diagrams and complex visualizations
+            across modern web browsers and platforms.
+            <b>GoJS</b> makes constructing JavaScript diagrams of complex nodes, links, and groups easy with customizable templates and layouts.
+
+        <p>
+            <b>GoJS</b> offers many advanced features for user interactivity such as drag-and-drop, copy-and-paste,
+            in-place text editing, tooltips, context menus, automatic layouts, templates, data binding and models, transactional state and undo management,
+            palettes, overviews, event handlers, commands, and an extensible tool system for custom operations.
+
+        <p>
+            <b>GoJS</b> is pure JavaScript, so users get interactivity without requiring round-trips to servers and without plugins.
+            <b>GoJS</b> normally runs completely in the browser, rendering to an HTML5 Canvas element or SVG without any server-side requirements.
+            <b>GoJS</b> does not depend on any JavaScript libraries or frameworks, so it should work with any HTML or JavaScript framework or with no framework at all.
+
+        <p>
+            Build custom modeling environments and domain-specific visual languages using the powerful features of <b>GoJS</b>.
+            Provide both a system editor and a read-only status monitor using shared code and templates.
+            Simultaneously show alternative visualizations of the same data in different diagrams.
+            Implement drill-down using expansion of subtrees and subgraphs or a detailed view in another diagram.
+
+        <p>
+            Yet <b>GoJS</b> is remarkably simple for such a powerful and flexible system.
+            Many pages of documentation introduce the basic concepts and demonstrate typical features that most apps want to offer.
+            Nodes and links can be arbitrarily detailed according to the needs of the application.
+            The API consists of only a few dozen important classes which encapsulate many useful features that interact with each other.
+            There are many properties that permit simple customizations; some methods may be overridden for more complicated customizations.
+    </div>
+    <div class="row mt30 center-block">
+        <div class="col-md-6">
+            <h2>Explore</h2>
+            <p>
+                Run over 150 sample apps that are flowcharts, org charts, mind maps,
+                UML diagrams, BPMN diagrams, graph editors, data visualization, and much more.
+            </p>
+            <p><a class="btn btn-primary" href="https://gojs.net/latest/samples/index.html" role="button">Run Interactive Samples</a></p>
+        </div>
+        <div class="col-md-6">
+            <h2>Learn</h2>
+            <p>
+                Get started with a step-by-step description of how to build a JavaScript diagram in HTML
+                using <b>GoJS</b> and some model data.
+            </p>
+            <p><a class="btn btn-primary" href="https://gojs.net/latest/learn/index.html" role="button">Learn with GoJS Tutorials</a></p>
+        </div>
+    </div>
+    <div class="row center-block">
+        <div class="col-md-6">
+            <h2>Download</h2>
+            <p>
+                Get a copy of the library and all of the samples, extensions, and documentation.
+                Search the JavaScript code and modify the samples to start your app.
+            </p>
+            <p>
+                <a class="btn btn-primary" href="https://gojs.net/latest/doc/download.html" role="button">Download</a>
+                <a class="btn btn-primary" href="https://github.com/NorthwoodsSoftware/GoJS" role="button">Clone us from GitHub</a>
+                <a class="btn btn-primary" href="https://www.npmjs.com/package/gojs" role="button">Install via npm</a>
+            </p>
+        </div>
+        <div class="col-md-6">
+            <h2>Technical Introduction</h2>
+            <p>
+                Read our introduction for a overview of <b>GoJS</b> concepts and features,
+                including hundreds of live interactive examples embedded right in each page.
+            </p>
+            <p><a class="btn btn-primary" href="https://gojs.net/latest/intro/index.html" role="button">Read the Introduction</a></p>
+        </div>
+    </div>
+    <div class="row center-block">
+        <div class="col-md-6">
+            <h2>Unlimited Evaluation</h2>
+            <p>
+                Evaluate the full library without any limitations.
+                Register with us and get free support for a month to help build your app.
+            </p>
+            <p>
+                <a class="btn btn-primary" href="https://www.nwoods.com/products/register.html" role="button">Register for Support</a>
+                <a class="btn btn-primary" href="https://www.nwoods.com/contact.html" role="button">Contact Us</a>
+            </p>
+        </div>
+        <div class="col-md-6">
+            <h2>API Documentation</h2>
+            <p>
+                Read our comprehensive documentation for an in-depth reference of the properties
+                and methods of all of the JavaScript classes.
+            </p>
+            <p><a class="btn btn-primary" href="https://gojs.net/latest/api/index.html" role="button">View the API</a></p>
+        </div>
+    </div>
+    <div class="row mt30 center-block">
+        <p>
+            When upgrading to a newer version, please read the <strong><a href="https://gojs.net/latest/doc/changelog.html" target="_blank">Change Log</a></strong>.
         </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+        <p>
+            You can explore the newest features and samples in the <a href="https://gojs.net/beta/index.html" target="_blank">GoJS Beta</a> for the next version,
+            if a next version is available.  Read the <a href="https://gojs.net/beta/doc/changelog.html" target="_blank">beta change log</a> for the new features.
+            Please note that our <a href="https://github.com/NorthwoodsSoftware/GoJS" target="_blank">GitHub</a> directory does not have the beta files.
+        </p>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+    <hr>
+</div> <!-- /container -->

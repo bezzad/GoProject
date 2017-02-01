@@ -10,8 +10,11 @@ namespace GoProject.Sample
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include("~/Scripts/jquery-{version}.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/go").Include("~/Scripts/go-{version}-debug.js"));
+            bundles.Add(new ScriptBundle("~/bundles/go").Include("~/Scripts/go-{version}.js"));
+            bundles.Add(new ScriptBundle("~/bundles/bpmn").Include("~/Scripts/DrawCommandHandler.js", "~/Scripts/BPMNClasses.js", "~/Scripts/BPMN.js"));
             bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/go", "~/Content/goSamples.css"));
+            bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/main", "~/Content/main.css"));
+            bundles.Add(new StyleBundle("~/Content/bpmn").Include("~/Content/main", "~/Content/bpmn.css"));
 
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include("~/Scripts/jquery.validate*"));
