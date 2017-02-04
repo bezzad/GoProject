@@ -1637,7 +1637,7 @@ function saveDocumentAs() {
     var saveName = prompt("Save file as...", getCurrentFileName());
     if (saveName && saveName !== UnsavedFileName) {
       setCurrentFileName(saveName);
-      saveDiagramProperties()
+      saveDiagramProperties();
       window.localStorage.setItem(saveName, myDiagram.model.toJson());
       myDiagram.isModified = false;
     }
