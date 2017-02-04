@@ -12,9 +12,9 @@ namespace GoProject.Sample
 
             bundles.Add(new ScriptBundle("~/bundles/go").Include("~/Scripts/go-{version}.js"));
             bundles.Add(new ScriptBundle("~/bundles/bpmn").Include("~/Scripts/DrawCommandHandler.js", "~/Scripts/BPMNClasses.js", "~/Scripts/BPMN.js"));
-            bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/go", "~/Content/goSamples.css"));
-            bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/main", "~/Content/main.css"));
-            bundles.Add(new StyleBundle("~/Content/bpmn").Include("~/Content/main", "~/Content/bpmn.css"));
+            bundles.Add(new StyleBundle("~/Content/go").Include("~/Content/goSamples.css"));
+            bundles.Add(new StyleBundle("~/Content/main").Include("~/Content/main.css"));
+            bundles.Add(new StyleBundle("~/Content/bpmn").Include("~/Content/bpmn.css"));
 
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include("~/Scripts/jquery.validate*"));
@@ -25,7 +25,7 @@ namespace GoProject.Sample
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include("~/Scripts/bootstrap.js","~/Scripts/respond.js"));
 
-            bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/bootstrap.css", "~/Content/site.css"));
+            bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/bootstrap.css", "~/Content/site.css", "~/Content/main.css"));
         }
     }
 }
