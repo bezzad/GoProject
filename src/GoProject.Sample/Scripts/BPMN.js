@@ -34,7 +34,7 @@ function init() {
 
     // constants for design choices
 
-    var GradientYellow = $(go.Brush, "Linear", { 0: "LightGoldenRodYellow", 1: "#FFFF66" });
+    var GradientYellow = $(go.Brush, "Linear", { 0: "LightGoldenRodYellow", 1: "#55FF66" });
     var GradientLightGreen = $(go.Brush, "Linear", { 0: "#E0FEE0", 1: "PaleGreen" });
     var GradientLightGray = $(go.Brush, "Linear", { 0: "White", 1: "#DADADA" });
 
@@ -126,6 +126,7 @@ function init() {
       "36.95 4.24,36.37 4.28,35.35 4.32,34.33 7.60,31.25 12.97,35.75 12.97," +
       "35.75 16.10,39.79 16.10,42.00 16.10,42.00 15.69,14.30 15.80,12.79 15.96," +
       "10.75 17.42,10.04 18.13,10.06z ");
+    
     handGeo.rotate(90, 0, 0);
     handGeo.normalize();
     go.Shape.defineFigureGenerator("BpmnTaskManual", function (shape, w, h) {
@@ -166,6 +167,7 @@ function init() {
                       "BpmnTaskMessage",  // should be black on white
                       "BpmnTaskService",  // Custom gear symbol
                       "InternalStorage"];
+
         if (s < tasks.length) return tasks[s];
         return "NotAllowed"; // error
     }
@@ -1676,23 +1678,31 @@ function checkLocalStorage() {
 
 // saves the current floor plan to local storage
 function saveDocument() {
-    //if (checkLocalStorage()) {
-    //  var saveName = getCurrentFileName();
-    //  if (saveName === UnsavedFileName) {
-    //    saveDocumentAs();
-    //  } else {
-    //    saveDiagramProperties()
-    //    window.localStorage.setItem(saveName, myDiagram.model.toJson());
-    //    myDiagram.isModified = false;
-    //  }
-    //}
-    var x = myDiagram.model.toJson();
-    $.post(window.location.origin + '/api/goApi/SaveDiagram', JSON.parse(x),
-        function (d) {
-            alert("Stored Successfull!");
-        }).fail(function (d) {
-            alert("Fial to stores");
-        });
+    if (checkLocalStorage()) {
+        var saveName = getCurrentFileName();
+        if (saveName === UnsavedFileName) {
+            saveDocumentAs();
+        } else {
+            saveDiagramProperties();
+            window.localStorage.setItem(saveName, myDiagram.model.toJson());
+            myDiagram.isModified = false;
+        }
+    }
+}
+
+function storeOnServer() {
+    if (checkLocalStorage()) {
+        var saveName = getCurrentFileName();
+        if (saveName === UnsavedFileName) {
+            saveDocumentAs();
+        } else {
+            saveDiagramProperties();
+            $.post(window.location.origin + '/api/goApi/SaveDiagram', JSON.parse(myDiagram.model.toJson()),
+                    function (d) { alert("Stored Successfull!");
+                    }).fail(function (d) {alert("Fial to stores");});
+            myDiagram.isModified = false;
+        }
+    }
 }
 
 // saves floor plan to local storage with a new name
@@ -1710,15 +1720,18 @@ function saveDocumentAs() {
 
 // checks to see if all changes have been saved -> shows the open HTML element
 function openDocument() {
-    //if (checkLocalStorage()) {
-    //  if (myDiagram.isModified) {
-    //    var save = confirm("Would you like to save changes to " + getCurrentFileName() + "?");
-    //    if (save) {
-    //      saveDocument();
-    //    }
-    //  }
-    //  openElement("openDocument", "mySavedFiles");
-    //}
+    if (checkLocalStorage()) {
+      if (myDiagram.isModified) {
+        var save = confirm("Would you like to save changes to " + getCurrentFileName() + "?");
+        if (save) {
+          saveDocument();
+        }
+      }
+      openElement("openDocument", "mySavedFiles");
+    }
+}
+
+function openFromServer() {
     loadJSON(window.location.origin + '/api/goApi/GetDiagram');
 }
 

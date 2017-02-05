@@ -8,6 +8,10 @@
     @Scripts.Render("~/bundles/bpmn")
 
     <script>
+        function layout() {
+            myDiagram.layoutDiagram(true);
+        }
+
         init();
     </script>
 }
@@ -20,9 +24,12 @@
             <ul>
                 <li><a href="#" onclick="newDocument()">New</a></li>
                 <li><a href="#" onclick="openDocument()">Open...</a></li>
+                <li><a href="#" onclick="openDocument()">Open from Server...</a></li>
                 <li><a href="#" onclick="saveDocument()">Save</a></li>
                 <li><a href="#" onclick="saveDocumentAs()">Save As...</a></li>
+                <li><a href="#" onclick="storeOnServer()">Store On Server...</a></li>
                 <li><a href="#" onclick="removeDocument()">Delete...</a></li>
+                <li><a href="#" onclick="layout()">layout...</a></li>
             </ul>
         </li>
         <li>
