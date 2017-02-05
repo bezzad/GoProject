@@ -6,28 +6,28 @@ namespace GoProject
 {
     public class Diagram
     {
-        [JsonProperty(PropertyName = "class")]
+        [JsonProperty(PropertyName = "class", NullValueHandling = NullValueHandling.Ignore)]
         public string Class { get; set; }
 
-        [JsonProperty(PropertyName = "copiesArrays")]
+        [JsonProperty(PropertyName = "copiesArrays", NullValueHandling = NullValueHandling.Ignore)]
         public bool CopiesArrays { get; set; }
 
-        [JsonProperty(PropertyName = "copiesArrayObjects")]
+        [JsonProperty(PropertyName = "copiesArrayObjects", NullValueHandling = NullValueHandling.Ignore)]
         public bool CopiesArrayObjects { get; set; }
 
-        [JsonProperty(PropertyName = "linkFromPortIdProperty")]
+        [JsonProperty(PropertyName = "linkFromPortIdProperty", NullValueHandling = NullValueHandling.Ignore)]
         public string LinkFromPortIdProperty { get; set; }
 
-        [JsonProperty(PropertyName = "linkToPortIdProperty")]
+        [JsonProperty(PropertyName = "linkToPortIdProperty", NullValueHandling = NullValueHandling.Ignore)]
         public string LinkToPortIdProperty { get; set; }
 
-        [JsonProperty(PropertyName = "nodeDataArray")]
+        [JsonProperty(PropertyName = "nodeDataArray", NullValueHandling = NullValueHandling.Ignore)]
         public List<NodeDataArray> NodeDataArray { get; set; }
 
-        [JsonProperty(PropertyName = "linkDataArray")]
+        [JsonProperty(PropertyName = "linkDataArray", NullValueHandling = NullValueHandling.Ignore)]
         public List<LinkDataArray> LinkDataArray { get; set; }
 
-        [JsonProperty(PropertyName = "modelData")]
+        [JsonProperty(PropertyName = "modelData", NullValueHandling = NullValueHandling.Ignore)]
         public ModelData ModelData { get; set; }
         
     }
