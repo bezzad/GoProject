@@ -34,7 +34,7 @@ function init() {
 
     // constants for design choices
 
-    var gradientYellow = $(go.Brush, "Linear", { 0: "LightGoldenRodYellow", 1: "#55FF66" });
+    var gradientYellow = $(go.Brush, "Linear", { 0: "LightGoldenRodYellow", 1: "#FFFF66" });
     var gradientLightGreen = $(go.Brush, "Linear", { 0: "#E0FEE0", 1: "PaleGreen" });
     var gradientLightGray = $(go.Brush, "Linear", { 0: "White", 1: "#DADADA" });
 
@@ -281,25 +281,22 @@ function init() {
     var activityNodeMenu =
          $(go.Adornment, "Vertical",
            $("ContextMenuButton",
-               $(go.TextBlock, "Add Email Event", { margin: 3 }),
+               $(go.TextBlock, "اضافه کردن رخداد ایمیل", { margin: 3 }),
                { click: function (e, obj) { addActivityNodeBoundaryEvent(2, 5); } }),
            $("ContextMenuButton",
-               $(go.TextBlock, "Add Timer Event", { margin: 3 }),
+               $(go.TextBlock, "اضافه کردن رخداد زماندار", { margin: 3 }),
                { click: function (e, obj) { addActivityNodeBoundaryEvent(3, 5); } }),
            $("ContextMenuButton",
-               $(go.TextBlock, "Add Escalation Event", { margin: 3 }),
+               $(go.TextBlock, "اضافه کردن رخداد تشدید", { margin: 3 }),
                { click: function (e, obj) { addActivityNodeBoundaryEvent(4, 5); } }),
            $("ContextMenuButton",
-               $(go.TextBlock, "Add Error Event", { margin: 3 }),
+               $(go.TextBlock, "اضافه کردن رخداد خطا", { margin: 3 }),
                { click: function (e, obj) { addActivityNodeBoundaryEvent(7, 5); } }),
            $("ContextMenuButton",
-               $(go.TextBlock, "Add Signal Event", { margin: 3 }),
+               $(go.TextBlock, "اضافه کردن رخداد سیگنال", { margin: 3 }),
                { click: function (e, obj) { addActivityNodeBoundaryEvent(10, 5); } }),
            $("ContextMenuButton",
-               $(go.TextBlock, "Add N-I Escalation Event", { margin: 3 }),
-               { click: function (e, obj) { addActivityNodeBoundaryEvent(4, 6); } }),
-           $("ContextMenuButton",
-               $(go.TextBlock, "Rename", { margin: 3 }),
+               $(go.TextBlock, "تغییر نام", { margin: 3 }),
                { click: function (e, obj) { rename(obj); } }));
 
 
@@ -369,14 +366,7 @@ function init() {
             new go.Binding("strokeWidth", "isCall",
                  function (s) { return s ? activityNodeStrokeWidthIsCall : activityNodeStrokeWidth; })
            ),
-  //        $(go.Shape, "RoundedRectangle",  // the inner "Transaction" rounded rectangle
-  //          { margin: 3,
-  //            stretch: go.GraphObject.Fill,
-    //            stroke: ActivityNodeStroke,
-  //            parameter1: 8, fill: null, visible: false
-  //          },
-  //          new go.Binding("visible", "isTransaction")
-  //         ),
+
           // task icon
           $(go.Shape, "BpmnTaskScript",    // will be None, Script, Manual, Service, etc via converter
             {
@@ -530,14 +520,16 @@ function init() {
     //------------------------------------------  Gateway Node Template   ----------------------------------------------
 
     function nodeGatewaySymbolTypeConverter(s) {
-        var tasks = ["NotAllowed",
-                      "ThinCross",      // 1 - Parallel
-                      "Circle",         // 2 - Inclusive
-                      "AsteriskLine",   // 3 - Complex
-                      "ThinX",          // 4 - Exclusive  (exclusive can also be no symbol, just bind to visible=false for no symbol)
-                      "Pentagon",       // 5 - double cicle event based gateway
-                      "Pentagon",       // 6 - exclusive event gateway to start a process (single circle)
-                      "ThickCross"]     // 7 - parallel event gateway to start a process (single circle)
+        var tasks = [
+            "NotAllowed",
+            "ThinCross", // 1 - Parallel
+            "Circle", // 2 - Inclusive
+            "AsteriskLine", // 3 - Complex
+            "ThinX", // 4 - Exclusive  (exclusive can also be no symbol, just bind to visible=false for no symbol)
+            "Pentagon", // 5 - double cicle event based gateway
+            "Pentagon", // 6 - exclusive event gateway to start a process (single circle)
+            "ThickCross"
+        ];     // 7 - parallel event gateway to start a process (single circle)
         if (s < tasks.length) return tasks[s];
         return "NotAllowed"; // error
     }
@@ -843,7 +835,7 @@ function init() {
     var laneEventMenu =  // context menu for each lane
     $(go.Adornment, "Vertical",
       $("ContextMenuButton",
-        $(go.TextBlock, "Add Lane"),
+        $(go.TextBlock, "ایجاد بخش"),
         // in the click event handler, the obj.part is the Adornment; its adornedObject is the port
           { click: function (e, obj) { addLaneEvent(obj.part.adornedObject); } })
      );
@@ -858,7 +850,7 @@ function init() {
             //size.height = MINBREADTH;
             var newlanedata = {
                 category: "Lane",
-                text: "New Lane",
+                text: "بخش",
                 color: "white",
                 isGroup: true,
                 loc: go.Point.stringify(new go.Point(lane.location.x, lane.location.y + 1)), // place below selection

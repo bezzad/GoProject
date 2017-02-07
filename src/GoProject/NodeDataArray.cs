@@ -46,5 +46,11 @@ namespace GoProject
 
         [JsonProperty(PropertyName = "gatewayType", NullValueHandling = NullValueHandling.Ignore)]
         public int? GatewayType { get; set; }
+
+        [JsonProperty(PropertyName = "isSubProcess", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? IsSubProcess { get; set; }
+
+        [JsonProperty(PropertyName = "name", NullValueHandling = NullValueHandling.Ignore)]
+        public string Name { get; set; }
     }
 }
