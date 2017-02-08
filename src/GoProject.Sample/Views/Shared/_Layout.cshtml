@@ -4,8 +4,14 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Go Project</title>
+    @Styles.Render("~/Content/go")
     @Styles.Render("~/Content/css")
+
+
     @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/go")
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -59,8 +65,11 @@
     </footer>
 
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+
+
+
+
+
     @RenderSection("scripts", required: false)
 </body>
 </html>

@@ -7,13 +7,11 @@
 
 // Setup all of the Diagrams and what they need.
 // This is called after the page is loaded.
-function init() {
-    if (typeof (Storage) === "undefined") {
-        var currentFile = document.getElementById("currentFile");
-        currentFile.textContent = "Sorry! No web storage support.\nIf you're using Internet Explorer, you must load the page from a server for local storage to work.";
-    }
+var UnsavedFileName = "(Unsaved File)";
 
-    // setup the menubar    
+
+function init() {
+    // setup the menubar
     jQuery("#menuui").menu();
     jQuery(function () {
         jQuery("#menuui").menu({ position: { my: "left top", at: "left top+30" } });
@@ -21,14 +19,6 @@ function init() {
     jQuery("#menuui").menu({
         icons: { submenu: "ui-icon-triangle-1-s" }
     });
-
-    // hides open HTML Element
-    var openDocument = document.getElementById("openDocument");
-    openDocument.style.visibility = "hidden";
-    // hides remove HTML Element
-    var removeDocument = document.getElementById("removeDocument");
-    removeDocument.style.visibility = "hidden";
-
 
     var $ = go.GraphObject.make;  // for more concise visual tree definitions
 
@@ -126,7 +116,6 @@ function init() {
       "36.95 4.24,36.37 4.28,35.35 4.32,34.33 7.60,31.25 12.97,35.75 12.97," +
       "35.75 16.10,39.79 16.10,42.00 16.10,42.00 15.69,14.30 15.80,12.79 15.96," +
       "10.75 17.42,10.04 18.13,10.06z ");
-
     handGeo.rotate(90, 0, 0);
     handGeo.normalize();
     go.Shape.defineFigureGenerator("BpmnTaskManual", function (shape, w, h) {
@@ -167,7 +156,6 @@ function init() {
                       "BpmnTaskMessage",  // should be black on white
                       "BpmnTaskService",  // Custom gear symbol
                       "InternalStorage"];
-
         if (s < tasks.length) return tasks[s];
         return "NotAllowed"; // error
     }
@@ -182,7 +170,7 @@ function init() {
     }
 
     function nodeActivityTaskTypeColorConverter(s) {
-        return (s == 5) ? "dimgray" : "white";
+        return (s === 5) ? "dimgray" : "white";
     }
 
     function nodeEventTypeConverter(s) {  // order here from BPMN 2.0 poster
@@ -278,26 +266,50 @@ function init() {
 
     //------------------------------------------  Activity Node contextMenu   ----------------------------------------------
 
+    //var activityNodeMenu =
+    //     $(go.Adornment, "Vertical",
+    //       $("ContextMenuButton",
+    //           $(go.TextBlock, "Add Email Event", { margin: 3 }),
+    //           { click: function (e, obj) { addActivityNodeBoundaryEvent(2, 5); } }),
+    //       $("ContextMenuButton",
+    //           $(go.TextBlock, "Add Timer Event", { margin: 3 }),
+    //           { click: function (e, obj) { addActivityNodeBoundaryEvent(3, 5); } }),
+    //       $("ContextMenuButton",
+    //           $(go.TextBlock, "Add Escalation Event", { margin: 3 }),
+    //           { click: function (e, obj) { addActivityNodeBoundaryEvent(4, 5); } }),
+    //       $("ContextMenuButton",
+    //           $(go.TextBlock, "Add Error Event", { margin: 3 }),
+    //           { click: function (e, obj) { addActivityNodeBoundaryEvent(7, 5); } }),
+    //       $("ContextMenuButton",
+    //           $(go.TextBlock, "Add Signal Event", { margin: 3 }),
+    //           { click: function (e, obj) { addActivityNodeBoundaryEvent(10, 5); } }),
+    //       $("ContextMenuButton",
+    //           $(go.TextBlock, "Add N-I Escalation Event", { margin: 3 }),
+    //           { click: function (e, obj) { addActivityNodeBoundaryEvent(4, 6); } }),
+    //       $("ContextMenuButton",
+    //           $(go.TextBlock, "Rename", { margin: 3 }),
+    //           { click: function (e, obj) { rename(obj); } }));
+
     var activityNodeMenu =
-         $(go.Adornment, "Vertical",
-           $("ContextMenuButton",
-               $(go.TextBlock, "اضافه کردن رخداد ایمیل", { margin: 3 }),
-               { click: function (e, obj) { addActivityNodeBoundaryEvent(2, 5); } }),
-           $("ContextMenuButton",
-               $(go.TextBlock, "اضافه کردن رخداد زماندار", { margin: 3 }),
-               { click: function (e, obj) { addActivityNodeBoundaryEvent(3, 5); } }),
-           $("ContextMenuButton",
-               $(go.TextBlock, "اضافه کردن رخداد تشدید", { margin: 3 }),
-               { click: function (e, obj) { addActivityNodeBoundaryEvent(4, 5); } }),
-           $("ContextMenuButton",
-               $(go.TextBlock, "اضافه کردن رخداد خطا", { margin: 3 }),
-               { click: function (e, obj) { addActivityNodeBoundaryEvent(7, 5); } }),
-           $("ContextMenuButton",
-               $(go.TextBlock, "اضافه کردن رخداد سیگنال", { margin: 3 }),
-               { click: function (e, obj) { addActivityNodeBoundaryEvent(10, 5); } }),
-           $("ContextMenuButton",
-               $(go.TextBlock, "تغییر نام", { margin: 3 }),
-               { click: function (e, obj) { rename(obj); } }));
+     $(go.Adornment, "Vertical",
+       $("ContextMenuButton",
+           $(go.TextBlock, "اضافه کردن رخداد ایمیل", { margin: 3 }),
+           { click: function (e, obj) { addActivityNodeBoundaryEvent(2, 5); } }),
+       $("ContextMenuButton",
+           $(go.TextBlock, "اضافه کردن رخداد زماندار", { margin: 3 }),
+           { click: function (e, obj) { addActivityNodeBoundaryEvent(3, 5); } }),
+       $("ContextMenuButton",
+           $(go.TextBlock, "اضافه کردن رخداد تشدید", { margin: 3 }),
+           { click: function (e, obj) { addActivityNodeBoundaryEvent(4, 5); } }),
+       $("ContextMenuButton",
+           $(go.TextBlock, "اضافه کردن رخداد خطا", { margin: 3 }),
+           { click: function (e, obj) { addActivityNodeBoundaryEvent(7, 5); } }),
+       $("ContextMenuButton",
+           $(go.TextBlock, "اضافه کردن رخداد سیگنال", { margin: 3 }),
+           { click: function (e, obj) { addActivityNodeBoundaryEvent(10, 5); } }),
+       $("ContextMenuButton",
+           $(go.TextBlock, "تغییر نام", { margin: 3 }),
+           { click: function (e, obj) { rename(myDiagram, obj); } }));
 
 
     // sub-process,  loop, parallel, sequential, ad doc and compensation markers in horizontal array
@@ -366,7 +378,14 @@ function init() {
             new go.Binding("strokeWidth", "isCall",
                  function (s) { return s ? activityNodeStrokeWidthIsCall : activityNodeStrokeWidth; })
            ),
-
+  //        $(go.Shape, "RoundedRectangle",  // the inner "Transaction" rounded rectangle
+  //          { margin: 3,
+  //            stretch: go.GraphObject.Fill,
+    //            stroke: ActivityNodeStroke,
+  //            parameter1: 8, fill: null, visible: false
+  //          },
+  //          new go.Binding("visible", "isTransaction")
+  //         ),
           // task icon
           $(go.Shape, "BpmnTaskScript",    // will be None, Script, Manual, Service, etc via converter
             {
@@ -397,6 +416,7 @@ function init() {
            locationSpot: go.Spot.Center,
            selectionAdorned: false
        },
+      new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
       $(go.Panel, "Spot",
         {
             name: "PANEL",
@@ -520,16 +540,14 @@ function init() {
     //------------------------------------------  Gateway Node Template   ----------------------------------------------
 
     function nodeGatewaySymbolTypeConverter(s) {
-        var tasks = [
-            "NotAllowed",
-            "ThinCross", // 1 - Parallel
-            "Circle", // 2 - Inclusive
-            "AsteriskLine", // 3 - Complex
-            "ThinX", // 4 - Exclusive  (exclusive can also be no symbol, just bind to visible=false for no symbol)
-            "Pentagon", // 5 - double cicle event based gateway
-            "Pentagon", // 6 - exclusive event gateway to start a process (single circle)
-            "ThickCross"
-        ];     // 7 - parallel event gateway to start a process (single circle)
+        var tasks = ["NotAllowed",
+                      "ThinCross",      // 1 - Parallel
+                      "Circle",         // 2 - Inclusive
+                      "AsteriskLine",   // 3 - Complex
+                      "ThinX",          // 4 - Exclusive  (exclusive can also be no symbol, just bind to visible=false for no symbol)
+                      "Pentagon",       // 5 - double cicle event based gateway
+                      "Pentagon",       // 6 - exclusive event gateway to start a process (single circle)
+                      "ThickCross"]     // 7 - parallel event gateway to start a process (single circle)
         if (s < tasks.length) return tasks[s];
         return "NotAllowed"; // error
     }
@@ -614,6 +632,7 @@ function init() {
             locationSpot: go.Spot.Center,
             resizeObjectName: "SHAPE"
         },
+        new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
         $(go.Panel, "Spot",
           $(go.Shape, "Diamond",
             {
@@ -739,6 +758,7 @@ function init() {
       $(go.Group, "Vertical",
         {
             locationSpot: go.Spot.Center,
+            computesBoundsIncludingLinks: false,
             isSubGraphExpanded: false
         },
         $(go.Shape, "Process",
@@ -758,7 +778,6 @@ function init() {
         {
             locationSpot: go.Spot.Center,
             locationObjectName: "PH",
-            resizable: true, resizeObjectName: "PH",
             //locationSpot: go.Spot.Center,
             isSubGraphExpanded: false,
             memberValidation: function (group, part) {
@@ -784,7 +803,6 @@ function init() {
                   portId: "", fromLinkable: true, toLinkable: true, cursor: "pointer",
                   fromSpot: go.Spot.RightSide, toSpot: go.Spot.LeftSide
               },
-              new go.Binding("desiredSize", "size", go.Size.parse).makeTwoWay(go.Size.stringify),
               new go.Binding("strokeWidth", "isCall", function (s) { return s ? activityNodeStrokeWidthIsCall : activityNodeStrokeWidth; })
              ),
             $(go.Panel, "Vertical",
@@ -802,14 +820,18 @@ function init() {
         );  // end Group
 
     //** need this in the subprocess group template above.
-    //        $(go.Shape, "RoundedRectangle",  // the inner "Transaction" rounded rectangle
-    //          { margin: 3,
-    //            stretch: go.GraphObject.Fill,
-    //            stroke: ActivityNodeStroke,
-    //            parameter1: 8, fill: null, visible: false
-    //          },
-    //          new go.Binding("visible", "isTransaction")
-    //         ),
+    //$(go.Shape,
+    //    "RoundedRectangle", // the inner "Transaction" rounded rectangle
+    //    {
+    //        margin: 3,
+    //        stretch: go.GraphObject.Fill,
+    //        stroke: activityNodeStroke,
+    //        parameter1: 8,
+    //        fill: null,
+    //        visible: false
+    //    },
+    //    new go.Binding("visible", "isTransaction")
+    //);
 
 
     function groupStyle() {  // common settings for both Lane and Pool Groups
@@ -835,7 +857,7 @@ function init() {
     var laneEventMenu =  // context menu for each lane
     $(go.Adornment, "Vertical",
       $("ContextMenuButton",
-        $(go.TextBlock, "ایجاد بخش"),
+        $(go.TextBlock, "Add Lane"),
         // in the click event handler, the obj.part is the Adornment; its adornedObject is the port
           { click: function (e, obj) { addLaneEvent(obj.part.adornedObject); } })
      );
@@ -850,7 +872,7 @@ function init() {
             //size.height = MINBREADTH;
             var newlanedata = {
                 category: "Lane",
-                text: "بخش",
+                text: "New Lane",
                 color: "white",
                 isGroup: true,
                 loc: go.Point.stringify(new go.Point(lane.location.x, lane.location.y + 1)), // place below selection
@@ -954,7 +976,10 @@ function init() {
               fill: "lightblue", stroke: "dodgerblue",
               cursor: "col-resize"
           },
-          new go.Binding("visible", "", function (ad) { return ad.adornedPart.isSubGraphExpanded; }).ofObject()),
+          new go.Binding("visible", "", function (ad) {
+              if (ad.adornedPart === null) return false;
+              return ad.adornedPart.isSubGraphExpanded;
+          }).ofObject()),
         $(go.Shape,  // for changing the breadth of a lane
           {
               alignment: go.Spot.Bottom,
@@ -962,12 +987,17 @@ function init() {
               fill: "lightblue", stroke: "dodgerblue",
               cursor: "row-resize"
           },
-          new go.Binding("visible", "", function (ad) { return ad.adornedPart.isSubGraphExpanded; }).ofObject())
+          new go.Binding("visible", "", function (ad) {
+              if (ad.adornedPart === null) return false;
+              return ad.adornedPart.isSubGraphExpanded;
+          }).ofObject())
       );
 
     var poolGroupTemplate =
        $(go.Group, "Auto", groupStyle(),
-         { // use a simple layout that ignores links to stack the "lane" Groups on top of each other
+         {
+             computesBoundsIncludingLinks: false,
+             // use a simple layout that ignores links to stack the "lane" Groups on top of each other
              layout: $(PoolLayout, { spacing: new go.Size(0, 0) })  // no space between lanes
          },
          new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
@@ -1169,6 +1199,17 @@ function init() {
         }
     });
 
+    //  uncomment this if you want a subprocess to expand on drop.  We decided we didn't like this behavior
+      //myDiagram.addDiagramListener("ExternalObjectsDropped", function(e) {
+      //  // e.subject is the collection that was just dropped
+      //  e.subject.each(function(part) {
+      //      if (part instanceof go.Node && part.data.item === "end") {
+      //          part.move(new go.Point(part.location.x + 350, part.location.y));
+      //      }
+      //    });
+      //  myDiagram.commandHandler.expandSubGraph();
+      //});
+
     // change the title to indicate that the diagram has been modified
     myDiagram.addDiagramListener("Modified", function (e) {
         var currentFile = document.getElementById("currentFile");
@@ -1206,12 +1247,40 @@ function init() {
                       })
         });
 
+
+
     jQuery("#accordion").accordion({
         activate: function (event, ui) {
             myPaletteLevel1.requestUpdate();
-            //myPaletteLevel2.requestUpdate();
         }
     });
+
+  //  myPaletteLevel1.model = $(go.GraphLinksModel,
+  //{
+  //    copiesArrays: true,
+  //    copiesArrayObjects: true,
+  //    nodeDataArray: [
+  //    // -------------------------- Event Nodes
+  //      { key: 101, category: "event", text: "مواد اولیه", eventType: 1, eventDimension: 1, item: "start" },
+  //      { key: 103, category: "event", text: "زماندار", eventType: 3, eventDimension: 3, item: "Timer" },
+  //      { key: 104, category: "event", text: "محصول نهایی", eventType: 1, eventDimension: 8, item: "End" },
+  //      { key: 108, category: "event", text: "نیمه کاره", eventType: 13, eventDimension: 8, item: "Terminate" },
+  //    // -------------------------- Task/Activity Nodes
+  //      { key: 131, category: "activity", text: "فرآیند", item: "generic task", taskType: 0 },
+  //    // subprocess and start and end
+  //      { key: 134, category: "subprocess", loc: "0 0", text: "ایستگاه کاری", isGroup: true, isSubProcess: true, taskType: 0 },
+  //        { key: -802, category: "event", loc: "0 0", group: 134, text: "شروع", eventType: 1, eventDimension: 1, item: "start" },
+  //        { key: -803, category: "event", loc: "350 0", group: 134, text: "پایان", eventType: 1, eventDimension: 8, item: "end", name: "end" },
+  //    // -------------------------- Gateway Nodes, Data, Pool and Annotation
+  //      { key: 201, category: "gateway", text: "ترکیب", gatewayType: 1 },
+  //      { key: 204, category: "gateway", text: "تفکیک", gatewayType: 4 },
+  //      { key: 302, category: "datastore", text: "مخزن" },
+  //      { key: "501", "text": "گروه بندی", "isGroup": "true", "category": "Pool" },
+  //        { key: "Lane5", "text": "بخش 1", "isGroup": "true", "group": "501", "color": "lightyellow", "category": "Lane" },
+  //        { key: "Lane6", "text": "بخش 2", "isGroup": "true", "group": "501", "color": "lightgreen", "category": "Lane" },
+  //      { key: 701, category: "annotation", text: "توضیحات" }
+  //    ]  // end nodeDataArray
+  //});  // end model
 
     myPaletteLevel1.model = $(go.GraphLinksModel,
       {
@@ -1219,27 +1288,32 @@ function init() {
           copiesArrayObjects: true,
           nodeDataArray: [
           // -------------------------- Event Nodes
-            { key: 101, category: "event", text: "مواد اولیه", eventType: 1, eventDimension: 1, item: "start" },
-            { key: 103, category: "event", text: "زماندار", eventType: 3, eventDimension: 3, item: "Timer" },
-            { key: 104, category: "event", text: "محصول نهایی", eventType: 1, eventDimension: 8, item: "End" },
-            { key: 108, category: "event", text: "نیمه کاره", eventType: 13, eventDimension: 8, item: "Terminate" },
+            { key: 101, category: "event", text: "Start", eventType: 1, eventDimension: 1, item: "start" },
+            { key: 102, category: "event", text: "Message", eventType: 2, eventDimension: 2, item: "Message" }, // BpmnTaskMessage
+            { key: 103, category: "event", text: "Timer", eventType: 3, eventDimension: 3, item: "Timer" },
+            { key: 104, category: "event", text: "End", eventType: 1, eventDimension: 8, item: "End" },
+            { key: 107, category: "event", text: "Message", eventType: 2, eventDimension: 8, item: "Message" },// BpmnTaskMessage
+            { key: 108, category: "event", text: "Terminate", eventType: 13, eventDimension: 8, item: "Terminate" },
           // -------------------------- Task/Activity Nodes
-            { key: 131, category: "activity", text: "فرآیند", item: "generic task", taskType: 0 },
+            { key: 131, category: "activity", text: "Task", item: "generic task", taskType: 0 },
+            { key: 132, category: "activity", text: "User Task", item: "User task", taskType: 2 },
+            { key: 133, category: "activity", text: "Service\nTask", item: "service task", taskType: 6 },
           // subprocess and start and end
-            { key: 134, category: "subprocess", loc: "0 0", text: "ایستگاه کاری", isGroup: true, isSubProcess: true, taskType: 0 },
-              { key: -802, category: "event", loc: "0 0", group: 134, text: "شروع", eventType: 1, eventDimension: 1, item: "start" },
-              { key: -803, category: "event", loc: "350 0", group: 134, text: "پایان", eventType: 1, eventDimension: 8, item: "end", name: "end" },
+            { key: 134, category: "subprocess", loc: "0 0", text: "Subprocess", isGroup: true, isSubProcess: true, taskType: 0 },
+              { key: -802, category: "event", loc: "0 0", group: 134, text: "Start", eventType: 1, eventDimension: 1, item: "start" },
+              { key: -803, category: "event", loc: "350 0", group: 134, text: "End", eventType: 1, eventDimension: 8, item: "end", name: "end" },
           // -------------------------- Gateway Nodes, Data, Pool and Annotation
-            { key: 201, category: "gateway", text: "ترکیب", gatewayType: 1 },
-            { key: 204, category: "gateway", text: "تفکیک", gatewayType: 4 },
-            { key: 302, category: "datastore", text: "مخزن" },
-            { key: "501", "text": "گروه بندی", "isGroup": "true", "category": "Pool" },
-              { key: "Lane5", "text": "بخش 1", "isGroup": "true", "group": "501", "color": "lightyellow", "category": "Lane" },
-              { key: "Lane6", "text": "بخش 2", "isGroup": "true", "group": "501", "color": "lightgreen", "category": "Lane" },
-            { key: 701, category: "annotation", text: "توضیحات" }
+            { key: 201, category: "gateway", text: "Parallel", gatewayType: 1 },
+            { key: 204, category: "gateway", text: "Exclusive", gatewayType: 4 },
+            { key: 301, category: "dataobject", text: "Data\nObject" },
+            { key: 302, category: "datastore", text: "Data\nStorage" },
+            { key: 401, category: "privateProcess", text: "Black Box" },
+            { key: "501", "text": "Pool 1", "isGroup": "true", "category": "Pool" },
+              { key: "Lane5", "text": "Lane 1", "isGroup": "true", "group": "501", "color": "lightyellow", "category": "Lane" },
+              { key: "Lane6", "text": "Lane 2", "isGroup": "true", "group": "501", "color": "lightgreen", "category": "Lane" },
+            { key: 701, category: "annotation", text: "note" }
           ]  // end nodeDataArray
       });  // end model
-
 
     //------------------------------------------  Overview   ----------------------------------------------
 
@@ -1248,10 +1322,6 @@ function init() {
         { observed: myDiagram, maxScale: 0.5, contentAlignment: go.Spot.Center });
     // change color of viewport border in Overview
     myOverview.box.elt(0).stroke = "dodgerblue";
-
-    // start with a simple preset model:
-    //loadJSON("BPMNdata/OMG BPMN by Example Figure 5.1.json");
-    loadJSON(window.location.origin + '/api/goApi/GetDiagram');
 } // end init
 
 
@@ -1342,7 +1412,7 @@ LaneResizingTool.prototype.canStart = function () {
 
     // if this is a resize handle for a "Lane", we can start.
     var diagram = this.diagram;
-    if (diagram === null) return;
+    if (diagram === null) return null;
     var handl = this.findToolHandleAt(diagram.firstInput.documentPoint, this.name);
     if (handl === null || handl.part === null || handl.part.adornedObject === null || handl.part.adornedObject.part === null) return false;
     return (handl.part.adornedObject.part.category === "Lane");
@@ -1482,13 +1552,8 @@ function updateSnapOption() {
     }
 }
 
-// user specifies the amount of space between nodes when making rows and column
-function askSpace() {
-    var space = prompt("Desired space between nodes (in pixels):", "0");
-    return space;
-}
 
-var UnsavedFileName = "(Unsaved File)";
+
 
 function getCurrentFileName() {
     var currentFile = document.getElementById("currentFile");
@@ -1510,7 +1575,7 @@ function newDocument() {
     if (myDiagram.isModified) {
         var save = confirm("Would you like to save changes to " + getCurrentFileName() + "?");
         if (save) {
-            saveDocument();
+            //saveDocument();
         }
     }
     setCurrentFileName(UnsavedFileName);
@@ -1529,99 +1594,23 @@ function resetModel() {
     myDiagram.isModified = false;
 }
 
-function checkLocalStorage() {
-    return (typeof (Storage) !== "undefined") && (window.localStorage !== undefined);
-}
-
-// saves the current floor plan to local storage
-function saveDocument() {
-    if (checkLocalStorage()) {
-        var saveName = getCurrentFileName();
-        if (saveName === UnsavedFileName) {
-            saveDocumentAs();
-        } else {
-            saveDiagramProperties();
-            window.localStorage.setItem(saveName, myDiagram.model.toJson());
-            myDiagram.isModified = false;
-        }
-    }
-}
-
 function storeOnServer() {
-    if (checkLocalStorage()) {
+    if (myDiagram.isModified) {
         var saveName = getCurrentFileName();
-        if (saveName === UnsavedFileName) {
-            saveDocumentAs();
-        } else {
-            saveDiagramProperties();
-            $.post(window.location.origin + '/api/goApi/SaveDiagram', JSON.parse(myDiagram.model.toJson()),
-                    function (d) {
-                        alert("Stored Successfull!");
-                    }).fail(function (d) { alert("Fial to stores"); });
-            myDiagram.isModified = false;
-        }
-    }
-}
-
-// saves floor plan to local storage with a new name
-function saveDocumentAs() {
-    if (checkLocalStorage()) {
-        var saveName = prompt("Save file as...", getCurrentFileName());
-        if (saveName && saveName !== UnsavedFileName) {
-            setCurrentFileName(saveName);
-            saveDiagramProperties();
-            window.localStorage.setItem(saveName, myDiagram.model.toJson());
-            myDiagram.isModified = false;
-        }
-    }
-}
-
-// checks to see if all changes have been saved -> shows the open HTML element
-function openDocument() {
-    if (checkLocalStorage()) {
-        if (myDiagram.isModified) {
-            var save = confirm("Would you like to save changes to " + getCurrentFileName() + "?");
-            if (save) {
-                saveDocument();
-            }
-        }
-        openElement("openDocument", "mySavedFiles");
+        saveDiagramProperties();
+        saveDiagramProperties();
+        $.post(window.location.origin + '/api/goApi/SaveDiagram',
+                JSON.parse(myDiagram.model.toJson()),
+                function (d) {
+                    alert("Stored Successfull!");
+                })
+            .fail(function (d) { alert("Fial to stores"); });
+        myDiagram.isModified = false; // save and have no changes
     }
 }
 
 function openFromServer() {
     loadJSON(window.location.origin + '/api/goApi/GetDiagram');
-}
-
-// shows the remove HTML element
-function removeDocument() {
-    if (checkLocalStorage()) {
-        openElement("removeDocument", "mySavedFiles2");
-    }
-}
-
-// these functions are called when panel buttons are clicked
-
-function loadFile() {
-    var listbox = document.getElementById("mySavedFiles");
-    // get selected filename
-    var fileName = undefined;
-    for (var i = 0; i < listbox.options.length; i++) {
-        if (listbox.options[i].selected) fileName = listbox.options[i].text; // selected file
-    }
-    if (fileName !== undefined) {
-        // changes the text of "currentFile" to be the same as the floor plan now loaded
-        setCurrentFileName(fileName);
-        // actually load the model from the JSON format string
-        var savedFile = window.localStorage.getItem(fileName);
-        myDiagram.model = go.Model.fromJson(savedFile);
-        loadDiagramProperties();
-        myDiagram.model.undoManager.isEnabled = true;
-        myDiagram.isModified = false;
-        // eventually loadDiagramProperties will be called to finish
-        // restoring shared saved model/diagram properties
-    }
-    closeElement("openDocument");
 }
 
 function loadJSON(file) {
@@ -1664,7 +1653,7 @@ function removeFile() {
         window.localStorage.removeItem(fileName);
         // the current document remains open, even if its storage was deleted
     }
-    closeElement("removeDocument");
+
 }
 
 function updateFileList(id) {
@@ -1672,7 +1661,7 @@ function updateFileList(id) {
     var listbox = document.getElementById(id);
     // remove any old listing of files
     var last;
-    while (last = listbox.lastChild) listbox.removeChild(last);
+    while (last === listbox.lastChild) listbox.removeChild(last);
     // now add all saved files to the listbox
     for (var key in window.localStorage) {
         var storedFile = window.localStorage.getItem(key);
@@ -1681,21 +1670,5 @@ function updateFileList(id) {
         option.value = key;
         option.text = key;
         listbox.add(option, null);
-    }
-}
-
-function openElement(id, listid) {
-    var panel = document.getElementById(id);
-    if (panel.style.visibility === "hidden") {
-        updateFileList(listid);
-        panel.style.visibility = "visible";
-    }
-}
-
-// hides the open/remove elements when the "cancel" button is pressed
-function closeElement(id) {
-    var panel = document.getElementById(id);
-    if (panel.style.visibility === "visible") {
-        panel.style.visibility = "hidden";
     }
 }

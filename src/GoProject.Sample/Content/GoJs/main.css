@@ -26,12 +26,12 @@ body {
 }
 
 
-#bannertop {
+/*#bannertop {
   background-image: url('../images/banner2.png');
   background-repeat: no-repeat;
   box-shadow: 0px 2px 5px #D3D3D3;
   padding-top: 48px;
-}
+}*/
 
 .img-thumbnail {
   padding: 0px;
