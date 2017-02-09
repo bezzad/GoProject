@@ -4,14 +4,17 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Go Project</title>
-    @Styles.Render("~/Content/go")
-    @Styles.Render("~/Content/css")
-
-
-    @Scripts.Render("~/bundles/modernizr")
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/go")
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/themes/smoothness/jquery-ui.css"/>
+    @Scripts.Render("~/bundles/jquery")
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
+    @Styles.Render("~/Content/go")
+    @*@Styles.Render("~/Content/css")*@
+
+
+    @*@Scripts.Render("~/bundles/modernizr")*@
+
+    @*@Scripts.Render("~/bundles/bootstrap")*@
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">

@@ -10,8 +10,9 @@ namespace GoProject.Sample
         {
             bundles.Add(new ScriptBundle("~/bundles/go").Include("~/Scripts/GoJs/go.js"));
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                "~/Scripts/jquery-{version}.js", 
-                "~/Scripts/jquery-ui-{version}.js"));
+                "~/Scripts/jquery-{version}.js"
+                //,"~/Scripts/jquery-ui-{version}.js"
+                ));
             
             bundles.Add(new ScriptBundle("~/bundles/bpmn").Include(
                 "~/Scripts/GoJs/DrawCommandHandler.js",
@@ -19,7 +20,7 @@ namespace GoProject.Sample
                 "~/Scripts/GoJs/BPMN.js"));
 
             bundles.Add(new StyleBundle("~/Content/go").Include(
-                "~/Content/themes/base/jquery-ui.min.css",
+              //  "~/Content/themes/base/jquery-ui.min.css",
                 "~/Content/GoJs/goSamples.css",
                 "~/Content/GoJs/bpmn.css"));
 

@@ -7,9 +7,6 @@
 
 // Setup all of the Diagrams and what they need.
 // This is called after the page is loaded.
-var UnsavedFileName = "(Unsaved File)";
-
-
 function init() {
     // setup the menubar
     jQuery("#menuui").menu();
@@ -116,6 +113,7 @@ function init() {
       "36.95 4.24,36.37 4.28,35.35 4.32,34.33 7.60,31.25 12.97,35.75 12.97," +
       "35.75 16.10,39.79 16.10,42.00 16.10,42.00 15.69,14.30 15.80,12.79 15.96," +
       "10.75 17.42,10.04 18.13,10.06z ");
+
     handGeo.rotate(90, 0, 0);
     handGeo.normalize();
     go.Shape.defineFigureGenerator("BpmnTaskManual", function (shape, w, h) {
@@ -156,6 +154,7 @@ function init() {
                       "BpmnTaskMessage",  // should be black on white
                       "BpmnTaskService",  // Custom gear symbol
                       "InternalStorage"];
+
         if (s < tasks.length) return tasks[s];
         return "NotAllowed"; // error
     }
@@ -540,14 +539,16 @@ function init() {
     //------------------------------------------  Gateway Node Template   ----------------------------------------------
 
     function nodeGatewaySymbolTypeConverter(s) {
-        var tasks = ["NotAllowed",
-                      "ThinCross",      // 1 - Parallel
-                      "Circle",         // 2 - Inclusive
-                      "AsteriskLine",   // 3 - Complex
-                      "ThinX",          // 4 - Exclusive  (exclusive can also be no symbol, just bind to visible=false for no symbol)
-                      "Pentagon",       // 5 - double cicle event based gateway
-                      "Pentagon",       // 6 - exclusive event gateway to start a process (single circle)
-                      "ThickCross"]     // 7 - parallel event gateway to start a process (single circle)
+        var tasks = [
+            "NotAllowed",
+            "ThinCross", // 1 - Parallel
+            "Circle", // 2 - Inclusive
+            "AsteriskLine", // 3 - Complex
+            "ThinX", // 4 - Exclusive  (exclusive can also be no symbol, just bind to visible=false for no symbol)
+            "Pentagon", // 5 - double cicle event based gateway
+            "Pentagon", // 6 - exclusive event gateway to start a process (single circle)
+            "ThickCross"
+        ];     // 7 - parallel event gateway to start a process (single circle)
         if (s < tasks.length) return tasks[s];
         return "NotAllowed"; // error
     }
@@ -778,6 +779,7 @@ function init() {
         {
             locationSpot: go.Spot.Center,
             locationObjectName: "PH",
+            resizable: true, resizeObjectName: "PH",
             //locationSpot: go.Spot.Center,
             isSubGraphExpanded: false,
             memberValidation: function (group, part) {
@@ -803,6 +805,7 @@ function init() {
                   portId: "", fromLinkable: true, toLinkable: true, cursor: "pointer",
                   fromSpot: go.Spot.RightSide, toSpot: go.Spot.LeftSide
               },
+              new go.Binding("desiredSize", "size", go.Size.parse).makeTwoWay(go.Size.stringify),
               new go.Binding("strokeWidth", "isCall", function (s) { return s ? activityNodeStrokeWidthIsCall : activityNodeStrokeWidth; })
              ),
             $(go.Panel, "Vertical",
@@ -857,7 +860,7 @@ function init() {
     var laneEventMenu =  // context menu for each lane
     $(go.Adornment, "Vertical",
       $("ContextMenuButton",
-        $(go.TextBlock, "Add Lane"),
+        $(go.TextBlock, "ایجاد بخش"),
         // in the click event handler, the obj.part is the Adornment; its adornedObject is the port
           { click: function (e, obj) { addLaneEvent(obj.part.adornedObject); } })
      );
@@ -872,7 +875,7 @@ function init() {
             //size.height = MINBREADTH;
             var newlanedata = {
                 category: "Lane",
-                text: "New Lane",
+                text: "بخش",
                 color: "white",
                 isGroup: true,
                 loc: go.Point.stringify(new go.Point(lane.location.x, lane.location.y + 1)), // place below selection
@@ -976,10 +979,7 @@ function init() {
               fill: "lightblue", stroke: "dodgerblue",
               cursor: "col-resize"
           },
-          new go.Binding("visible", "", function (ad) {
-              if (ad.adornedPart === null) return false;
-              return ad.adornedPart.isSubGraphExpanded;
-          }).ofObject()),
+          new go.Binding("visible", "", function (ad) { return ad.adornedPart.isSubGraphExpanded; }).ofObject()),
         $(go.Shape,  // for changing the breadth of a lane
           {
               alignment: go.Spot.Bottom,
@@ -987,10 +987,7 @@ function init() {
               fill: "lightblue", stroke: "dodgerblue",
               cursor: "row-resize"
           },
-          new go.Binding("visible", "", function (ad) {
-              if (ad.adornedPart === null) return false;
-              return ad.adornedPart.isSubGraphExpanded;
-          }).ofObject())
+          new go.Binding("visible", "", function (ad) { return ad.adornedPart.isSubGraphExpanded; }).ofObject())
       );
 
     var poolGroupTemplate =
@@ -1234,8 +1231,7 @@ function init() {
     }
 
     // initialize the first Palette, BPMN Spec Level 1
-    var myPaletteLevel1 =
-      $(go.Palette, "myPaletteLevel1",
+    var myPaletteLevel1 = $(go.Palette, "myPaletteLevel1",
         { // share the templates with the main Diagram
             nodeTemplateMap: palNodeTemplateMap,
             groupTemplateMap: palGroupTemplateMap,
@@ -1246,8 +1242,6 @@ function init() {
                           comparer: keyCompare
                       })
         });
-
-
 
     jQuery("#accordion").accordion({
         activate: function (event, ui) {
@@ -1331,7 +1325,8 @@ function init() {
 var MINLENGTH = 400;  // this controls the minimum length of any swimlane
 var MINBREADTH = 20;  // this controls the minimum breadth of any non-collapsed swimlane
 
-// some shared functions
+var UnsavedFileName = "(Unsaved File)";
+
 
 // this is called after nodes have been moved or lanes resized, to layout all of the Pool Groups again
 function relayoutDiagram() {
@@ -1523,11 +1518,11 @@ function addActivityNodeBoundaryEvent(evType, evDim) {
 }
 
 // changes the item of the object
-function rename(obj) {
-    myDiagram.startTransaction("rename");
+function rename(diagram, obj) {
+    diagram.startTransaction("rename");
     var newName = prompt("Rename " + obj.part.data.item + " to:");
-    myDiagram.model.setDataProperty(obj.part.data, "item", newName);
-    myDiagram.commitTransaction("rename");
+    diagram.model.setDataProperty(obj.part.data, "item", newName);
+    diagram.commitTransaction("rename");
 }
 
 // shows/hides gridlines
@@ -1551,9 +1546,6 @@ function updateSnapOption() {
         myDiagram.toolManager.resizingTool.isGridSnapEnabled = false;
     }
 }
-
-
-
 
 function getCurrentFileName() {
     var currentFile = document.getElementById("currentFile");
@@ -1613,6 +1605,9 @@ function openFromServer() {
     loadJSON(window.location.origin + '/api/goApi/GetDiagram');
 }
 
+
+// these functions are called when panel buttons are clicked
+
 function loadJSON(file) {
     jQuery.getJSON(file, function (jsondata) {
         // set these kinds of Diagram properties after initialization, not now
@@ -1637,38 +1632,4 @@ function loadDiagramProperties(e) {
     // set Diagram.initialPosition, not Diagram.position, to handle initialization side-effects
     var pos = myDiagram.model.modelData.position;
     if (pos) myDiagram.initialPosition = go.Point.parse(pos);
-}
-
-
-// deletes the selected file from local storage
-function removeFile() {
-    var listbox = document.getElementById("mySavedFiles2");
-    // get selected filename
-    var fileName = undefined;
-    for (var i = 0; i < listbox.options.length; i++) {
-        if (listbox.options[i].selected) fileName = listbox.options[i].text; // selected file
-    }
-    if (fileName !== undefined) {
-        // removes file from local storage
-        window.localStorage.removeItem(fileName);
-        // the current document remains open, even if its storage was deleted
-    }
-
-}
-
-function updateFileList(id) {
-    // displays cached floor plan files in the listboxes
-    var listbox = document.getElementById(id);
-    // remove any old listing of files
-    var last;
-    while (last === listbox.lastChild) listbox.removeChild(last);
-    // now add all saved files to the listbox
-    for (var key in window.localStorage) {
-        var storedFile = window.localStorage.getItem(key);
-        if (!storedFile) continue;
-        var option = document.createElement("option");
-        option.value = key;
-        option.text = key;
-        listbox.add(option, null);
-    }
 }

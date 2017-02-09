@@ -1,10 +1,14 @@
 ﻿"use strict";
+/*
+*  Copyright (C) 1998-2017 by Northwoods Software Corporation. All Rights Reserved.
+*/
+
 // This file holds all of the JavaScript code specific to the BPMN.html page.
 
 // Setup all of the Diagrams and what they need.
 // This is called after the page is loaded.
 function init() {
-    // setup the menubar    
+    // setup the menubar
     jQuery("#menuui").menu();
     jQuery(function () {
         jQuery("#menuui").menu({ position: { my: "left top", at: "left top+30" } });
@@ -261,6 +265,30 @@ function init() {
 
     //------------------------------------------  Activity Node contextMenu   ----------------------------------------------
 
+    //var activityNodeMenu =
+    //     $(go.Adornment, "Vertical",
+    //       $("ContextMenuButton",
+    //           $(go.TextBlock, "Add Email Event", { margin: 3 }),
+    //           { click: function (e, obj) { addActivityNodeBoundaryEvent(2, 5); } }),
+    //       $("ContextMenuButton",
+    //           $(go.TextBlock, "Add Timer Event", { margin: 3 }),
+    //           { click: function (e, obj) { addActivityNodeBoundaryEvent(3, 5); } }),
+    //       $("ContextMenuButton",
+    //           $(go.TextBlock, "Add Escalation Event", { margin: 3 }),
+    //           { click: function (e, obj) { addActivityNodeBoundaryEvent(4, 5); } }),
+    //       $("ContextMenuButton",
+    //           $(go.TextBlock, "Add Error Event", { margin: 3 }),
+    //           { click: function (e, obj) { addActivityNodeBoundaryEvent(7, 5); } }),
+    //       $("ContextMenuButton",
+    //           $(go.TextBlock, "Add Signal Event", { margin: 3 }),
+    //           { click: function (e, obj) { addActivityNodeBoundaryEvent(10, 5); } }),
+    //       $("ContextMenuButton",
+    //           $(go.TextBlock, "Add N-I Escalation Event", { margin: 3 }),
+    //           { click: function (e, obj) { addActivityNodeBoundaryEvent(4, 6); } }),
+    //       $("ContextMenuButton",
+    //           $(go.TextBlock, "Rename", { margin: 3 }),
+    //           { click: function (e, obj) { rename(obj); } }));
+
     var activityNodeMenu =
          $(go.Adornment, "Vertical",
            $("ContextMenuButton",
@@ -349,7 +377,14 @@ function init() {
             new go.Binding("strokeWidth", "isCall",
                  function (s) { return s ? activityNodeStrokeWidthIsCall : activityNodeStrokeWidth; })
            ),
-
+  //        $(go.Shape, "RoundedRectangle",  // the inner "Transaction" rounded rectangle
+  //          { margin: 3,
+  //            stretch: go.GraphObject.Fill,
+    //            stroke: ActivityNodeStroke,
+  //            parameter1: 8, fill: null, visible: false
+  //          },
+  //          new go.Binding("visible", "isTransaction")
+  //         ),
           // task icon
           $(go.Shape, "BpmnTaskScript",    // will be None, Script, Manual, Service, etc via converter
             {
@@ -380,6 +415,7 @@ function init() {
            locationSpot: go.Spot.Center,
            selectionAdorned: false
        },
+      new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
       $(go.Panel, "Spot",
         {
             name: "PANEL",
@@ -597,6 +633,7 @@ function init() {
             locationSpot: go.Spot.Center,
             resizeObjectName: "SHAPE"
         },
+        new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
         $(go.Panel, "Spot",
           $(go.Shape, "Diamond",
             {
@@ -722,6 +759,7 @@ function init() {
       $(go.Group, "Vertical",
         {
             locationSpot: go.Spot.Center,
+            computesBoundsIncludingLinks: false,
             isSubGraphExpanded: false
         },
         $(go.Shape, "Process",
@@ -950,7 +988,9 @@ function init() {
 
     var poolGroupTemplate =
        $(go.Group, "Auto", groupStyle(),
-         { // use a simple layout that ignores links to stack the "lane" Groups on top of each other
+         {
+             computesBoundsIncludingLinks: false,
+             // use a simple layout that ignores links to stack the "lane" Groups on top of each other
              layout: $(PoolLayout, { spacing: new go.Size(0, 0) })  // no space between lanes
          },
          new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
@@ -1151,6 +1191,17 @@ function init() {
             e.subject.category = "data"; // data association
         }
     });
+
+    //  uncomment this if you want a subprocess to expand on drop.  We decided we didn't like this behavior
+      //myDiagram.addDiagramListener("ExternalObjectsDropped", function(e) {
+      //  // e.subject is the collection that was just dropped
+      //  e.subject.each(function(part) {
+      //      if (part instanceof go.Node && part.data.item === "end") {
+      //          part.move(new go.Point(part.location.x + 350, part.location.y));
+      //      }
+      //    });
+      //  myDiagram.commandHandler.expandSubGraph();
+      //});
 
     // change the title to indicate that the diagram has been modified
     myDiagram.addDiagramListener("Modified", function (e) {
@@ -1540,18 +1591,14 @@ function storeOnServer() {
     if (myDiagram.isModified) {
         var saveName = getCurrentFileName();
         saveDiagramProperties();
-        if (saveName === UnsavedFileName) {
-            //saveDocumentAs();
-        } else {
-            saveDiagramProperties();
-            $.post(window.location.origin + '/api/goApi/SaveDiagram',
-                    JSON.parse(myDiagram.model.toJson()),
-                    function(d) {
-                        alert("Stored Successfull!");
-                    })
-                .fail(function(d) { alert("Fial to stores"); });
-            myDiagram.isModified = false; // save and have no changes
-        }
+        saveDiagramProperties();
+        $.post(window.location.origin + '/api/goApi/SaveDiagram',
+                JSON.parse(myDiagram.model.toJson()),
+                function (d) {
+                    alert("Stored Successfull!");
+                })
+            .fail(function (d) { alert("Fial to stores"); });
+        myDiagram.isModified = false; // save and have no changes
     }
 }
 
@@ -1586,23 +1633,4 @@ function loadDiagramProperties(e) {
     // set Diagram.initialPosition, not Diagram.position, to handle initialization side-effects
     var pos = myDiagram.model.modelData.position;
     if (pos) myDiagram.initialPosition = go.Point.parse(pos);
-}
-
-function updateFileList(id) {
-    // displays cached floor plan files in the listboxes
-    var listbox = document.getElementById(id);
-    // remove any old listing of files
-    var last;
-    while (last === listbox.lastChild) listbox.removeChild(last);
-    // now add all saved files to the listbox
-    for (var key in window.localStorage) {
-        if (window.localStorage.hasOwnProperty(key)) {
-            var storedFile = window.localStorage.getItem(key);
-            if (!storedFile) continue;
-            var option = document.createElement("option");
-            option.value = key;
-            option.text = key;
-            listbox.add(option, null);
-        }
-    }
 }
