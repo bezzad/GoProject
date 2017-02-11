@@ -168,8 +168,6 @@
     <Content Include="Content\GoJs\BPMNdata\OMG BPMN by Example Figure 5.1.png" />
     <Content Include="Content\GoJs\BPMNdata\OMG BPMN by Example Figure 5.2.png" />
     <Content Include="Content\GoJs\BPMNdata\OMG BPMN by Example Figure 5.3.png" />
-    <Content Include="Content\GoJs\goSamples.css" />
-    <Content Include="Content\GoJs\main.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -226,7 +224,6 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\GoJs\BPMN.js" />
-    <Content Include="Scripts\GoJs\BPMN_old.js" />
     <Content Include="Scripts\GoJs\BPMNClasses.js" />
     <Content Include="Scripts\GoJs\DrawCommandHandler.js" />
     <Content Include="Scripts\GoJs\go.js" />

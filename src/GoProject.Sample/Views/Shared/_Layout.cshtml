@@ -4,17 +4,13 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Go Project</title>
-    @Scripts.Render("~/bundles/go")
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/themes/smoothness/jquery-ui.css"/>
+
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/goCss")
+
     @Scripts.Render("~/bundles/jquery")
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
-    @Styles.Render("~/Content/go")
-    @*@Styles.Render("~/Content/css")*@
+    @Scripts.Render("~/bundles/goJs")
 
-
-    @*@Scripts.Render("~/bundles/modernizr")*@
-
-    @*@Scripts.Render("~/bundles/bootstrap")*@
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -41,37 +37,7 @@
     <div>
         @RenderBody()
     </div>
-    <footer id="footer" class="row">
-        <div class="col-sm-4">
-            <h3>GoJS</h3>
-            <p>by Northwoods Software</p>
-            <p>Copyright &copy; 2016-@DateTime.Now.Year <a href="https://www.nwoods.com" target="_blank">Northwoods Software</a></p>
-        </div>
-        <div class="col-sm-4">
-            <ul>
-                <li><a href="https://gojs.net/latest/samples/index.html">Samples</a></li>
-                <li><a href="https://gojs.net/latest/learn/index.html">Learn</a></li>
-                <li><a href="https://gojs.net/latest/intro/index.html">Intro</a></li>
-                <li><a href="https://gojs.net/latest/api/index.html">API</a></li>
-                <li><a href="https://gojs.net/latest/doc/changelog.html">Changelog</a></li>
-                <li><a href="https://github.com/NorthwoodsSoftware/GoJS">GitHub</a></li>
-            </ul>
-        </div>
-        <div class="col-sm-4">
-            <ul>
-                <li><a href="https://www.nwoods.com/sales/index.html" onclick="ga('send','event','Outbound Link','click','buy');">Buy</a></li>
-                <li><a href="https://forum.nwoods.com/c/gojs">Forum</a></li>
-                <li><a href="https://twitter.com/northwoodsgo">Twitter</a></li>
-                <li><a href="https://www.nwoods.com/contact.html" onclick="ga('send','event','Outbound Link','click','contact');">Contact</a></li>
-            </ul>
-        </div>
-    </footer>
-
-
-
-
-
-
+    
 
     @RenderSection("scripts", required: false)
 </body>

@@ -42,7 +42,7 @@
         </li>
     </ul>
 
-    <div id="PaletteAndDiagram">
+    <div id="PaletteAndDiagram" style="overflow-y: scroll;">
         <div id="sideBar">
             <div class="handle">@Localization.Overview:</div>
             <div id="myOverviewDiv"></div>
@@ -63,7 +63,7 @@
 <br />
 
 @section scripts{
-    @Scripts.Render("~/bundles/bpmn")
+    @Scripts.Render("~/bundles/bpmnJs")
 
 
     <script>
