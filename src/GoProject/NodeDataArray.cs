@@ -52,5 +52,11 @@ namespace GoProject
 
         [JsonProperty(PropertyName = "name", NullValueHandling = NullValueHandling.Ignore)]
         public string Name { get; set; }
+
+        /// <summary>
+        /// Extra data of this node elements
+        /// </summary>
+        [JsonProperty(PropertyName = "details")]
+        public Dictionary<string, object> Details { get; set; }
     }
 }

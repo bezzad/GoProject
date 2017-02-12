@@ -1,61 +1,63 @@
 ﻿@using GoProject.Properties
 
-  
-    <ul id="menuui">
-        <li>
-            <a href="#">File</a>
-            <ul>
-                <li><a href="#" onclick="newDocument()">@Localization.New</a></li>
-                <li><a href="#" onclick="openFromServer()">@Localization.Reset</a></li>
-                <li><a href="#" onclick="saveDocument()">@Localization.Save</a></li>
-                <li><a href="#" onclick="removeDocument()">@Localization.Delete</a></li>
-                <li><a href="#" onclick="myDiagram.layoutDiagram(true)">@Localization.Layout</a></li>
-            </ul>
-        </li>
-        <li>
-            <a href="#">@Localization.Edit</a>
-            <ul>
-                <li><a href="#" onclick="myDiagram.commandHandler.undo()">@Localization.Undo</a></li>
-                <li><a href="#" onclick="myDiagram.commandHandler.redo()">@Localization.Redo</a></li>
-                <li><a href="#" onclick="myDiagram.commandHandler.cutSelection()">@Localization.Cut</a></li>
-                <li><a href="#" onclick="myDiagram.commandHandler.copySelection()">@Localization.Copy</a></li>
-                <li><a href="#" onclick="myDiagram.commandHandler.pasteSelection()">@Localization.Paste</a></li>
-                <li><a href="#" onclick="myDiagram.commandHandler.deleteSelection()">@Localization.Delete</a></li>
-                <li><a href="#" onclick="myDiagram.commandHandler.selectAll()">@Localization.SelectAll</a></li>
-            </ul>
-        </li>
-        <li>
-            <a href="#">Options</a>
-            <ul>
-                <li>
-                    <a href="#">
-                        <input id="grid" type="checkbox" name="options" value="grid" onclick="updateGridOption()">@Localization.Grid
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <input id="snap" type="checkbox" name="options" value="0" onclick="updateSnapOption()">@Localization.Snapping
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li><div id="currentFile">(@Localization.Unsaved)</div></li>
-    </ul>
+<div id="currentFile">(@Localization.Unsaved)</div>
+<ul id="menuui">
+    <li>
+        <a href="#">File</a>
+        <ul>
+            <li><a href="#" onclick="newDocument()">@Localization.New</a></li>
+            <li><a href="#" onclick="openFromServer()">@Localization.Reset</a></li>
+            <li><a href="#" onclick="saveDocument()">@Localization.Save</a></li>
+            <li><a href="#" onclick="removeDocument()">@Localization.Delete</a></li>
+            <li><a href="#" onclick="myDiagram.layoutDiagram(true)">@Localization.Layout</a></li>
+        </ul>
+    </li>
+    <li>
+        <a href="#">@Localization.Edit</a>
+        <ul>
+            <li><a href="#" onclick="myDiagram.commandHandler.undo()">@Localization.Undo</a></li>
+            <li><a href="#" onclick="myDiagram.commandHandler.redo()">@Localization.Redo</a></li>
+            <li><a href="#" onclick="myDiagram.commandHandler.cutSelection()">@Localization.Cut</a></li>
+            <li><a href="#" onclick="myDiagram.commandHandler.copySelection()">@Localization.Copy</a></li>
+            <li><a href="#" onclick="myDiagram.commandHandler.pasteSelection()">@Localization.Paste</a></li>
+            <li><a href="#" onclick="myDiagram.commandHandler.deleteSelection()">@Localization.Delete</a></li>
+            <li><a href="#" onclick="myDiagram.commandHandler.selectAll()">@Localization.SelectAll</a></li>
+        </ul>
+    </li>
+    <li>
+        <a href="#">Options</a>
+        <ul>
+            <li>
+                <a href="#">
+                    <input id="grid" type="checkbox" name="options" value="grid" onclick="updateGridOption()">@Localization.Grid
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <input id="snap" type="checkbox" name="options" value="0" onclick="updateSnapOption()">@Localization.Snapping
+                </a>
+            </li>
+        </ul>
+    </li>
+</ul>
 
-    <div id="PaletteAndDiagram">
-        <div id="sideBar">
-            <div class="handle">@Localization.Overview:</div>
-            <div id="myOverviewDiv"></div>
+<div id="PaletteAndDiagram">
+    <div id="sideBar">
+        <div class="handle">@Localization.Overview:</div>
+        <div id="myOverviewDiv"></div>
 
-            <div id="accordion">
-                <h4>@Localization.Tools</h4>
-                <div>
-                    <div id="myPaletteLevel1" class="myPaletteDiv"></div>
-                </div>
+        <div id="accordion">
+            <h4>@Localization.Tools</h4>
+            <div>
+                <div id="myPaletteLevel1" class="myPaletteDiv"></div>
             </div>
         </div>
-        <div id="myDiagramDiv"></div>
     </div>
+    <div id="myDiagramDiv"></div>
+    <div id="infoBoxHolder">
+        <!-- Initially Empty, it is populated when updateInfoBox is called -->
+    </div>
+</div>
 
 @section scripts{
     @Scripts.Render("~/bundles/bpmnJs")

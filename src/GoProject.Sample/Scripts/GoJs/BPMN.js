@@ -5,6 +5,12 @@
 
 // This file holds all of the JavaScript code specific to the BPMN.html page.
 
+var myLocation = {  // this controls the data properties used by data binding conversions
+    x: "sepalLength",
+    y: "sepalWidth"
+}
+var lastStroked = null;  // this remembers the last highlit Shape
+
 // Setup all of the Diagrams and what they need.
 // This is called after the page is loaded.
 function init() {
@@ -681,7 +687,11 @@ function init() {
 
     var annotationNodeTemplate =
       $(go.Node, "Auto",
-        { background: gradientLightGray, locationSpot: go.Spot.Center },
+        {
+            background: gradientLightGray,
+            locationSpot: go.Spot.Center,
+            click: doMouseOver  // this event handler is defined below
+        },
         new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
         $(go.Shape, "Annotation", // A left bracket shape
           { portId: "", fromLinkable: true, cursor: "pointer", fromSpot: go.Spot.Left, strokeWidth: 2, stroke: "gray" }),
@@ -1190,7 +1200,14 @@ function init() {
             },
             linkingTool: new BPMNLinkingTool(), // defined in BPMNClasses.js
             "SelectionMoved": relayoutDiagram,  // defined below
-            "SelectionCopied": relayoutDiagram
+            "SelectionCopied": relayoutDiagram,
+
+            "animationManager.isEnabled": true,  // don't bother with layout animation
+            //contentAlignment: go.Spot.Center,  // content is always centered in the viewport
+            //autoScale: go.Diagram.Uniform,  // scale always has all content fitting in the viewport
+            //isReadOnly: true,  // don't let users modify anything
+            mouseOver: doMouseOver,  // this event handler is defined below
+            click: doMouseOver  // this event handler is defined below
         });
 
     myDiagram.toolManager.mouseDownTools.insertAt(0, new LaneResizingTool());
@@ -1325,6 +1342,32 @@ function init() {
         { observed: myDiagram, maxScale: 0.5, contentAlignment: go.Spot.Center });
     // change color of viewport border in Overview
     myOverview.box.elt(0).stroke = "dodgerblue";
+
+
+    // Make sure the infoBox is momentarily hidden if the user tries to mouse over it
+    var infoBoxH = document.getElementById("infoBoxHolder");
+    infoBoxH.addEventListener("mousemove", function () {
+        var box = document.getElementById("infoBoxHolder");
+        box.style.left = parseInt(box.style.left) + "px";
+        box.style.top = parseInt(box.style.top) + 30 + "px";
+    }, false);
+
+    var diagramDiv = document.getElementById("myDiagramDiv");
+    // Make sure the infoBox is hidden when the mouse is not over the Diagram
+    diagramDiv.addEventListener("mouseout", function (e) {
+        if (lastStroked !== null) lastStroked.stroke = null;
+        lastStroked = null;
+
+        var infoBox = document.getElementById("infoBox");
+        var elem = document.elementFromPoint(e.clientX, e.clientY);
+        if (elem !== null && (elem === infoBox || elem.parentNode === infoBox)) {
+            // do nothing
+        } else {
+            var box = document.getElementById("infoBoxHolder");
+            box.innerHTML = "";
+        }
+    }, false);
+
 } // end init
 
 
@@ -1650,4 +1693,69 @@ function nodeInfo(d) {  // Tooltip info for a node data object
     else
         str += "top-level node";
     return str;
+}
+
+
+
+// Called when the mouse is over the diagram's background
+function doMouseOver(e) {
+    if (e === undefined) e = myDiagram.lastInput;
+    var doc = e.documentPoint;
+    // find all Nodes that are within 100 units
+    var list = myDiagram.findObjectsNear(doc, 4, null, function (x) { return x instanceof go.Node; });
+    // now find the one that is closest to e.documentPoint
+    var closest = null;
+    var closestDist = 999999999;
+    list.each(function (node) {
+        var dist = doc.distanceSquaredPoint(node.getDocumentPoint(go.Spot.Center));
+        if (dist < closestDist) {
+            closestDist = dist;
+            closest = node;
+        }
+    });
+    highlightNode(e, closest);
+}
+
+// Called with a Node (or null) that the mouse is over or near
+function highlightNode(e, node) {
+    if (node !== null) {
+        var shape = node.findObject("SHAPE");
+        shape.scale = 1.1;
+        if (lastStroked !== null && lastStroked !== shape) lastStroked.scale = 1;
+        lastStroked = shape;
+        updateInfoBox(e.viewPoint, node.data);
+    } else {
+        if (lastStroked !== null) lastStroked.scale = 1;
+        lastStroked = null;
+        document.getElementById("infoBoxHolder").innerHTML = "";
+    }
+}
+
+
+// This function is called to update the tooltip information
+// depending on the bound data of the Node that is closest to the pointer.
+function updateInfoBox(mousePt, data) {
+    var x =
+    "<div id='infoBox'>" +
+    "<div>" + data.text + " (" + data.item + ")</div>" +
+    "<div class='infoTitle'>Category</div>" +
+    "<div class='infoValues'>" + data.category + "</div>" +
+    "<div class='infoTitle'>Key</div>" +
+    "<div class='infoValues'>" + data.key + "</div>";
+
+    if (data.details !== undefined && data.details !== null) {
+        x += "<div class='infoTitle'>------ Detials ------</div><div class='infoValues'>----</div>";
+        for (var prop in data.details) {
+            x += "<div class='infoTitle'>" + prop + "</div>" +
+              "<div class='infoValues'>" + data.details[prop] + "</div>";
+        }
+    }
+
+    x += "</div>";
+
+    var box = document.getElementById("infoBoxHolder");
+    box.innerHTML = x;
+
+    box.style.left = mousePt.x + 160 + "px";
+    box.style.top = mousePt.y + 80 + "px";
 }

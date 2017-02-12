@@ -3,131 +3,191 @@
 /* Diagram and palette area */
 
 #myDiagramDiv {
-  float: left;
-  border: solid 1px gray;
-  border-left: none;
-  width: 84%;
-  height: 700px;
-  background-color: white;
+    float: left;
+    background-color: white;
+    border: solid 1px black;
+    width: 1000px;
+    height: 800px;
+    margin-right: 12px;
+    background-color: antiquewhite;
+}
+
+#controls {
+    border: solid 1px gray;
+    width: 300px;
+    background: #ffffff;
+    padding: 5px;
+    float: left;
 }
 
 #description {
-  float: left;
-  margin-left: 4px;
+    float: left;
+    margin-left: 4px;
 }
 
 #PaletteAndDiagram {
-  position: relative;
-  overflow: hidden;
-  width: 100%;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
 }
 
 #sideBar {
-  float: left;
-  width: 15%;
-  min-height: 500px;
-  text-align: center;
-  border: 1px solid gray;
+    float: left;
+    width: 15%;
+    min-height: 500px;
+    text-align: center;
+    border: 1px solid gray;
 }
 
 .myPaletteDiv {
-  width: 100%;
-  min-height: 625px;
+    width: 100%;
+    min-height: 625px;
 }
 
 #accordion {
-  margin: 0px; 
-  width: 97%;
-  min-height: 625px;
+    margin: 0px;
+    width: 97%;
+    min-height: 625px;
 }
 
 #myOverviewDiv {
-  width: 100%;
-  height: 225px;
+    width: 100%;
+    height: 225px;
 }
 
 /* top bar area */
 
 .ui-accordion .ui-accordion-content {
-  padding: 1px;
+    padding: 1px;
 }
+
 .ui-menu {
-  width: 120px;
+    width: 120px;
 }
+
 #menuui {
-  height: 30px;
-  width: 100%;   
+    height: 30px;
+    width: 100%;
 }
-#menuui > li {
-   float: left;  
-}    
+
+    #menuui > li {
+        float: left;
+    }
 
 
 input {
-  text-align: center;
-  font-size: large;
-  float: left;
+    text-align: center;
+    font-size: large;
+    float: left;
 }
 
 #myOverviewDiv {
-  background-color: lightgray;
+    background-color: lightgray;
 }
 
 #currentFile {
-  background: #1874CD;
-  width: 100%;
-  text-align: center;
-  font-family: Arial;
-  font-weight: bold;
-  font-size: 14px;
-  padding: 3px 0px;
-  color: white;
+    background: #1874CD;
+    width: 100%;
+    text-align: center;
+    font-family: Arial;
+    font-weight: bold;
+    font-size: 14px;
+    padding: 3px 0px;
+    color: white;
 }
 
 .draggable {
-  display: inline-block;
-  vertical-align: top;
-  border: 1px solid gray;
-  background-color: #e2e2e2;
-  position: absolute;
-  top: 40%;
-  left: 50%;
-  width: 300px;
-  height: 200px;
-  z-index: 500;
+    display: inline-block;
+    vertical-align: top;
+    border: 1px solid gray;
+    background-color: #e2e2e2;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    width: 300px;
+    height: 200px;
+    z-index: 500;
 }
 
 .handle {
-  background-color: #9CCB19;
-  text-align: center;
-  font: bold 12px sans-serif;
+    background-color: #9CCB19;
+    text-align: center;
+    font: bold 12px sans-serif;
 }
 
 .elementText {
-  font-family: Arial;
-  font-size: medium;
-  margin-left: 10px;
-  margin-top: 20px;
-  margin-bottom: 10px;
+    font-family: Arial;
+    font-size: medium;
+    margin-left: 10px;
+    margin-top: 20px;
+    margin-bottom: 10px;
 }
 
 .mySavedFiles {
-  font-family: Arial;
-  font-size: medium;
-  width: 250px;
-  margin-left: 25px;
+    font-family: Arial;
+    font-size: medium;
+    width: 250px;
+    margin-left: 25px;
 }
 
 .elementBtn {
-  margin-top: 20px;
-  font-family: Arial;
-  font-size: medium;
-  margin-left: 20px;
+    margin-top: 20px;
+    font-family: Arial;
+    font-size: medium;
+    margin-left: 20px;
 }
 
 /* sample thumbnails bottom area */
 
 figure {
-      display: inline-block; 
-      margin: 10px;
-  }    
+    display: inline-block;
+    margin: 10px;
+}
+
+
+#infoBoxHolder {
+    z-index: 300;
+    position: absolute;
+    left: 5px;
+}
+
+#infoBox {
+    border: 1px solid #999;
+    padding: 8px;
+    background-color: whitesmoke;
+    opacity: 0.9;
+    position: relative;
+    width: 170px;
+    //height: 60px;
+    font-family: arial, helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 11px;
+}
+    /* this is known as the "clearfix" hack to allow
+    floated objects to add to the height of a div */
+    #infoBox:after {
+        visibility: hidden;
+        display: block;
+        font-size: 0;
+        content: " ";
+        clear: both;
+        height: 0;
+    }
+
+div.infoTitle {
+    width: 100px;
+    font-weight: normal;
+    color: #787878;
+    float: left;
+    margin-left: 4px;
+}
+
+div.infoValues {
+    width: 30px;
+    text-align: right;
+    float: right;
+}
+
+label:hover, label:focus {
+    background: #CEDFF2;
+}
