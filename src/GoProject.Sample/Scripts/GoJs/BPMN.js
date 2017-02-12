@@ -133,13 +133,22 @@ function init() {
     var tooltiptemplate =
       $(go.Adornment, go.Panel.Auto,
         $(go.Shape, "RoundedRectangle",
-          { fill: "whitesmoke", stroke: "gray" }),
+          {
+              fill: "white", // the default fill, if there is no data-binding
+              portId: "", cursor: "pointer",  // the Shape is the port, not the whole Node
+              // allow all kinds of links from and to this port
+              fromLinkable: true, fromLinkableSelfNode: true, fromLinkableDuplicates: true,
+              toLinkable: true, toLinkableSelfNode: true, toLinkableDuplicates: true
+          }),
         $(go.TextBlock,
-          { margin: 3, editable: true },
-          new go.Binding("text", "", function (data) {
-              if (data.item !== undefined) return data.item;
-              return "(unnamed item)";
-          }))
+          {
+              font: "bold 14px sans-serif",
+              stroke: '#333',
+              margin: 6,  // make some extra space for the shape around the text
+              isMultiline: false,  // don't allow newlines in text
+              editable: true  // allow in-place editing by user
+          },
+          new go.Binding("text", "", nodeInfo))
       );
 
 
@@ -1631,4 +1640,14 @@ function loadDiagramProperties(e) {
     // set Diagram.initialPosition, not Diagram.position, to handle initialization side-effects
     var pos = myDiagram.model.modelData.position;
     if (pos) myDiagram.initialPosition = go.Point.parse(pos);
+}
+
+
+function nodeInfo(d) {  // Tooltip info for a node data object
+    var str = "Node " + d.key + ": " + d.text + "\n";
+    if (d.group)
+        str += "member of " + d.group;
+    else
+        str += "top-level node";
+    return str;
 }
