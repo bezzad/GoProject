@@ -1197,15 +1197,15 @@ function init() {
     });
 
     //  uncomment this if you want a subprocess to expand on drop.  We decided we didn't like this behavior
-      //myDiagram.addDiagramListener("ExternalObjectsDropped", function(e) {
-      //  // e.subject is the collection that was just dropped
-      //  e.subject.each(function(part) {
-      //      if (part instanceof go.Node && part.data.item === "end") {
-      //          part.move(new go.Point(part.location.x + 350, part.location.y));
-      //      }
-      //    });
-      //  myDiagram.commandHandler.expandSubGraph();
-      //});
+    //myDiagram.addDiagramListener("ExternalObjectsDropped", function(e) {
+    //  // e.subject is the collection that was just dropped
+    //  e.subject.each(function(part) {
+    //      if (part instanceof go.Node && part.data.item === "end") {
+    //          part.move(new go.Point(part.location.x + 350, part.location.y));
+    //      }
+    //    });
+    //  myDiagram.commandHandler.expandSubGraph();
+    //});
 
     // change the title to indicate that the diagram has been modified
     myDiagram.addDiagramListener("Modified", function (e) {
@@ -1249,32 +1249,32 @@ function init() {
         }
     });
 
-  //  myPaletteLevel1.model = $(go.GraphLinksModel,
-  //{
-  //    copiesArrays: true,
-  //    copiesArrayObjects: true,
-  //    nodeDataArray: [
-  //    // -------------------------- Event Nodes
-  //      { key: 101, category: "event", text: "مواد اولیه", eventType: 1, eventDimension: 1, item: "start" },
-  //      { key: 103, category: "event", text: "زماندار", eventType: 3, eventDimension: 3, item: "Timer" },
-  //      { key: 104, category: "event", text: "محصول نهایی", eventType: 1, eventDimension: 8, item: "End" },
-  //      { key: 108, category: "event", text: "نیمه کاره", eventType: 13, eventDimension: 8, item: "Terminate" },
-  //    // -------------------------- Task/Activity Nodes
-  //      { key: 131, category: "activity", text: "فرآیند", item: "generic task", taskType: 0 },
-  //    // subprocess and start and end
-  //      { key: 134, category: "subprocess", loc: "0 0", text: "ایستگاه کاری", isGroup: true, isSubProcess: true, taskType: 0 },
-  //        { key: -802, category: "event", loc: "0 0", group: 134, text: "شروع", eventType: 1, eventDimension: 1, item: "start" },
-  //        { key: -803, category: "event", loc: "350 0", group: 134, text: "پایان", eventType: 1, eventDimension: 8, item: "end", name: "end" },
-  //    // -------------------------- Gateway Nodes, Data, Pool and Annotation
-  //      { key: 201, category: "gateway", text: "ترکیب", gatewayType: 1 },
-  //      { key: 204, category: "gateway", text: "تفکیک", gatewayType: 4 },
-  //      { key: 302, category: "datastore", text: "مخزن" },
-  //      { key: "501", "text": "گروه بندی", "isGroup": "true", "category": "Pool" },
-  //        { key: "Lane5", "text": "بخش 1", "isGroup": "true", "group": "501", "color": "lightyellow", "category": "Lane" },
-  //        { key: "Lane6", "text": "بخش 2", "isGroup": "true", "group": "501", "color": "lightgreen", "category": "Lane" },
-  //      { key: 701, category: "annotation", text: "توضیحات" }
-  //    ]  // end nodeDataArray
-  //});  // end model
+    //  myPaletteLevel1.model = $(go.GraphLinksModel,
+    //{
+    //    copiesArrays: true,
+    //    copiesArrayObjects: true,
+    //    nodeDataArray: [
+    //    // -------------------------- Event Nodes
+    //      { key: 101, category: "event", text: "مواد اولیه", eventType: 1, eventDimension: 1, item: "start" },
+    //      { key: 103, category: "event", text: "زماندار", eventType: 3, eventDimension: 3, item: "Timer" },
+    //      { key: 104, category: "event", text: "محصول نهایی", eventType: 1, eventDimension: 8, item: "End" },
+    //      { key: 108, category: "event", text: "نیمه کاره", eventType: 13, eventDimension: 8, item: "Terminate" },
+    //    // -------------------------- Task/Activity Nodes
+    //      { key: 131, category: "activity", text: "فرآیند", item: "generic task", taskType: 0 },
+    //    // subprocess and start and end
+    //      { key: 134, category: "subprocess", loc: "0 0", text: "ایستگاه کاری", isGroup: true, isSubProcess: true, taskType: 0 },
+    //        { key: -802, category: "event", loc: "0 0", group: 134, text: "شروع", eventType: 1, eventDimension: 1, item: "start" },
+    //        { key: -803, category: "event", loc: "350 0", group: 134, text: "پایان", eventType: 1, eventDimension: 8, item: "end", name: "end" },
+    //    // -------------------------- Gateway Nodes, Data, Pool and Annotation
+    //      { key: 201, category: "gateway", text: "ترکیب", gatewayType: 1 },
+    //      { key: 204, category: "gateway", text: "تفکیک", gatewayType: 4 },
+    //      { key: 302, category: "datastore", text: "مخزن" },
+    //      { key: "501", "text": "گروه بندی", "isGroup": "true", "category": "Pool" },
+    //        { key: "Lane5", "text": "بخش 1", "isGroup": "true", "group": "501", "color": "lightyellow", "category": "Lane" },
+    //        { key: "Lane6", "text": "بخش 2", "isGroup": "true", "group": "501", "color": "lightgreen", "category": "Lane" },
+    //      { key: 701, category: "annotation", text: "توضیحات" }
+    //    ]  // end nodeDataArray
+    //});  // end model
 
     myPaletteLevel1.model = $(go.GraphLinksModel,
       {
@@ -1567,7 +1567,7 @@ function newDocument() {
     if (myDiagram.isModified) {
         var save = confirm("Would you like to save changes to " + getCurrentFileName() + "?");
         if (save) {
-            //saveDocument();
+            saveDocument();
         }
     }
     setCurrentFileName(UnsavedFileName);
@@ -1586,17 +1586,16 @@ function resetModel() {
     myDiagram.isModified = false;
 }
 
-function storeOnServer() {
+function saveDocument() {
     if (myDiagram.isModified) {
         var saveName = getCurrentFileName();
-        saveDiagramProperties();
         saveDiagramProperties();
         $.post(window.location.origin + '/api/goApi/SaveDiagram',
                 JSON.parse(myDiagram.model.toJson()),
                 function (d) {
-                    alert("Stored Successfull!");
+                    alert("Stored Successfull at path: " + d + "!");
                 })
-            .fail(function (d) { alert("Fial to stores"); });
+            .fail(function (d) { alert("Fail to store on path: " + d); });
         myDiagram.isModified = false; // save and have no changes
     }
 }

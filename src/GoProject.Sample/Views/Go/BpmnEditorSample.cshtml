@@ -1,7 +1,6 @@
 ﻿@using GoProject.Properties
 
-<div>
-    <div id="currentFile">(@Localization.Unsaved)</div>
+  
     <ul id="menuui">
         <li>
             <a href="#">File</a>
@@ -40,9 +39,10 @@
                 </li>
             </ul>
         </li>
+        <li><div id="currentFile">(@Localization.Unsaved)</div></li>
     </ul>
 
-    <div id="PaletteAndDiagram" style="overflow-y: scroll;">
+    <div id="PaletteAndDiagram">
         <div id="sideBar">
             <div class="handle">@Localization.Overview:</div>
             <div id="myOverviewDiv"></div>
@@ -56,11 +56,6 @@
         </div>
         <div id="myDiagramDiv"></div>
     </div>
-</div>
-
-<br />
-<br />
-<br />
 
 @section scripts{
     @Scripts.Render("~/bundles/bpmnJs")
