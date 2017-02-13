@@ -1606,7 +1606,7 @@ function resetModel() {
 
 function saveDocument() {
     if (myDiagram.isModified) {
-        var saveName = getCurrentFileName();
+        var saveName = "Saved";
         saveDiagramProperties();
         $.post(window.location.origin + '/api/goApi/SaveDiagram',
                 JSON.parse(myDiagram.model.toJson()),
@@ -1709,7 +1709,8 @@ function updateInfoBox(mousePt, data) {
         "<div class='aline'><div class='infoTitle'>eventDimension</div><div class='infoValues'>" + data.eventDimension + "</div></div>" +
         "<div class='aline'><div class='infoTitle'>eventType</div><div class='infoValues'>" + data.eventType + "</div></div>" +
         "<div class='aline'><div class='infoTitle'>gatewayType</div><div class='infoValues'>" + data.gatewayType + "</div></div>" + 
-        "<div class='aline'><div class='infoTitle'>loc</div><div class='infoValues'>" + data.loc + "</div></div>";
+        "<div class='aline'><div class='infoTitle'>loc</div><div class='infoValues'>" + data.loc + "</div></div>" + 
+        "<div class='aline'><div class='infoTitle'>taskType</div><div class='infoValues'>" + data.taskType + "</div></div>";
 
     if (data.attributes !== undefined && data.attributes !== null) {
         x += "<div class='aline'><div class='infoTitle'>------ Detials ------</div><div class='infoValues'>----</div></div>";

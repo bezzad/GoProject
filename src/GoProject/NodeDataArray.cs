@@ -20,6 +20,7 @@ namespace GoProject
         public string Loc { get; set; }
 
         [JsonProperty(PropertyName = "position", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonIgnore]
         public PointF? Position
         {
             get
