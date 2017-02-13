@@ -392,14 +392,6 @@ function init() {
             new go.Binding("strokeWidth", "isCall",
                  function (s) { return s ? activityNodeStrokeWidthIsCall : activityNodeStrokeWidth; })
            ),
-  //        $(go.Shape, "RoundedRectangle",  // the inner "Transaction" rounded rectangle
-  //          { margin: 3,
-  //            stretch: go.GraphObject.Fill,
-    //            stroke: ActivityNodeStroke,
-  //            parameter1: 8, fill: null, visible: false
-  //          },
-  //          new go.Binding("visible", "isTransaction")
-  //         ),
           // task icon
           $(go.Shape, "BpmnTaskScript",    // will be None, Script, Manual, Service, etc via converter
             {
@@ -841,21 +833,6 @@ function init() {
           )
         );  // end Group
 
-    //** need this in the subprocess group template above.
-    //$(go.Shape,
-    //    "RoundedRectangle", // the inner "Transaction" rounded rectangle
-    //    {
-    //        margin: 3,
-    //        stretch: go.GraphObject.Fill,
-    //        stroke: activityNodeStroke,
-    //        parameter1: 8,
-    //        fill: null,
-    //        visible: false
-    //    },
-    //    new go.Binding("visible", "isTransaction")
-    //);
-
-
     function groupStyle() {  // common settings for both Lane and Pool Groups
         return [
           {
@@ -1202,7 +1179,7 @@ function init() {
             "SelectionMoved": relayoutDiagram,  // defined below
             "SelectionCopied": relayoutDiagram,
 
-            "animationManager.isEnabled": true,  // don't bother with layout animation
+            //"animationManager.isEnabled": true,  // don't bother with layout animation
             //contentAlignment: go.Spot.Center,  // content is always centered in the viewport
             //autoScale: go.Diagram.Uniform,  // scale always has all content fitting in the viewport
             //isReadOnly: true,  // don't let users modify anything
@@ -1221,17 +1198,6 @@ function init() {
             e.subject.category = "data"; // data association
         }
     });
-
-    //  uncomment this if you want a subprocess to expand on drop.  We decided we didn't like this behavior
-    //myDiagram.addDiagramListener("ExternalObjectsDropped", function(e) {
-    //  // e.subject is the collection that was just dropped
-    //  e.subject.each(function(part) {
-    //      if (part instanceof go.Node && part.data.item === "end") {
-    //          part.move(new go.Point(part.location.x + 350, part.location.y));
-    //      }
-    //    });
-    //  myDiagram.commandHandler.expandSubGraph();
-    //});
 
     // change the title to indicate that the diagram has been modified
     myDiagram.addDiagramListener("Modified", function (e) {
@@ -1720,12 +1686,12 @@ function doMouseOver(e) {
 function highlightNode(e, node) {
     if (node !== null) {
         var shape = node.findObject("SHAPE");
-        shape.scale = 1.1;
+        if (shape !== null && shape.figure === "Circle") shape.scale = 1.1;
         if (lastStroked !== null && lastStroked !== shape) lastStroked.scale = 1;
         lastStroked = shape;
         updateInfoBox(e.viewPoint, node.data);
     } else {
-        if (lastStroked !== null) lastStroked.scale = 1;
+        if (lastStroked !== null && lastStroked.figure === "Circle") lastStroked.scale = 1;
         lastStroked = null;
         document.getElementById("infoBoxHolder").innerHTML = "";
     }
@@ -1737,17 +1703,18 @@ function highlightNode(e, node) {
 function updateInfoBox(mousePt, data) {
     var x =
     "<div id='infoBox'>" +
-    "<div>" + data.text + " (" + data.item + ")</div>" +
-    "<div class='infoTitle'>Category</div>" +
-    "<div class='infoValues'>" + data.category + "</div>" +
-    "<div class='infoTitle'>Key</div>" +
-    "<div class='infoValues'>" + data.key + "</div>";
+        "<div class='tooltipTitle'>" + data.text + "</div>" +
+        "<div class='aline'><div class='infoTitle'>Category</div><div class='infoValues'>" + data.category + "</div></div>" +
+        "<div class='aline'><div class='infoTitle'>Key</div><div class='infoValues'>" + data.key + "</div></div>" +
+        "<div class='aline'><div class='infoTitle'>eventDimension</div><div class='infoValues'>" + data.eventDimension + "</div></div>" +
+        "<div class='aline'><div class='infoTitle'>eventType</div><div class='infoValues'>" + data.eventType + "</div></div>" +
+        "<div class='aline'><div class='infoTitle'>gatewayType</div><div class='infoValues'>" + data.gatewayType + "</div></div>" + 
+        "<div class='aline'><div class='infoTitle'>loc</div><div class='infoValues'>" + data.loc + "</div></div>";
 
-    if (data.details !== undefined && data.details !== null) {
-        x += "<div class='infoTitle'>------ Detials ------</div><div class='infoValues'>----</div>";
-        for (var prop in data.details) {
-            x += "<div class='infoTitle'>" + prop + "</div>" +
-              "<div class='infoValues'>" + data.details[prop] + "</div>";
+    if (data.attributes !== undefined && data.attributes !== null) {
+        x += "<div class='aline'><div class='infoTitle'>------ Detials ------</div><div class='infoValues'>----</div></div>";
+        for (var prop in data.attributes) {
+            x += "<div class='aline'><div class='infoTitle'>" + prop + "</div><div class='infoValues'>" + data.attributes[prop] + "</div></div>";
         }
     }
 

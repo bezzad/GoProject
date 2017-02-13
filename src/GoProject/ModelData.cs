@@ -14,7 +14,7 @@ namespace GoProject
         {
             get
             {
-                if (!string.IsNullOrEmpty(Position)) return null;
+                if (string.IsNullOrEmpty(Position)) return null;
                 var data = Position.Split(' ');
                 return new PointF(float.Parse(data[0]), float.Parse(data[1]));
             }

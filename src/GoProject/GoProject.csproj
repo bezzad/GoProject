@@ -47,7 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Category.cs" />
+    <Compile Include="NodeCategory.cs" />
     <Compile Include="LinkDataArray.cs" />
     <Compile Include="ModelData.cs" />
     <Compile Include="NodeDataArray.cs" />

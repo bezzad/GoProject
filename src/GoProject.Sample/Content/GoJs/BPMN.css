@@ -4,12 +4,11 @@
 
 #myDiagramDiv {
     float: left;
-    background-color: white;
-    border: solid 1px black;
-    width: 1000px;
-    height: 800px;
+    border: solid 1px blue;
+    width: 800px;
+    height: 600px;
     margin-right: 12px;
-    background-color: antiquewhite;
+    background-color: ghostwhite;
 }
 
 #controls {
@@ -152,13 +151,13 @@ figure {
 }
 
 #infoBox {
-    border: 1px solid #999;
+    border: 1px dashed #AAA;
     padding: 8px;
-    background-color: whitesmoke;
-    opacity: 0.9;
+    background-color: azure;
+    opacity: 1;
     position: relative;
-    width: 170px;
-    //height: 60px;
+    width: 180px;
+    /*height: 60px;*/
     font-family: arial, helvetica, sans-serif;
     font-weight: bold;
     font-size: 11px;
@@ -175,19 +174,28 @@ figure {
     }
 
 div.infoTitle {
-    width: 100px;
+    width: 50%;
     font-weight: normal;
-    color: #787878;
-    float: left;
-    margin-left: 4px;
+    color: #777777;
+    float: left;   
 }
 
 div.infoValues {
-    width: 30px;
-    text-align: right;
-    float: right;
+    width: 50%;
+    text-align: left;
+    float: left;
 }
 
 label:hover, label:focus {
     background: #CEDFF2;
+}
+
+.aline{
+    clear: both;
+    width: 100%;
+}
+.tooltipTitle{
+    font-size: 13px;
+    padding-top: 5px;
+    padding-bottom: 10px;
 }

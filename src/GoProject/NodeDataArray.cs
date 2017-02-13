@@ -1,12 +1,14 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
+using System.Drawing;
 
 namespace GoProject
 {
     public class NodeDataArray
     {
         [JsonProperty(PropertyName = "category", NullValueHandling = NullValueHandling.Ignore)]
-        public string Category { get; set; }
+        [JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        public NodeCategory Category { get; set; }
 
         [JsonProperty(PropertyName = "item", NullValueHandling = NullValueHandling.Ignore)]
         public string Item { get; set; }
@@ -16,6 +18,22 @@ namespace GoProject
 
         [JsonProperty(PropertyName = "loc", NullValueHandling = NullValueHandling.Ignore)]
         public string Loc { get; set; }
+
+        [JsonProperty(PropertyName = "position", NullValueHandling = NullValueHandling.Ignore)]
+        public PointF? Position
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(Loc)) return null;
+                var data = Loc.Split(' ');
+                return new PointF(float.Parse(data[0]), float.Parse(data[1]));
+            }
+
+            set
+            {
+                if (value != null) Loc = $"{value.Value.X} {value.Value.Y}";
+            }
+        }
 
         [JsonProperty(PropertyName = "text", NullValueHandling = NullValueHandling.Ignore)]
         public string Text { get; set; }
@@ -36,7 +54,7 @@ namespace GoProject
         public List<object> BoundaryEventArray { get; set; }
 
         [JsonProperty(PropertyName = "isGroup", NullValueHandling = NullValueHandling.Ignore)]
-        public object IsGroup { get; set; }
+        public bool IsGroup { get; set; }
 
         [JsonProperty(PropertyName = "color", NullValueHandling = NullValueHandling.Ignore)]
         public string Color { get; set; }
@@ -56,7 +74,7 @@ namespace GoProject
         /// <summary>
         /// Extra data of this node elements
         /// </summary>
-        [JsonProperty(PropertyName = "details")]
+        [JsonProperty(PropertyName = "details", NullValueHandling = NullValueHandling.Ignore)]
         public Dictionary<string, object> Details { get; set; }
     }
 }
