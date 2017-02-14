@@ -47,6 +47,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EventDimension.cs" />
+    <Compile Include="EventType.cs" />
+    <Compile Include="GatewayType.cs" />
     <Compile Include="NodeCategory.cs" />
     <Compile Include="LinkDataArray.cs" />
     <Compile Include="ModelData.cs" />
@@ -58,6 +61,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Localization.resx</DependentUpon>
     </Compile>
+    <Compile Include="TaskType.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassesDiagram.cd" />

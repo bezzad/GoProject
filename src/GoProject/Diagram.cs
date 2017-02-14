@@ -7,13 +7,13 @@ namespace GoProject
     public class Diagram
     {
         [JsonProperty(PropertyName = "class", NullValueHandling = NullValueHandling.Ignore)]
-        public string Class { get; set; }
+        public string Class { get; set; } = "go.GraphLinksModel";
 
         [JsonProperty(PropertyName = "copiesArrays", NullValueHandling = NullValueHandling.Ignore)]
-        public bool CopiesArrays { get; set; }
+        public bool CopiesArrays { get; set; } = false;
 
         [JsonProperty(PropertyName = "copiesArrayObjects", NullValueHandling = NullValueHandling.Ignore)]
-        public bool CopiesArrayObjects { get; set; }
+        public bool CopiesArrayObjects { get; set; } = false;
 
         [JsonProperty(PropertyName = "linkFromPortIdProperty", NullValueHandling = NullValueHandling.Ignore)]
         public string LinkFromPortIdProperty { get; set; }
