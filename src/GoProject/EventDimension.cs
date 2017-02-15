@@ -2,14 +2,13 @@ namespace GoProject
 {
     public enum EventDimension
     {
-        Solid = 1,
-        Chromatic = 2,
-        Dashed = 3,
-        Double = 4,
-        PaddingSolid = 5,
-        DoubleDashed = 6,
-        DoubleFill = 7,
-        RedFill = 8,
-        Fill = 9
+        StartNone = 1,
+        StartInter = 2,
+        StartNonInter = 3,
+        IntermediateCatching = 4,
+        IntermediateInter = 5,
+        IntermediateNonInter = 6,
+        IntermediateThrowing = 7,
+        End = 8
     }
 }

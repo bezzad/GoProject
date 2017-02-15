@@ -864,7 +864,7 @@ function init() {
     // Add a lane to pool (lane parameter is lane above new lane)
     function addLaneEvent(lane) {
         myDiagram.startTransaction("addLane");
-        if (lane != null && lane.data.category === "Lane") {
+        if (lane !== null && lane.data.category === "Lane") {
             // create a new lane data object
             var shape = lane.findObject("SHAPE");
             var size = new go.Size(shape.width, MINBREADTH);
@@ -1247,7 +1247,7 @@ function init() {
           copiesArrayObjects: true,
           nodeDataArray: [
           // -------------------------- Event Nodes
-            { category: "event", text: "Start", eventType: 1, eventDimension: 1},
+            { category: "event", text: "Start", eventType: 1, eventDimension: 1 },
             { category: "event", text: "Message", eventType: 2, eventDimension: 2 }, // BpmnTaskMessage
             { category: "event", text: "Timer", eventType: 3, eventDimension: 3 },
             { category: "event", text: "End", eventType: 1, eventDimension: 8 },
@@ -1382,16 +1382,16 @@ LaneResizingTool.prototype.isLengthening = function () {
 LaneResizingTool.prototype.computeMinSize = function () {
     var lane = this.adornedObject.part;
     // assert(lane instanceof go.Group && lane.category !== "Pool");
-    var msz = computeMinLaneSize(lane);  // get the absolute minimum size
+    var sz = computeMinLaneSize(lane);  // get the absolute minimum size
     if (this.isLengthening()) {  // compute the minimum length of all lanes
-        var sz = computeMinPoolSize(lane.containingGroup);
-        msz.width = Math.max(msz.width, sz.width);
+        sz = computeMinPoolSize(lane.containingGroup);
+        sz.width = Math.max(sz.width, sz.width);
     } else {  // find the minimum size of this single lane
-        var sz = computeLaneSize(lane);
-        msz.width = Math.max(msz.width, sz.width);
-        msz.height = Math.max(msz.height, sz.height);
+        sz = computeLaneSize(lane);
+        sz.width = Math.max(sz.width, sz.width);
+        sz.height = Math.max(sz.height, sz.height);
     }
-    return msz;
+    return sz;
 };
 
 /** @override */
@@ -1684,8 +1684,8 @@ function updateInfoBox(mousePt, data) {
         "<div class='aline'><div class='infoTitle'>Key</div><div class='infoValues'>" + data.key + "</div></div>" +
         "<div class='aline'><div class='infoTitle'>eventDimension</div><div class='infoValues'>" + data.eventDimension + "</div></div>" +
         "<div class='aline'><div class='infoTitle'>eventType</div><div class='infoValues'>" + data.eventType + "</div></div>" +
-        "<div class='aline'><div class='infoTitle'>gatewayType</div><div class='infoValues'>" + data.gatewayType + "</div></div>" + 
-        "<div class='aline'><div class='infoTitle'>loc</div><div class='infoValues'>" + data.loc + "</div></div>" + 
+        "<div class='aline'><div class='infoTitle'>gatewayType</div><div class='infoValues'>" + data.gatewayType + "</div></div>" +
+        "<div class='aline'><div class='infoTitle'>loc</div><div class='infoValues'>" + data.loc + "</div></div>" +
         "<div class='aline'><div class='infoTitle'>taskType</div><div class='infoValues'>" + data.taskType + "</div></div>";
 
     if (data.attributes !== undefined && data.attributes !== null) {
@@ -1701,5 +1701,5 @@ function updateInfoBox(mousePt, data) {
     box.innerHTML = x;
 
     box.style.left = mousePt.x + 160 + "px";
-    box.style.top = mousePt.y + 80 + "px";
+    box.style.top = mousePt.y + 30 + "px";
 }

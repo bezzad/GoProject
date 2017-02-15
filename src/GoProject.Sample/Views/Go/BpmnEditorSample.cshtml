@@ -3,7 +3,7 @@
 <div id="currentFile">(@Localization.Unsaved)</div>
 <ul id="menuui">
     <li>
-        <a href="#">File</a>
+        <a href="#">@Localization.File</a>
         <ul>
             <li><a href="#" onclick="newDocument()">@Localization.New</a></li>
             <li><a href="#" onclick="openFromServer()">@Localization.Reset</a></li>
@@ -25,7 +25,7 @@
         </ul>
     </li>
     <li>
-        <a href="#">Options</a>
+        <a href="#">@Localization.Options</a>
         <ul>
             <li>
                 <a href="#">
@@ -61,11 +61,7 @@
 
 @section scripts{
     @Scripts.Render("~/bundles/bpmnJs")
-
-
     <script>
-        
-
         init();
     </script>
 }

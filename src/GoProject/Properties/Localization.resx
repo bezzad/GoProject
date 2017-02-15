@@ -183,6 +183,9 @@
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>
+  <data name="Event" xml:space="preserve">
+    <value>Event</value>
+  </data>
   <data name="Exclusive" xml:space="preserve">
     <value>Exclusive</value>
   </data>

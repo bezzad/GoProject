@@ -2,7 +2,7 @@
 {
     public enum EventType
     {
-        Empty = 1,
+        None = 1,
         Message = 2,
         Timer = 3,
         Escalation = 4,
@@ -13,7 +13,7 @@
         Compensation = 9,
         Signal = 10,
         Multiple = 11,
-        Parallel = 12,
-        Inclusive = 13
+        MultipleParallel = 12,
+        Terminate = 13
     }
 }

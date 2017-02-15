@@ -1,11 +1,27 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Threading;
 using Newtonsoft.Json;
 
 namespace GoProject
 {
     public class Diagram
     {
+        public Diagram()
+        {
+            // Modify current thread's cultures            
+            Thread.CurrentThread.CurrentCulture =
+                Thread.CurrentThread.CurrentUICulture = CultureInfo.DefaultThreadCurrentCulture ?? CultureInfo.CreateSpecificCulture("en");
+        }
+
+        public Diagram(CultureInfo ci)
+        {
+            // Modify current thread's cultures            
+            Thread.CurrentThread.CurrentCulture =
+                Thread.CurrentThread.CurrentUICulture = ci;
+        }
+
         [JsonProperty(PropertyName = "class", NullValueHandling = NullValueHandling.Ignore)]
         public string Class { get; set; } = "go.GraphLinksModel";
 
@@ -29,6 +45,11 @@ namespace GoProject
 
         [JsonProperty(PropertyName = "modelData", NullValueHandling = NullValueHandling.Ignore)]
         public ModelData ModelData { get; set; }
-        
+
+        [JsonProperty(PropertyName = "id", NullValueHandling = NullValueHandling.Ignore)]
+        public string Id { get; set; } = "";
+
+        [JsonProperty(PropertyName = "isReadonly", NullValueHandling = NullValueHandling.Ignore)]
+        public bool IsReadonly { get; set; } = false;
     }
 }

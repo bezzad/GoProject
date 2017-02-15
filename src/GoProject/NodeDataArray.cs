@@ -1,27 +1,31 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 using System.Drawing;
+using GoProject.Nodes;
 
 namespace GoProject
 {
     public class NodeDataArray
     {
-        [JsonProperty(PropertyName = "category", NullValueHandling = NullValueHandling.Ignore)]
+        #region Properties
+
         [JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public NodeCategory Category { get; set; }
+        [JsonProperty(PropertyName = "category", NullValueHandling = NullValueHandling.Ignore)]
+        public virtual NodeCategory Category { get; set; }
 
         [JsonProperty(PropertyName = "item", NullValueHandling = NullValueHandling.Ignore)]
-        public string Item { get; set; }
+        public virtual string Item { get; set; }
 
         [JsonProperty(PropertyName = "key", NullValueHandling = NullValueHandling.Ignore)]
-        public string Key { get; set; }
+        public virtual string Key { get; set; }
 
         [JsonProperty(PropertyName = "loc", NullValueHandling = NullValueHandling.Ignore)]
-        public string Loc { get; set; }
+        public virtual string Loc { get; set; }
 
-        [JsonProperty(PropertyName = "position", NullValueHandling = NullValueHandling.Ignore)]
         [JsonIgnore]
-        public PointF? Position
+        [JsonProperty(PropertyName = "position", NullValueHandling = NullValueHandling.Ignore)]
+        public virtual PointF? Position
         {
             get
             {
@@ -37,94 +41,129 @@ namespace GoProject
         }
 
         [JsonProperty(PropertyName = "text", NullValueHandling = NullValueHandling.Ignore)]
-        public string Text { get; set; }
+        public virtual string Text { get; set; }
 
         [JsonProperty(PropertyName = "eventType", NullValueHandling = NullValueHandling.Ignore)]
-        public EventType? EventType { get; set; }
+        public virtual EventType? EventType { get; set; }
 
         [JsonProperty(PropertyName = "eventDimension", NullValueHandling = NullValueHandling.Ignore)]
-        public EventDimension? EventDimension { get; set; }
+        public virtual EventDimension? EventDimension { get; set; }
 
         [JsonProperty(PropertyName = "group", NullValueHandling = NullValueHandling.Ignore)]
-        public string Group { get; set; }
+        public virtual string Group { get; set; }
 
         [JsonProperty(PropertyName = "taskType", NullValueHandling = NullValueHandling.Ignore)]
-        public TaskType? TaskType { get; set; }
+        public virtual TaskType? TaskType { get; set; }
 
         [JsonProperty(PropertyName = "boundaryEventArray", NullValueHandling = NullValueHandling.Ignore)]
-        public List<object> BoundaryEventArray { get; set; }
+        public virtual List<object> BoundaryEventArray { get; set; }
 
         [JsonProperty(PropertyName = "isGroup", NullValueHandling = NullValueHandling.Ignore)]
-        public bool? IsGroup { get; set; }
+        public virtual bool? IsGroup { get; set; }
 
         [JsonProperty(PropertyName = "color", NullValueHandling = NullValueHandling.Ignore)]
-        public string Color { get; set; }
+        public virtual string Color { get; set; }
+
+        [JsonIgnore]
+        [JsonProperty(PropertyName = "htmlColor", NullValueHandling = NullValueHandling.Ignore)]
+        public virtual Color? HexColor
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(Color)) return null;
+                var data = ColorTranslator.FromHtml(Color);
+                return data;
+            }
+            set
+            {
+                if (value != null) Color = ColorTranslator.ToHtml(value.Value);
+            }
+        }
 
         [JsonProperty(PropertyName = "size", NullValueHandling = NullValueHandling.Ignore)]
-        public string Size { get; set; }
+        public virtual string Size { get; set; }
+
+        [JsonIgnore]
+        [JsonProperty(PropertyName = "sizeF", NullValueHandling = NullValueHandling.Ignore)]
+        public virtual SizeF? SizeF
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(Size)) return null;
+                var data = Size.Split(' ');
+                return new SizeF(float.Parse(data[0]), float.Parse(data[1]));
+            }
+
+            set
+            {
+                if (value != null) Size = $"{value.Value.Width} {value.Value.Height}";
+            }
+        }
 
         [JsonProperty(PropertyName = "gatewayType", NullValueHandling = NullValueHandling.Ignore)]
-        public GatewayType? GatewayType { get; set; }
+        public virtual GatewayType? GatewayType { get; set; }
 
         [JsonProperty(PropertyName = "isSubProcess", NullValueHandling = NullValueHandling.Ignore)]
-        public bool? IsSubProcess { get; set; }
+        public virtual bool? IsSubProcess { get; set; }
 
         [JsonProperty(PropertyName = "name", NullValueHandling = NullValueHandling.Ignore)]
-        public string Name { get; set; }
+        public virtual string Name { get; set; }
 
         /// <summary>
         /// Extra data of this node elements
         /// </summary>
         [JsonProperty(PropertyName = "details", NullValueHandling = NullValueHandling.Ignore)]
-        public Dictionary<string, object> Details { get; set; }
+        public virtual Dictionary<string, object> Details { get; set; }
 
+        #endregion
 
         public static List<NodeDataArray> PaletteNodes()
         {
             var nodes = new List<NodeDataArray>();
 
             // -------------------------- Event Nodes -------------------------------
-            nodes.AddRange(new List<NodeDataArray>()
+            nodes.AddRange(new List<NodeDataArray>
             {
-                new NodeDataArray() { Category = NodeCategory.@event, Text = Properties.Localization.Start, EventType = GoProject.EventType.Empty, EventDimension = GoProject.EventDimension.Solid },
-                new NodeDataArray() { Category = NodeCategory.@event, Text = Properties.Localization.Message, EventType = GoProject.EventType.Message, EventDimension = GoProject.EventDimension.Chromatic },
-                new NodeDataArray() { Category = NodeCategory.@event, Text = Properties.Localization.Timer, EventType = GoProject.EventType.Timer, EventDimension = GoProject.EventDimension.Dashed },
-                new NodeDataArray() { Category = NodeCategory.@event, Text = Properties.Localization.End, EventType = GoProject.EventType.Empty, EventDimension = GoProject.EventDimension.RedFill },
-                new NodeDataArray() { Category = NodeCategory.@event, Text = Properties.Localization.Message, EventType = GoProject.EventType.Message, EventDimension = GoProject.EventDimension.RedFill },
-                new NodeDataArray() { Category = NodeCategory.@event, Text = Properties.Localization.Terminate, EventType = GoProject.EventType.Inclusive, EventDimension = GoProject.EventDimension.RedFill }
+                new EventNode { Text = Properties.Localization.Start, EventType = GoProject.EventType.None, EventDimension = GoProject.EventDimension.StartNone },
+                new EventNode { Text = Properties.Localization.Message, EventType = GoProject.EventType.Message, EventDimension = GoProject.EventDimension.StartInter },
+                new EventNode { Text = Properties.Localization.Timer, EventType = GoProject.EventType.Timer, EventDimension = GoProject.EventDimension.StartNonInter },
+                new EventNode { Text = Properties.Localization.End, EventType = GoProject.EventType.None, EventDimension = GoProject.EventDimension.End },
+                new EventNode { Text = Properties.Localization.Message, EventType = GoProject.EventType.Message, EventDimension = GoProject.EventDimension.End },
+                new EventNode { Text = Properties.Localization.Terminate, EventType = GoProject.EventType.Terminate, EventDimension = GoProject.EventDimension.End }
             });
 
             // -------------------------- Task/Activity Nodes -------------------------------
-            nodes.AddRange(new List<NodeDataArray>()
+            nodes.AddRange(new List<NodeDataArray>
             {
-                new NodeDataArray() { Category = NodeCategory.activity, Text = Properties.Localization.Task, TaskType = GoProject.TaskType.EmptyTask },
-                new NodeDataArray() { Category = NodeCategory.activity, Text = Properties.Localization.UserTask, TaskType = GoProject.TaskType.User },
-                new NodeDataArray() { Category = NodeCategory.activity, Text = Properties.Localization.ServiceTask, TaskType = GoProject.TaskType.Service }
+                new NodeDataArray { Category = NodeCategory.activity, Text = Properties.Localization.Task, TaskType = GoProject.TaskType.EmptyTask },
+                new NodeDataArray { Category = NodeCategory.activity, Text = Properties.Localization.UserTask, TaskType = GoProject.TaskType.User },
+                new NodeDataArray { Category = NodeCategory.activity, Text = Properties.Localization.ServiceTask, TaskType = GoProject.TaskType.Service }
             });
 
 
             // -------------------------- Subprocess and start and end -------------------------------
-            nodes.AddRange(new List<NodeDataArray>()
+            nodes.AddRange(new List<NodeDataArray>
             {
-                new NodeDataArray() { Key = "task", Category = NodeCategory.subprocess, Text = Properties.Localization.Subprocess, TaskType = GoProject.TaskType.EmptyTask, IsSubProcess = true, IsGroup = true },
-                new NodeDataArray() { Category = NodeCategory.@event, Text = Properties.Localization.Start, EventType = GoProject.EventType.Empty, EventDimension = GoProject.EventDimension.Solid, Group = "task" },
-                new NodeDataArray() { Category = NodeCategory.@event, Text = Properties.Localization.End, EventType = GoProject.EventType.Empty, EventDimension = GoProject.EventDimension.RedFill, Group = "task" }
+                new NodeDataArray { Key = "task", Category = NodeCategory.subprocess, Text = Properties.Localization.Subprocess, TaskType = GoProject.TaskType.EmptyTask, IsSubProcess = true, IsGroup = true },
+                new NodeDataArray { Category = NodeCategory.@event, Text = Properties.Localization.Start, EventType = GoProject.EventType.None, EventDimension = GoProject.EventDimension.StartNone, Group = "task", Position = new PointF(0, 0) },
+                new NodeDataArray { Category = NodeCategory.@event, Text = Properties.Localization.End, EventType = GoProject.EventType.None, EventDimension = GoProject.EventDimension.End, Group = "task", Position = new PointF(250, 0) },
+                new NodeDataArray { Category = NodeCategory.gateway, Text = Properties.Localization.Parallel, GatewayType = GoProject.GatewayType.Parallel, Group = "task", Position = new PointF(125, 0)  }
             });
 
             // -------------------------- Gateway Nodes, Data, Pool and Annotation -------------------------------
-            nodes.AddRange(new List<NodeDataArray>()
+            nodes.AddRange(new List<NodeDataArray>
             {
-                new NodeDataArray() { Category = NodeCategory.gateway, Text = Properties.Localization.Parallel, GatewayType = GoProject.GatewayType.Parallel },
-                new NodeDataArray() { Category = NodeCategory.gateway, Text = Properties.Localization.Exclusive, GatewayType = GoProject.GatewayType.Exclusive },
+                new NodeDataArray { Category = NodeCategory.gateway, Text = Properties.Localization.Parallel, GatewayType = GoProject.GatewayType.Parallel },
+                new NodeDataArray { Category = NodeCategory.gateway, Text = Properties.Localization.Exclusive, GatewayType = GoProject.GatewayType.Exclusive },
 
-                new NodeDataArray() { Category = NodeCategory.dataobject, Text = Properties.Localization.DataObject },
-                new NodeDataArray() { Category = NodeCategory.datastore, Text = Properties.Localization.DataStorage },
-                new NodeDataArray() { Category = NodeCategory.privateProcess, Text = Properties.Localization.BlackBox },
-                new NodeDataArray() { Category = NodeCategory.annotation, Text = Properties.Localization.Note },
+                new NodeDataArray { Category = NodeCategory.dataobject, Text = Properties.Localization.DataObject },
+                new NodeDataArray { Category = NodeCategory.datastore, Text = Properties.Localization.DataStorage },
+                new NodeDataArray { Category = NodeCategory.privateProcess, Text = Properties.Localization.BlackBox, SizeF = new SizeF(300, 80)},
+                new NodeDataArray { Category = NodeCategory.annotation, Text = Properties.Localization.Note },
 
-                new NodeDataArray() { Category = NodeCategory.Pool, Text = Properties.Localization.Pool, IsGroup = true, Key = "pool" },
-                new NodeDataArray() { Category = NodeCategory.Lane, Text = Properties.Localization.NewLane, Group = "pool", Color = "lightyellow", IsGroup = true },
-                new NodeDataArray() { Category = NodeCategory.Lane, Text = Properties.Localization.NewLane, Group = "pool", Color = "lightgreen", IsGroup = true  }
+                new NodeDataArray { Category = NodeCategory.Pool, Text = Properties.Localization.Pool, IsGroup = true, Key = "pool" },
+                new NodeDataArray { Category = NodeCategory.Lane, Text = Properties.Localization.NewLane, Group = "pool", HexColor = System.Drawing.Color.LightGoldenrodYellow, IsGroup = true },
+                new NodeDataArray { Category = NodeCategory.Lane, Text = Properties.Localization.NewLane, Group = "pool", HexColor = System.Drawing.Color.LightGreen, IsGroup = true  }
             });
 
 

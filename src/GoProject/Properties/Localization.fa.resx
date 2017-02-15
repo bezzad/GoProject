@@ -183,6 +183,9 @@
   <data name="Error" xml:space="preserve">
     <value>خطا</value>
   </data>
+  <data name="Event" xml:space="preserve">
+    <value>رخداد</value>
+  </data>
   <data name="Exclusive" xml:space="preserve">
     <value>تفکیک</value>
   </data>
