@@ -234,6 +234,9 @@
   <data name="Overview" xml:space="preserve">
     <value>Overview</value>
   </data>
+  <data name="Palette" xml:space="preserve">
+    <value>Palette</value>
+  </data>
   <data name="Parallel" xml:space="preserve">
     <value>Parallel</value>
   </data>

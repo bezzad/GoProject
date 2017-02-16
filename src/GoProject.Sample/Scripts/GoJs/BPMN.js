@@ -1597,6 +1597,10 @@ function openFromServer() {
     loadJSON(window.location.origin + '/api/goApi/GetDiagram');
 }
 
+function openPaletteFromServer() {
+    loadJSON(window.location.origin + '/api/goApi/GetPaletteNodes');
+}
+
 
 // these functions are called when panel buttons are clicked
 

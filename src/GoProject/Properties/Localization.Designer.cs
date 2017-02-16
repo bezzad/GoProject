@@ -412,6 +412,15 @@ namespace GoProject.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Palette.
+        /// </summary>
+        public static string Palette {
+            get {
+                return ResourceManager.GetString("Palette", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Parallel.
         /// </summary>
         public static string Parallel {

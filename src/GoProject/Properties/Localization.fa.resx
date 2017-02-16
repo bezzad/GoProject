@@ -234,6 +234,9 @@
   <data name="Overview" xml:space="preserve">
     <value>نمای کلی</value>
   </data>
+  <data name="Palette" xml:space="preserve">
+    <value>پالت</value>
+  </data>
   <data name="Parallel" xml:space="preserve">
     <value>ترکیب</value>
   </data>

@@ -78,12 +78,15 @@
     <Compile Include="EventDimension.cs" />
     <Compile Include="EventType.cs" />
     <Compile Include="GatewayType.cs" />
+    <Compile Include="GoHelper.cs" />
     <Compile Include="HtmlHelperExtensions.cs" />
     <Compile Include="LinkCategory.cs" />
     <Compile Include="NodeCategory.cs" />
     <Compile Include="LinkDataArray.cs" />
     <Compile Include="ModelData.cs" />
     <Compile Include="Nodes\Node.cs" />
+    <Compile Include="Nodes\SubProcessNode.cs" />
+    <Compile Include="Nodes\INode.cs" />
     <Compile Include="Nodes\DataNode.cs" />
     <Compile Include="Nodes\ActivityNode.cs" />
     <Compile Include="Nodes\EventNode.cs" />

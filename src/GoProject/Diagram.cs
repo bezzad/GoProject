@@ -27,10 +27,10 @@ namespace GoProject
         public string Class { get; set; } = "go.GraphLinksModel";
 
         [JsonProperty(PropertyName = "copiesArrays", NullValueHandling = NullValueHandling.Ignore)]
-        public bool CopiesArrays { get; set; } = false;
+        public bool CopiesArrays { get; set; } = true;
 
         [JsonProperty(PropertyName = "copiesArrayObjects", NullValueHandling = NullValueHandling.Ignore)]
-        public bool CopiesArrayObjects { get; set; } = false;
+        public bool CopiesArrayObjects { get; set; } = true;
 
         [JsonProperty(PropertyName = "linkFromPortIdProperty", NullValueHandling = NullValueHandling.Ignore)]
         public string LinkFromPortIdProperty { get; set; }

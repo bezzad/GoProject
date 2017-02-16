@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace GoProject
 {
@@ -30,7 +31,7 @@ namespace GoProject
         [JsonProperty(PropertyName = "text", NullValueHandling = NullValueHandling.Ignore)]
         public string Text { get; set; }
 
-        [JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty(PropertyName = "category", NullValueHandling = NullValueHandling.Ignore)]
         public LinkCategory Category { get; set; }
 
