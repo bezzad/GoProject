@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
+using GoProject.Nodes;
 using Newtonsoft.Json;
 
 namespace GoProject
@@ -38,7 +39,7 @@ namespace GoProject
         public string LinkToPortIdProperty { get; set; }
 
         [JsonProperty(PropertyName = "nodeDataArray", NullValueHandling = NullValueHandling.Ignore)]
-        public List<NodeDataArray> NodeDataArray { get; set; }
+        public List<Node> NodeDataArray { get; set; }
 
         [JsonProperty(PropertyName = "linkDataArray", NullValueHandling = NullValueHandling.Ignore)]
         public List<LinkDataArray> LinkDataArray { get; set; }
@@ -47,9 +48,10 @@ namespace GoProject
         public ModelData ModelData { get; set; }
 
         [JsonProperty(PropertyName = "id", NullValueHandling = NullValueHandling.Ignore)]
-        public string Id { get; set; } = "";
+        public string Id { get; set; } = Guid.NewGuid().ToString();
 
         [JsonProperty(PropertyName = "isReadonly", NullValueHandling = NullValueHandling.Ignore)]
         public bool IsReadonly { get; set; } = false;
+
     }
 }

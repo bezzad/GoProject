@@ -24,11 +24,11 @@ namespace GoProject.Sample.Controllers
 
         public IHttpActionResult GetDiagram()
         {
-            //var json = File.ReadAllText(FilePath, System.Text.Encoding.UTF8);
-            //var diagram = JsonConvert.DeserializeObject<Diagram>(json);
+            var json = File.ReadAllText(FilePath, System.Text.Encoding.UTF8);
+            var diagram = JsonConvert.DeserializeObject<Diagram>(json);
 
-            var diagram = new Diagram();
-            diagram.NodeDataArray = NodeDataArray.PaletteNodes();
+            //var diagram = new Diagram();
+            //diagram.NodeDataArray = Node.PaletteNodes();
 
             return Ok(diagram);
         }

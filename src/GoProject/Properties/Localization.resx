@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Activity" xml:space="preserve">
+    <value>Activity</value>
+  </data>
   <data name="AddEmailEvent" xml:space="preserve">
     <value>Add Email Event</value>
   </data>
@@ -156,6 +159,9 @@
   <data name="Cut" xml:space="preserve">
     <value>Cut</value>
   </data>
+  <data name="Data" xml:space="preserve">
+    <value>Data</value>
+  </data>
   <data name="DataObject" xml:space="preserve">
     <value>Data Object</value>
   </data>
@@ -191,6 +197,9 @@
   </data>
   <data name="File" xml:space="preserve">
     <value>File</value>
+  </data>
+  <data name="Gateway" xml:space="preserve">
+    <value>Gateway</value>
   </data>
   <data name="Grid" xml:space="preserve">
     <value>Grid</value>

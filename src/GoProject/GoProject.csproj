@@ -79,10 +79,12 @@
     <Compile Include="EventType.cs" />
     <Compile Include="GatewayType.cs" />
     <Compile Include="HtmlHelperExtensions.cs" />
+    <Compile Include="LinkCategory.cs" />
     <Compile Include="NodeCategory.cs" />
     <Compile Include="LinkDataArray.cs" />
     <Compile Include="ModelData.cs" />
-    <Compile Include="NodeDataArray.cs" />
+    <Compile Include="Nodes\Node.cs" />
+    <Compile Include="Nodes\DataNode.cs" />
     <Compile Include="Nodes\ActivityNode.cs" />
     <Compile Include="Nodes\EventNode.cs" />
     <Compile Include="Nodes\GatewayNode.cs" />

@@ -61,6 +61,15 @@ namespace GoProject.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Activity.
+        /// </summary>
+        public static string Activity {
+            get {
+                return ResourceManager.GetString("Activity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add Email Event.
         /// </summary>
         public static string AddEmailEvent {
@@ -178,6 +187,15 @@ namespace GoProject.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Data.
+        /// </summary>
+        public static string Data {
+            get {
+                return ResourceManager.GetString("Data", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Data Object.
         /// </summary>
         public static string DataObject {
@@ -282,6 +300,15 @@ namespace GoProject.Properties {
         public static string File {
             get {
                 return ResourceManager.GetString("File", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gateway.
+        /// </summary>
+        public static string Gateway {
+            get {
+                return ResourceManager.GetString("Gateway", resourceCulture);
             }
         }
         

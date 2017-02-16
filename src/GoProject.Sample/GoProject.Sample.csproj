@@ -160,6 +160,7 @@
       <LastGenOutput>Connections.cs</LastGenOutput>
     </Content>
     <Content Include="App_Data\DatabaseCreatorScript.sql" />
+    <Content Include="BPMN.PNG" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />

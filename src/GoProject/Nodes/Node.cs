@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using Newtonsoft.Json;
+﻿using System.Collections.Generic;
 using System.Drawing;
-using GoProject.Nodes;
+using Newtonsoft.Json;
 
-namespace GoProject
+namespace GoProject.Nodes
 {
-    public class NodeDataArray
+    public class Node
     {
         #region Properties
 
@@ -41,7 +39,7 @@ namespace GoProject
         }
 
         [JsonProperty(PropertyName = "text", NullValueHandling = NullValueHandling.Ignore)]
-        public virtual string Text { get; set; }
+        public string Text { get; set; }
 
         [JsonProperty(PropertyName = "eventType", NullValueHandling = NullValueHandling.Ignore)]
         public virtual EventType? EventType { get; set; }
@@ -117,12 +115,12 @@ namespace GoProject
 
         #endregion
 
-        public static List<NodeDataArray> PaletteNodes()
+        public static List<Node> PaletteNodes()
         {
-            var nodes = new List<NodeDataArray>();
+            var nodes = new List<Node>();
 
             // -------------------------- Event Nodes -------------------------------
-            nodes.AddRange(new List<NodeDataArray>
+            nodes.AddRange(new List<Node>
             {
                 new EventNode { Text = Properties.Localization.Start, EventType = GoProject.EventType.None, EventDimension = GoProject.EventDimension.StartNone },
                 new EventNode { Text = Properties.Localization.Message, EventType = GoProject.EventType.Message, EventDimension = GoProject.EventDimension.StartInter },
@@ -133,37 +131,37 @@ namespace GoProject
             });
 
             // -------------------------- Task/Activity Nodes -------------------------------
-            nodes.AddRange(new List<NodeDataArray>
+            nodes.AddRange(new List<Node>
             {
-                new NodeDataArray { Category = NodeCategory.activity, Text = Properties.Localization.Task, TaskType = GoProject.TaskType.EmptyTask },
-                new NodeDataArray { Category = NodeCategory.activity, Text = Properties.Localization.UserTask, TaskType = GoProject.TaskType.User },
-                new NodeDataArray { Category = NodeCategory.activity, Text = Properties.Localization.ServiceTask, TaskType = GoProject.TaskType.Service }
+                new Node { Category = NodeCategory.activity, Text = Properties.Localization.Task, TaskType = GoProject.TaskType.EmptyTask },
+                new Node { Category = NodeCategory.activity, Text = Properties.Localization.UserTask, TaskType = GoProject.TaskType.User },
+                new Node { Category = NodeCategory.activity, Text = Properties.Localization.ServiceTask, TaskType = GoProject.TaskType.Service }
             });
 
 
             // -------------------------- Subprocess and start and end -------------------------------
-            nodes.AddRange(new List<NodeDataArray>
+            nodes.AddRange(new List<Node>
             {
-                new NodeDataArray { Key = "task", Category = NodeCategory.subprocess, Text = Properties.Localization.Subprocess, TaskType = GoProject.TaskType.EmptyTask, IsSubProcess = true, IsGroup = true },
-                new NodeDataArray { Category = NodeCategory.@event, Text = Properties.Localization.Start, EventType = GoProject.EventType.None, EventDimension = GoProject.EventDimension.StartNone, Group = "task", Position = new PointF(0, 0) },
-                new NodeDataArray { Category = NodeCategory.@event, Text = Properties.Localization.End, EventType = GoProject.EventType.None, EventDimension = GoProject.EventDimension.End, Group = "task", Position = new PointF(250, 0) },
-                new NodeDataArray { Category = NodeCategory.gateway, Text = Properties.Localization.Parallel, GatewayType = GoProject.GatewayType.Parallel, Group = "task", Position = new PointF(125, 0)  }
+                new Node { Key = "task", Category = NodeCategory.subprocess, Text = Properties.Localization.Subprocess, TaskType = GoProject.TaskType.EmptyTask, IsSubProcess = true, IsGroup = true },
+                new Node { Category = NodeCategory.@event, Text = Properties.Localization.Start, EventType = GoProject.EventType.None, EventDimension = GoProject.EventDimension.StartNone, Group = "task", Position = new PointF(0, 0) },
+                new Node { Category = NodeCategory.@event, Text = Properties.Localization.End, EventType = GoProject.EventType.None, EventDimension = GoProject.EventDimension.End, Group = "task", Position = new PointF(250, 0) },
+                new Node { Category = NodeCategory.gateway, Text = Properties.Localization.Parallel, GatewayType = GoProject.GatewayType.Parallel, Group = "task", Position = new PointF(125, 0)  }
             });
 
             // -------------------------- Gateway Nodes, Data, Pool and Annotation -------------------------------
-            nodes.AddRange(new List<NodeDataArray>
+            nodes.AddRange(new List<Node>
             {
-                new NodeDataArray { Category = NodeCategory.gateway, Text = Properties.Localization.Parallel, GatewayType = GoProject.GatewayType.Parallel },
-                new NodeDataArray { Category = NodeCategory.gateway, Text = Properties.Localization.Exclusive, GatewayType = GoProject.GatewayType.Exclusive },
+                new Node { Category = NodeCategory.gateway, Text = Properties.Localization.Parallel, GatewayType = GoProject.GatewayType.Parallel },
+                new Node { Category = NodeCategory.gateway, Text = Properties.Localization.Exclusive, GatewayType = GoProject.GatewayType.Exclusive },
 
-                new NodeDataArray { Category = NodeCategory.dataobject, Text = Properties.Localization.DataObject },
-                new NodeDataArray { Category = NodeCategory.datastore, Text = Properties.Localization.DataStorage },
-                new NodeDataArray { Category = NodeCategory.privateProcess, Text = Properties.Localization.BlackBox, SizeF = new SizeF(300, 80)},
-                new NodeDataArray { Category = NodeCategory.annotation, Text = Properties.Localization.Note },
+                new Node { Category = NodeCategory.dataobject, Text = Properties.Localization.DataObject },
+                new Node { Category = NodeCategory.datastore, Text = Properties.Localization.DataStorage },
+                new Node { Category = NodeCategory.privateProcess, Text = Properties.Localization.BlackBox, SizeF = new SizeF(300, 80)},
+                new Node { Category = NodeCategory.annotation, Text = Properties.Localization.Note },
 
-                new NodeDataArray { Category = NodeCategory.Pool, Text = Properties.Localization.Pool, IsGroup = true, Key = "pool" },
-                new NodeDataArray { Category = NodeCategory.Lane, Text = Properties.Localization.NewLane, Group = "pool", HexColor = System.Drawing.Color.LightGoldenrodYellow, IsGroup = true },
-                new NodeDataArray { Category = NodeCategory.Lane, Text = Properties.Localization.NewLane, Group = "pool", HexColor = System.Drawing.Color.LightGreen, IsGroup = true  }
+                new Node { Category = NodeCategory.Pool, Text = Properties.Localization.Pool, IsGroup = true, Key = "pool" },
+                new Node { Category = NodeCategory.Lane, Text = Properties.Localization.NewLane, Group = "pool", HexColor = System.Drawing.Color.LightGoldenrodYellow, IsGroup = true },
+                new Node { Category = NodeCategory.Lane, Text = Properties.Localization.NewLane, Group = "pool", HexColor = System.Drawing.Color.LightGreen, IsGroup = true  }
             });
 
 

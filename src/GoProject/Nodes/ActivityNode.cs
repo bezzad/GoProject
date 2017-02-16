@@ -3,12 +3,14 @@ using System.Drawing;
 
 namespace GoProject.Nodes
 {
-    public sealed class ActivityNode : NodeDataArray
+    public class ActivityNode : Node
     {
         #region Fields
 
         private readonly NodeCategory _category;
         private readonly GatewayType? _gatewayType;
+        private readonly EventType? _eventType;
+        private readonly EventDimension? _eventDimension;
         private readonly bool? _isSubProcess;
         private readonly bool? _isGroup;
         private readonly List<object> _boundaryEventArray;
@@ -17,9 +19,6 @@ namespace GoProject.Nodes
         private readonly string _size;
         private readonly SizeF? _sizeF;
         private readonly string _group;
-        private readonly EventType? _eventType;
-        private readonly EventDimension? _eventDimension;
-
 
         #endregion
 
@@ -27,6 +26,8 @@ namespace GoProject.Nodes
 
         public override NodeCategory Category => _category;
         public override GatewayType? GatewayType => _gatewayType;
+        public override EventType? EventType => _eventType;
+        public override EventDimension? EventDimension => _eventDimension;
         public override bool? IsSubProcess => _isSubProcess;
         public override bool? IsGroup => _isGroup;
         public override List<object> BoundaryEventArray => _boundaryEventArray;
@@ -35,8 +36,6 @@ namespace GoProject.Nodes
         public override string Size => _size;
         public override SizeF? SizeF => _sizeF;
         public override string Group => _group;
-        public override EventType? EventType => _eventType;
-        public override EventDimension? EventDimension => _eventDimension;
 
         #endregion
 
@@ -44,8 +43,10 @@ namespace GoProject.Nodes
 
         public ActivityNode()
         {
-            Text = Properties.Localization.Task;
+            Text = Properties.Localization.Activity;
             _category = NodeCategory.activity;
+            _eventType = null;
+            _eventDimension = null;
             _gatewayType = null;
             _isSubProcess = null;
             _isGroup = null;
@@ -55,8 +56,7 @@ namespace GoProject.Nodes
             _size = null;
             _sizeF = null;
             _group = null;
-            _eventType = null;
-            _eventDimension = null;
+
         }
 
         #endregion

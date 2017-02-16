@@ -6,8 +6,8 @@ namespace GoProject
         Inclusive = 2,
         Complex = 3,
         Exclusive = 4,
-        Event = 5,
-        ExclusiveStart = 6,
-        ParallelStart = 7
+        EventBased = 5,
+        ExclusiveEventBasedStart = 6,
+        ParallelEventBasedStart = 7
     }
 }

@@ -1637,7 +1637,6 @@ function nodeInfo(d) {  // Tooltip info for a node data object
 }
 
 
-
 // Called when the mouse is over the diagram's background
 function doMouseOver(e) {
     if (e === undefined) e = myDiagram.lastInput;
@@ -1655,7 +1654,8 @@ function doMouseOver(e) {
         }
     });
     //highlightNode(e, closest);
-    updateInfoBox(e.viewPoint, closest.data);
+    if (closest !== undefined && closest !== null)
+        updateInfoBox(e.viewPoint, closest.data);
 }
 
 // Called with a Node (or null) that the mouse is over or near

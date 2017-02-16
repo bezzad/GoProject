@@ -1,14 +1,16 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace GoProject.Nodes
 {
-    public class EventNode : Node
+    public class DataNode : Node
     {
         #region Fields
 
         private readonly NodeCategory _category;
         private readonly GatewayType? _gatewayType;
+        private readonly EventType? _eventType;
+        private readonly EventDimension? _eventDimension;
         private readonly TaskType? _taskType;
         private readonly bool? _isSubProcess;
         private readonly bool? _isGroup;
@@ -25,6 +27,8 @@ namespace GoProject.Nodes
 
         public override NodeCategory Category => _category;
         public override GatewayType? GatewayType => _gatewayType;
+        public override EventType? EventType => _eventType;
+        public override EventDimension? EventDimension => _eventDimension;
         public override TaskType? TaskType => _taskType;
         public override bool? IsSubProcess => _isSubProcess;
         public override bool? IsGroup => _isGroup;
@@ -37,13 +41,16 @@ namespace GoProject.Nodes
 
         #endregion
 
+        #region Constructs
 
-        public EventNode()
+        public DataNode()
         {
-            Text = Properties.Localization.Event;
-            _category = NodeCategory.@event;
-            _gatewayType = null;
+            Text = Properties.Localization.Data;
+            _category = NodeCategory.activity;
+            _eventType = null;
+            _eventDimension = null;
             _taskType = null;
+            _gatewayType = null;
             _isSubProcess = null;
             _isGroup = null;
             _boundaryEventArray = null;
@@ -53,5 +60,8 @@ namespace GoProject.Nodes
             _sizeF = null;
             _group = null;
         }
+
+        #endregion
+
     }
 }
