@@ -14,7 +14,7 @@ namespace GoProject
             // -------------------------- Event Nodes -------------------------------
             nodes.AddRange(new List<Node>
             {
-                new EventNode { Text = Localization.Start, EventType = EventType.None, EventDimension = EventDimension.StartNone },
+                new EventNode { Text = Localization.Start, EventType = EventType.None, EventDimension = EventDimension.Start },
                 new EventNode { Text = Localization.Message, EventType = EventType.Message, EventDimension = EventDimension.StartInter },
                 new EventNode { Text = Localization.Timer, EventType = EventType.Timer, EventDimension = EventDimension.StartNonInter },
                 new EventNode { Text = Localization.End, EventType = EventType.None, EventDimension = EventDimension.End },
@@ -35,9 +35,8 @@ namespace GoProject
             nodes.AddRange(new List<Node>
             {
                 new SubProcessNode { Key = "task", Text = Localization.Subprocess },
-                new Node { Category = NodeCategory.@event, Text = Localization.Start, EventType = EventType.None, EventDimension = EventDimension.StartNone, Group = "task", Position = new PointF(0, 0) },
-                new Node { Category = NodeCategory.@event, Text = Localization.End, EventType = EventType.None, EventDimension = EventDimension.End, Group = "task", Position = new PointF(250, 0) },
-                new Node { Category = NodeCategory.gateway, Text = Localization.Parallel, GatewayType = GatewayType.Parallel, Group = "task", Position = new PointF(125, 0)  }
+                new EventNode { Text = Localization.Start, EventType = EventType.None, EventDimension = EventDimension.Start, Group = "task", Position = new PointF(0, 0) },
+                new EventNode { Text = Localization.End, EventType = EventType.None, EventDimension = EventDimension.End, Group = "task", Position = new PointF(250, 0) }
             });
 
             // -------------------------- Gateway Nodes, Data, Pool and Annotation -------------------------------

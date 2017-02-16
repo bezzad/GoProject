@@ -1,7 +1,10 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Web.Http;
+using GoProject.Nodes;
+using GoProject.Sample.Models;
 
 namespace GoProject.Sample.Controllers
 {
@@ -30,7 +33,12 @@ namespace GoProject.Sample.Controllers
         public IHttpActionResult GetPaletteNodes()
         {
             var diagram = new Diagram();
-            diagram.NodeDataArray = GoHelper.PaletteNodes();
+            diagram.NodeDataArray = new List<Node>()
+            {
+                new MaterialNode(),
+                new SemiFinishMaterialNode(),
+                new WorkStationNode()
+            };
 
             return Ok(diagram);
         }
