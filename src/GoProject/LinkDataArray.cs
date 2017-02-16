@@ -20,13 +20,24 @@ namespace GoProject
         [JsonProperty(PropertyName = "points", NullValueHandling = NullValueHandling.Ignore)]
         public List<double> Points { get; set; }
 
+        /// <summary>
+        /// Show connector label or not?
+        /// Sample:   '------lable-------+>'
+        /// </summary>
         [JsonProperty(PropertyName = "visible", NullValueHandling = NullValueHandling.Ignore)]
-        public bool? Visible { get; set; }
+        public bool? Visible { get; set; } = true;
 
         [JsonProperty(PropertyName = "text", NullValueHandling = NullValueHandling.Ignore)]
         public string Text { get; set; }
 
+        [JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [JsonProperty(PropertyName = "category", NullValueHandling = NullValueHandling.Ignore)]
-        public string Category { get; set; }
+        public LinkCategory Category { get; set; }
+
+        /// <summary>
+        /// Is Default Connection by symbole '--/----+>'
+        /// </summary>
+        [JsonProperty(PropertyName = "isDefault", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? IsDefault { get; set; }
     }
 }

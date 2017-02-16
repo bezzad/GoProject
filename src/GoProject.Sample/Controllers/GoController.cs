@@ -3,7 +3,7 @@ using System.Web.Mvc;
 
 namespace GoProject.Sample.Controllers
 {
-    public class GoController : Controller
+    public class GoController : BaseController
     {
         
         public ActionResult PageFlowSample()
