@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Drawing;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
@@ -62,6 +63,20 @@ namespace GoProject.Nodes
         /// </summary>
         [JsonProperty(PropertyName = "details", NullValueHandling = NullValueHandling.Ignore)]
         Dictionary<string, object> Details { get; set; }
+
+        [JsonIgnore]
+        [JsonProperty(PropertyName = "position", NullValueHandling = NullValueHandling.Ignore)]
+        PointF? Position { get; set; }
+
+
+        [JsonIgnore]
+        [JsonProperty(PropertyName = "sizeF", NullValueHandling = NullValueHandling.Ignore)]
+        SizeF? SizeF { get; set; }
+
+
+        [JsonIgnore]
+        [JsonProperty(PropertyName = "htmlColor", NullValueHandling = NullValueHandling.Ignore)]
+        Color? HexColor { get; set; }
 
         #endregion
     }

@@ -1,26 +1,24 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using GoProject.Properties;
 
 namespace GoProject.Nodes
 {
     public class LaneNode : GroupNode
     {
+
         #region Properties
 
-        public new NodeCategory Category { get; }
+        private readonly NodeCategory _category = NodeCategory.Lane;
 
-        public new GatewayType? GatewayType { get; }
-
-        public new EventType? EventType { get; }
-
-        public new EventDimension? EventDimension { get; }
-
-        public new TaskType? TaskType { get; }
-
-        public new bool? IsSubProcess { get; }
-        
-        public new List<object> BoundaryEventArray { get; }
+        public override NodeCategory Category => _category;
+        public new GatewayType? GatewayType => null;
+        public new EventType? EventType => null;
+        public new EventDimension? EventDimension => null;
+        public new TaskType? TaskType => null;
+        public new bool? IsSubProcess => null;
+        public new List<object> BoundaryEventArray => null;
 
         #endregion
 
@@ -30,18 +28,14 @@ namespace GoProject.Nodes
         {
             Key = $"lane_{Guid.NewGuid()}";
             Text = Localization.NewLane;
-            Category = NodeCategory.Lane;
-
-            EventType = null;
-            EventDimension = null;
-            TaskType = null;
-            GatewayType = null;
-            IsSubProcess = null;
-            BoundaryEventArray = null;
 
             var rand = new Random();
             HexColor = System.Drawing.Color.FromArgb(rand.Next(150, 255), rand.Next(150, 255), rand.Next(150, 255));
+            SizeF = new SizeF(300, 40);
         }
+
+        public LaneNode(INode node) : base(node)
+        {}
 
         #endregion
 

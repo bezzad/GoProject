@@ -34,7 +34,7 @@ namespace GoProject.Sample.Controllers
         {
             var diagram = new Diagram
             {
-                NodeDataArray = GoHelper.PaletteNodes()
+                TreeNodes = GoHelper.PaletteTreeNodes()
             };
 
             return Ok(diagram);

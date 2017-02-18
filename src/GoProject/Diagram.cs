@@ -4,25 +4,12 @@ using System.Globalization;
 using System.Linq;
 using System.Threading;
 using GoProject.Nodes;
-using Nelibur.ObjectMapper;
 using Newtonsoft.Json;
 
 namespace GoProject
 {
     public class Diagram
     {
-        static Diagram()
-        {
-            TinyMapper.Bind<Node, EventNode>();
-            TinyMapper.Bind<Node, DataNode>();
-            TinyMapper.Bind<Node, ActivityNode>();
-            TinyMapper.Bind<Node, GatewayNode>();
-            TinyMapper.Bind<Node, GroupNode>();
-            TinyMapper.Bind<Node, PoolNode>();
-            TinyMapper.Bind<Node, LaneNode>();
-            TinyMapper.Bind<Node, SubProcessNode>();
-        }
-
         public Diagram()
         {
             // Modify current thread's cultures            
@@ -53,33 +40,22 @@ namespace GoProject
         public string LinkToPortIdProperty { get; set; }
 
         [JsonIgnore]
-        public List<Node> TreeNodes { get; set; }
-
-        [JsonProperty(PropertyName = "nodeDataArray", NullValueHandling = NullValueHandling.Ignore)]
-        public List<Node> NodeDataArray
+        public List<Node> TreeNodes
         {
             get
             {
-                var result = TreeNodes?.Where(n => n is IGoupNode).SelectMany(x => ((IGoupNode)x).GetNodes()).ToList();// find child nodes
-                result?.AddRange(TreeNodes); // top level nodes
-
-                return result;
+                return NodeDataArray?.ConvertToTreeNodes();
             }
             set
             {
-                TreeNodes = new List<Node>();
-                foreach (var node in value)
-                {
-                    switch (node.Category)
-                    {
-                        case NodeCategory.Pool: TreeNodes.Add(TinyMapper.Map<PoolNode>(node));
-                            break;
-                            //TODO:  Other typess
-                    }
-
-                }
+                NodeDataArray = value?.Where(n => n is IGroupNode).SelectMany(x => ((IGroupNode)x).GetNodes()).ToList();// find child nodes
+                NodeDataArray?.AddRange(value); // top level nodes
             }
         }
+
+        [JsonProperty(PropertyName = "nodeDataArray", NullValueHandling = NullValueHandling.Ignore)]
+        public List<Node> NodeDataArray { get; set; }
+
 
         [JsonProperty(PropertyName = "linkDataArray", NullValueHandling = NullValueHandling.Ignore)]
         public List<LinkDataArray> LinkDataArray { get; set; }

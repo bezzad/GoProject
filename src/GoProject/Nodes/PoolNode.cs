@@ -7,26 +7,20 @@ namespace GoProject.Nodes
 {
     public class PoolNode : GroupNode
     {
+
         #region Properties
 
-        public new NodeCategory Category { get; }
+        private readonly NodeCategory _category = NodeCategory.Pool;
 
-        public new GatewayType? GatewayType { get; }
-
-        public new EventType? EventType { get; }
-
-        public new EventDimension? EventDimension { get; }
-
-        public new TaskType? TaskType { get; }
-
-        public new bool? IsSubProcess { get; }
-
-        public new List<object> BoundaryEventArray { get; }
-
-        public new string Color { get; }
-
-        public new Color? HexColor { get; }
-        
+        public override NodeCategory Category => _category;
+        public new GatewayType? GatewayType => null;
+        public new EventType? EventType => null;
+        public new EventDimension? EventDimension => null;
+        public new TaskType? TaskType => null;
+        public new bool? IsSubProcess => null;
+        public new List<object> BoundaryEventArray => null;
+        public new string Color => null;
+        public new Color? HexColor => null;
 
         #endregion
 
@@ -36,17 +30,10 @@ namespace GoProject.Nodes
         {
             Key = $"pool_{Guid.NewGuid()}";
             Text = Localization.Pool;
-            Category = NodeCategory.Pool;
-
-            EventType = null;
-            EventDimension = null;
-            TaskType = null;
-            GatewayType = null;
-            IsSubProcess = null;
-            BoundaryEventArray = null;
-            Color = null;
-            HexColor = null;
         }
+
+        public PoolNode(INode node) : base(node)
+        {}
 
         #endregion
     }

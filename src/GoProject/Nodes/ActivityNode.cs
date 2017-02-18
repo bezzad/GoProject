@@ -1,6 +1,6 @@
-using System.Collections.Generic;
 using System.Drawing;
 using GoProject.Properties;
+// ReSharper disable UnassignedGetOnlyAutoProperty
 
 namespace GoProject.Nodes
 {
@@ -9,30 +9,19 @@ namespace GoProject.Nodes
 
         #region Properties
 
-        public new NodeCategory Category { get; }
+        private readonly NodeCategory _category = NodeCategory.activity;
 
-        public new GatewayType? GatewayType { get; }
-
-        public new EventType? EventType { get; }
-
-        public new EventDimension? EventDimension { get; }
-
-        public new bool? IsSubProcess { get; }
-
-        public new bool? IsGroup { get; }
-
-        public new List<object> BoundaryEventArray { get; }
-
-        public new string Color { get; }
-
-        public new Color? HexColor { get; }
-
-        public new string Size { get; }
-
-        public new SizeF? SizeF { get; }
-
-        public new string Group { get; }
-
+        public override NodeCategory Category => _category;
+        public new GatewayType? GatewayType => null;
+        public new EventType? EventType => null;
+        public new EventDimension? EventDimension => null;
+        public new bool? IsSubProcess => null;
+        public new bool? IsGroup => null;
+        public new string Color => null;
+        public new Color? HexColor => null;
+        public new string Size => null;
+        public new SizeF? SizeF => null;
+        
         #endregion
 
         #region Constructs
@@ -40,19 +29,10 @@ namespace GoProject.Nodes
         public ActivityNode()
         {
             Text = Localization.Activity;
-            Category = NodeCategory.activity;
-            EventType = null;
-            EventDimension = null;
-            GatewayType = null;
-            IsSubProcess = null;
-            IsGroup = null;
-            BoundaryEventArray = null;
-            Color = null;
-            HexColor = null;
-            Size = null;
-            SizeF = null;
-            Group = null;
         }
+
+        public ActivityNode(INode node) : base(node)
+        {}
 
         #endregion
 

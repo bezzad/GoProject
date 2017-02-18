@@ -6,31 +6,22 @@ namespace GoProject.Nodes
 {
     public class GatewayNode : Node
     {
+
         #region Properties
 
-        public new NodeCategory Category { get; }
+        private readonly NodeCategory _category=NodeCategory.gateway;
 
-        public new TaskType? TaskType { get; }
-
-        public new EventType? EventType { get; }
-
-        public new EventDimension? EventDimension { get; }
-
-        public new bool? IsSubProcess { get; }
-
-        public new bool? IsGroup { get; }
-
-        public new List<object> BoundaryEventArray { get; }
-
-        public new string Color { get; }
-
-        public new Color? HexColor { get; }
-
-        public new string Size { get; }
-
-        public new SizeF? SizeF { get; }
-
-        public new string Group { get; }
+        public override NodeCategory Category => _category;
+        public new TaskType? TaskType => null;
+        public new EventType? EventType => null;
+        public new EventDimension? EventDimension => null;
+        public new bool? IsSubProcess => null;
+        public new bool? IsGroup => null;
+        public new List<object> BoundaryEventArray => null;
+        public new string Color => null;
+        public new Color? HexColor => null;
+        public new string Size => null;
+        public new SizeF? SizeF => null;
 
         #endregion
 
@@ -39,19 +30,10 @@ namespace GoProject.Nodes
         public GatewayNode()
         {
             Text = Localization.Gateway;
-            Category = NodeCategory.gateway;
-            IsSubProcess = null;
-            IsGroup = null;
-            BoundaryEventArray = null;
-            Color = null;
-            HexColor = null;
-            Size = null;
-            SizeF = null;
-            Group = null;
-            TaskType = null;
-            EventType = null;
-            EventDimension = null;
         }
+
+        public GatewayNode(INode node) : base(node)
+        {}
 
         #endregion
     }
