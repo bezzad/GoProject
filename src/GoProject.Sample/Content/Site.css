@@ -1,4 +1,9 @@
-﻿body {
+﻿@font-face {
+    font-family: iransans;
+    src: url(../fonts/iransans.ttf);
+}
+
+body {
     height: 100%;
     width:100%;
     padding-top: 50px;
@@ -25,3 +30,6 @@ textarea {
     max-width: 280px;
 }
 
+canvas, div, * {
+    font-family: iransans, Arial, tahoma !important;
+}

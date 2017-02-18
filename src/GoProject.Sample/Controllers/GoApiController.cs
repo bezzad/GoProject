@@ -32,12 +32,14 @@ namespace GoProject.Sample.Controllers
 
         public IHttpActionResult GetPaletteNodes()
         {
-            var diagram = new Diagram();
-            diagram.NodeDataArray = new List<Node>()
+            var diagram = new Diagram
             {
-                new MaterialNode(),
-                new SemiFinishMaterialNode(),
-                new WorkStationNode()
+                NodeDataArray = new List<Node>()
+                {
+                    new MaterialNode(),
+                    new SemiFinishMaterialNode(),
+                    new WorkStationNode()
+                }
             };
 
             return Ok(diagram);

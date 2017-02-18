@@ -236,6 +236,7 @@
     <Content Include="Content\GoJs\BPMNdata\OMG BPMN by Example Figure 5.1.json" />
     <Content Include="Content\GoJs\BPMNdata\OMG BPMN by Example Figure 5.2.json" />
     <Content Include="Content\GoJs\BPMNdata\OMG BPMN by Example Figure 5.3.json" />
+    <Content Include="fonts\iransans.ttf" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />

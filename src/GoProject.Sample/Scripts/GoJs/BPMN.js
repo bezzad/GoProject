@@ -148,10 +148,10 @@ function init() {
           }),
         $(go.TextBlock,
           {
-              font: "bold 14px sans-serif",
+              font: "bold 14px iransans, sans-serif",
               stroke: '#333',
               margin: 6,  // make some extra space for the shape around the text
-              isMultiline: false,  // don't allow newlines in text
+              isMultiline: true,  // don't allow newlines in text
               editable: true  // allow in-place editing by user
           },
           new go.Binding("text", "", nodeInfo))
@@ -283,46 +283,46 @@ function init() {
     //var activityNodeMenu =
     //     $(go.Adornment, "Vertical",
     //       $("ContextMenuButton",
-    //           $(go.TextBlock, "Add Email Event", { margin: 3 }),
+    //           $(go.TextBlock, "Add Email Event", { margin: 3, font: "10px iransans, sans-serif" }),
     //           { click: function (e, obj) { addActivityNodeBoundaryEvent(2, 5); } }),
     //       $("ContextMenuButton",
-    //           $(go.TextBlock, "Add Timer Event", { margin: 3 }),
+    //           $(go.TextBlock, "Add Timer Event", { margin: 3, font: "10px iransans, sans-serif" }),
     //           { click: function (e, obj) { addActivityNodeBoundaryEvent(3, 5); } }),
     //       $("ContextMenuButton",
-    //           $(go.TextBlock, "Add Escalation Event", { margin: 3 }),
+    //           $(go.TextBlock, "Add Escalation Event", { margin: 3, font: "10px iransans, sans-serif" }),
     //           { click: function (e, obj) { addActivityNodeBoundaryEvent(4, 5); } }),
     //       $("ContextMenuButton",
-    //           $(go.TextBlock, "Add Error Event", { margin: 3 }),
+    //           $(go.TextBlock, "Add Error Event", { margin: 3, font: "10px iransans, sans-serif" }),
     //           { click: function (e, obj) { addActivityNodeBoundaryEvent(7, 5); } }),
     //       $("ContextMenuButton",
-    //           $(go.TextBlock, "Add Signal Event", { margin: 3 }),
+    //           $(go.TextBlock, "Add Signal Event", { margin: 3, font: "10px iransans, sans-serif" }),
     //           { click: function (e, obj) { addActivityNodeBoundaryEvent(10, 5); } }),
     //       $("ContextMenuButton",
-    //           $(go.TextBlock, "Add N-I Escalation Event", { margin: 3 }),
+    //           $(go.TextBlock, "Add N-I Escalation Event", { margin: 3, font: "10px iransans, sans-serif" }),
     //           { click: function (e, obj) { addActivityNodeBoundaryEvent(4, 6); } }),
     //       $("ContextMenuButton",
-    //           $(go.TextBlock, "Rename", { margin: 3 }),
+    //           $(go.TextBlock, "Rename", { margin: 3, font: "10px iransans, sans-serif" }),
     //           { click: function (e, obj) { rename(obj); } }));
 
     var activityNodeMenu =
      $(go.Adornment, "Vertical",
        $("ContextMenuButton",
-           $(go.TextBlock, "اضافه کردن رخداد ایمیل", { margin: 3 }),
+           $(go.TextBlock, "اضافه کردن رخداد ایمیل", { margin: 3, font: "10px iransans, sans-serif" }),
            { click: function (e, obj) { addActivityNodeBoundaryEvent(2, 5); } }),
        $("ContextMenuButton",
-           $(go.TextBlock, "اضافه کردن رخداد زماندار", { margin: 3 }),
+           $(go.TextBlock, "اضافه کردن رخداد زماندار", { margin: 3, font: "10px iransans, sans-serif" }),
            { click: function (e, obj) { addActivityNodeBoundaryEvent(3, 5); } }),
        $("ContextMenuButton",
-           $(go.TextBlock, "اضافه کردن رخداد تشدید", { margin: 3 }),
+           $(go.TextBlock, "اضافه کردن رخداد تشدید", { margin: 3, font: "10px iransans, sans-serif" }),
            { click: function (e, obj) { addActivityNodeBoundaryEvent(4, 5); } }),
        $("ContextMenuButton",
-           $(go.TextBlock, "اضافه کردن رخداد خطا", { margin: 3 }),
+           $(go.TextBlock, "اضافه کردن رخداد خطا", { margin: 3, font: "10px iransans, sans-serif" }),
            { click: function (e, obj) { addActivityNodeBoundaryEvent(7, 5); } }),
        $("ContextMenuButton",
-           $(go.TextBlock, "اضافه کردن رخداد سیگنال", { margin: 3 }),
+           $(go.TextBlock, "اضافه کردن رخداد سیگنال", { margin: 3, font: "10px iransans, sans-serif" }),
            { click: function (e, obj) { addActivityNodeBoundaryEvent(10, 5); } }),
        $("ContextMenuButton",
-           $(go.TextBlock, "تغییر نام", { margin: 3 }),
+           $(go.TextBlock, "تغییر نام", { margin: 3, font: "10px iransans, sans-serif" }),
            { click: function (e, obj) { rename(myDiagram, obj); } }));
 
 
@@ -405,6 +405,7 @@ function init() {
           ),  // end main body rectangles spot panel
         $(go.TextBlock,  // the center text
           {
+              font: "bold 11px iransans, sans-serif", // Task shape font
               alignment: go.Spot.Center, textAlign: "center", margin: 12,
               editable: true
           },
@@ -455,7 +456,7 @@ function init() {
         makeMarkerPanel(false, palscale) // sub-process,  loop, parallel, sequential, ad doc and compensation markers
       ), // End Spot panel
       $(go.TextBlock,  // the center text
-          { alignment: go.Spot.Center, textAlign: "center", margin: 2 },
+          { alignment: go.Spot.Center, textAlign: "center", margin: 2, font: "11px iransans, sans-serif" },
           new go.Binding("text"))
       );  // End Node
 
@@ -491,7 +492,7 @@ function init() {
           makeMarkerPanel(true, palscale) // sub-process,  loop, parallel, sequential, ad doc and compensation markers
         ), // end main body rectangles spot panel
         $(go.TextBlock,  // the center text
-          { alignment: go.Spot.Center, textAlign: "center", margin: 2 },
+          { alignment: go.Spot.Center, textAlign: "center", margin: 2, font: "bold 11px iransans, sans-serif" },
           new go.Binding("text"))
       );  // end go.Group
 
@@ -538,7 +539,7 @@ function init() {
               )
           ),  // end Auto Panel
           $(go.TextBlock,
-            { alignment: go.Spot.Center, textAlign: "center", margin: 5, editable: true },
+            { alignment: go.Spot.Center, textAlign: "center", margin: 5, editable: true, font: "bold 11px iransans, sans-serif" },
             new go.Binding("text").makeTwoWay())
 
         ); // end go.Node Vertical
@@ -625,7 +626,7 @@ function init() {
               )
            ),
           $(go.TextBlock,
-            { alignment: go.Spot.Center, textAlign: "center", margin: 5, editable: true },
+            { alignment: go.Spot.Center, textAlign: "center", margin: 5, editable: true, font: "bold 11px iransans, sans-serif" },
             new go.Binding("text").makeTwoWay())
         ); // end go.Node Vertical
 
@@ -671,7 +672,7 @@ function init() {
               )),
 
         $(go.TextBlock,
-          { alignment: go.Spot.Center, textAlign: "center", margin: 5, editable: false },
+          { alignment: go.Spot.Center, textAlign: "center", margin: 5, editable: false, font: "bold 11px iransans, sans-serif" },
           new go.Binding("text"))
       );
 
@@ -688,7 +689,7 @@ function init() {
         $(go.Shape, "Annotation", // A left bracket shape
           { portId: "", fromLinkable: true, cursor: "pointer", fromSpot: go.Spot.Left, strokeWidth: 2, stroke: "gray" }),
         $(go.TextBlock,
-          { margin: 5, editable: true },
+          { margin: 5, editable: true, font: "bold 11px iransans, sans-serif" },
           new go.Binding("text").makeTwoWay())
       );
 
@@ -719,7 +720,7 @@ function init() {
               fill: dataFill, desiredSize: new go.Size(eventNodeSize, eventNodeSize)
           }),
         $(go.TextBlock,
-          { margin: 5, editable: true },
+          { margin: 5, editable: true, font: "bold 11px iransans, sans-serif" },
           new go.Binding("text").makeTwoWay())
       );
 
@@ -741,7 +742,8 @@ function init() {
             {
                 row: 0, column: 0,
                 angle: 270, margin: 5,
-                editable: true, textAlign: "center"
+                editable: true, textAlign: "center",
+                font: "bold 11px iransans, sans-serif"
             },
             new go.Binding("text").makeTwoWay()),
           $(go.RowColumnDefinition, { column: 1, separatorStrokeWidth: 1, separatorStroke: "black" }),
@@ -762,7 +764,7 @@ function init() {
         $(go.Shape, "Process",
           { fill: dataFill, desiredSize: new go.Size(gatewayNodeSize / 2, gatewayNodeSize / 4) }),
         $(go.TextBlock,
-          { margin: 5, editable: true },
+          { margin: 5, editable: true, font: "bold 11px iransans, sans-serif" },
           new go.Binding("text"))
       );
 
@@ -778,7 +780,7 @@ function init() {
         $(go.Shape, "Process",
           { fill: "white", desiredSize: new go.Size(gatewayNodeSize / 2, gatewayNodeSize / 4) }),
         $(go.TextBlock,
-          { margin: 5, editable: true },
+          { margin: 5, editable: true, font: "bold 11px iransans, sans-serif" },
           new go.Binding("text"))
       );
 
@@ -822,7 +824,7 @@ function init() {
             $(go.Panel, "Vertical",
               { defaultAlignment: go.Spot.Left },
               $(go.TextBlock,  // label
-                { margin: 3, editable: true },
+                { margin: 3, editable: true, font: "bold 11px iransans, sans-serif" },
                 new go.Binding("text", "text").makeTwoWay(),
                 new go.Binding("alignment", "isSubGraphExpanded", function (s) { return s ? go.Spot.TopLeft : go.Spot.Center; })),
               // create a placeholder to represent the area where the contents of the group are
@@ -944,7 +946,7 @@ function init() {
             alignment: go.Spot.LeftCenter, alignmentFocus: go.Spot.LeftCenter
         },
           $(go.TextBlock,  // the lane label
-            { editable: true, margin: new go.Margin(2, 0, 0, 8) },
+            { editable: true, margin: new go.Margin(2, 0, 0, 8), font: "bold 11px iransans, sans-serif" },
             new go.Binding("visible", "isSubGraphExpanded").ofObject(),
             new go.Binding("text", "text").makeTwoWay()),
           $("SubGraphExpanderButton", { margin: 4, angle: -270 })  // but this remains always visible!
@@ -956,7 +958,8 @@ function init() {
           {
               name: "LABEL",
               editable: true, visible: false,
-              angle: 0, margin: new go.Margin(6, 0, 0, 20)
+              angle: 0, margin: new go.Margin(6, 0, 0, 20),
+              font: "bold 11px iransans, sans-serif"
           },
             new go.Binding("visible", "isSubGraphExpanded", function (e) { return !e; }).ofObject(),
           new go.Binding("text", "text").makeTwoWay())
@@ -1002,7 +1005,7 @@ function init() {
            $(go.Panel, "Horizontal",
              { column: 0, angle: 270 },
              $(go.TextBlock,
-               { editable: true, margin: new go.Margin(5, 0, 5, 0) },  // margin matches private process (black box pool)
+               { editable: true, margin: new go.Margin(5, 0, 5, 0), font: "bold 11px iransans, sans-serif" },  // margin matches private process (black box pool)
                new go.Binding("text").makeTwoWay())
            ),
            $(go.Placeholder,
@@ -1078,7 +1081,7 @@ function init() {
                         return s ? new go.Point(5, 0) : new go.Point(0, 0);
                     })),
         $(go.TextBlock, { // this is a Link label
-            name: "Label", editable: true, text: "label", segmentOffset: new go.Point(-10, -10), visible: false
+            name: "Label", editable: true, text: "label", segmentOffset: new go.Point(-10, -10), visible: false, font: "bold 14px iransans, sans-serif"
         },
           new go.Binding("text", "text").makeTwoWay(),
           new go.Binding("visible", "visible").makeTwoWay())
@@ -1118,7 +1121,7 @@ function init() {
          $(go.Shape, { toArrow: "Triangle", scale: 1, fill: "white", stroke: "black" }),
          $(go.Shape, { fromArrow: "Circle", scale: 1, visible: true, stroke: "black", fill: "white" }),
          $(go.TextBlock, {
-             editable: true, text: "label"
+             editable: true, text: "label", font: "bold 14px iransans, sans-serif"
          }, // Link label
          new go.Binding("text", "text").makeTwoWay())
       );
