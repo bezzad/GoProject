@@ -1,10 +1,10 @@
 {
   "class": "go.GraphLinksModel",
-  "copiesArrays": true,
-  "copiesArrayObjects": true,
+  "copiesArrays": false,
+  "copiesArrayObjects": false,
   "linkFromPortIdProperty": "fromPort",
   "linkToPortIdProperty": "toPort",
-  "modelData": { "position": "-66 -61.422167968750045" },
+  "modelData": { "position": "0 0" },
   "nodeDataArray": [
     {
       "key": "501",
