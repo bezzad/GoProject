@@ -5,7 +5,7 @@ using GoProject.Properties;
 
 namespace GoProject.Nodes
 {
-    public class SubProcessNode : GroupNode
+    public class PoolNode : GroupNode
     {
         #region Properties
 
@@ -20,41 +20,34 @@ namespace GoProject.Nodes
         public new TaskType? TaskType { get; }
 
         public new bool? IsSubProcess { get; }
-        
+
         public new List<object> BoundaryEventArray { get; }
 
         public new string Color { get; }
 
         public new Color? HexColor { get; }
-
-        public new string Size { get; }
-
-        public new SizeF? SizeF { get; }
+        
 
         #endregion
 
         #region Constructs
 
-        public SubProcessNode()
+        public PoolNode()
         {
-            Key = $"subProcess_{Guid.NewGuid()}";
-            Text = Localization.Subprocess;
-            Category = NodeCategory.subprocess;
+            Key = $"pool_{Guid.NewGuid()}";
+            Text = Localization.Pool;
+            Category = NodeCategory.Pool;
 
             EventType = null;
             EventDimension = null;
-            GatewayType = null;
             TaskType = null;
-            IsSubProcess = true;
+            GatewayType = null;
+            IsSubProcess = null;
             BoundaryEventArray = null;
             Color = null;
             HexColor = null;
-            Size = null;
-            SizeF = null;
         }
 
         #endregion
-
-
     }
 }

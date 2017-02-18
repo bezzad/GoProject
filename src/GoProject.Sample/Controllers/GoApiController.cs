@@ -34,11 +34,22 @@ namespace GoProject.Sample.Controllers
         {
             var diagram = new Diagram
             {
+                NodeDataArray = GoHelper.PaletteNodes()
+            };
+
+            return Ok(diagram);
+        }
+
+        public IHttpActionResult GetCustomPaletteNodes()
+        {
+            var diagram = new Diagram
+            {
                 NodeDataArray = new List<Node>()
                 {
                     new MaterialNode(),
                     new SemiFinishMaterialNode(),
-                    new WorkStationNode()
+                    new WorkStationNode(),
+                    new ExpenseCenterNode()
                 }
             };
 

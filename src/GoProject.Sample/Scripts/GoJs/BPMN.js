@@ -1596,12 +1596,8 @@ function saveDocument() {
     }
 }
 
-function openFromServer() {
-    loadJSON(window.location.origin + '/api/goApi/GetDiagram');
-}
-
-function openPaletteFromServer() {
-    loadJSON(window.location.origin + '/api/goApi/GetPaletteNodes');
+function openFromServer(apiName) {
+    loadJSON(window.location.origin + '/' + apiName);
 }
 
 

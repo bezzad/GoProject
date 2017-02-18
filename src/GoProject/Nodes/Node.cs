@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace GoProject.Nodes
 {
-    public class Node: INode
+    public class Node : INode
     {
         public NodeCategory Category { get; set; }
         public string Item { get; set; }
@@ -75,5 +75,6 @@ namespace GoProject.Nodes
                 if (value != null) Color = ColorTranslator.ToHtml(value.Value);
             }
         }
+
     }
 }

@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
-using System.Drawing;
 using GoProject.Nodes;
-using GoProject.Properties;
 
 namespace GoProject.Sample.Models
 {
-    public class MaterialNode: EventNode
+    public class MaterialNode : EventNode
     {
         public MaterialNode()
         {
@@ -34,15 +32,22 @@ namespace GoProject.Sample.Models
         }
     }
 
-    //public class ExpenseCenterNode : Node[]
-    //{
-    //    List<Node> Nodes = new List<Node>();
-    //    public ExpenseCenterNode()
-    //    {
-    //        Nodes.Add
-    //        new Node { Category = NodeCategory.Pool, Text = Localization.Pool, IsGroup = true, Key = "pool" },
-    //            new Node { Category = NodeCategory.Lane, Text = Localization.NewLane, Group = "pool", HexColor = Color.LightGoldenrodYellow, IsGroup = true },
-    //            new Node { Category = NodeCategory.Lane, Text = Localization.NewLane, Group = "pool", HexColor = Color.LightGreen, IsGroup = true }
-    //    }
-    //}
+    public class ExpenseCenterNode : PoolNode
+    {
+
+        public ExpenseCenterNode()
+        {
+            Text = "مرکز هزینه";
+            Nodes = new List<Node>() { new SubExpenseCenterNode() { Text = "خط تولید اول" } };
+        }
+    }
+
+
+    public class SubExpenseCenterNode : LaneNode
+    {
+        public SubExpenseCenterNode()
+        {
+            Text = "زیر مرکز هزینه";
+        }
+    }
 }

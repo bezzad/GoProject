@@ -73,6 +73,10 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="TinyMapper, Version=2.0.0.40, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\TinyMapper.2.0.8\lib\net45\TinyMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EventDimension.cs" />
@@ -84,6 +88,10 @@
     <Compile Include="NodeCategory.cs" />
     <Compile Include="LinkDataArray.cs" />
     <Compile Include="ModelData.cs" />
+    <Compile Include="Nodes\GroupNode.cs" />
+    <Compile Include="Nodes\IGoupNode.cs" />
+    <Compile Include="Nodes\LaneNode.cs" />
+    <Compile Include="Nodes\PoolNode.cs" />
     <Compile Include="Nodes\Node.cs" />
     <Compile Include="Nodes\SubProcessNode.cs" />
     <Compile Include="Nodes\INode.cs" />

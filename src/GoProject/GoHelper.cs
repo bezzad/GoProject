@@ -50,9 +50,9 @@ namespace GoProject
                 new DataNode { Category = NodeCategory.privateProcess, Text = Localization.BlackBox, SizeF = new SizeF(300, 80)},
                 new DataNode { Category = NodeCategory.annotation, Text = Localization.Note },
 
-                new Node { Category = NodeCategory.Pool, Text = Localization.Pool, IsGroup = true, Key = "pool" },
-                new Node { Category = NodeCategory.Lane, Text = Localization.NewLane, Group = "pool", HexColor = Color.LightGoldenrodYellow, IsGroup = true },
-                new Node { Category = NodeCategory.Lane, Text = Localization.NewLane, Group = "pool", HexColor = Color.LightGreen, IsGroup = true  }
+                new PoolNode { Key = "pool" },
+                new LaneNode { Group = "pool" },
+                new LaneNode { Group = "pool" }
             });
 
 

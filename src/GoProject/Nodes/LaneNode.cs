@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using GoProject.Properties;
 
 namespace GoProject.Nodes
 {
-    public class SubProcessNode : GroupNode
+    public class LaneNode : GroupNode
     {
         #region Properties
 
@@ -23,38 +22,28 @@ namespace GoProject.Nodes
         
         public new List<object> BoundaryEventArray { get; }
 
-        public new string Color { get; }
-
-        public new Color? HexColor { get; }
-
-        public new string Size { get; }
-
-        public new SizeF? SizeF { get; }
-
         #endregion
 
         #region Constructs
 
-        public SubProcessNode()
+        public LaneNode()
         {
-            Key = $"subProcess_{Guid.NewGuid()}";
-            Text = Localization.Subprocess;
-            Category = NodeCategory.subprocess;
+            Key = $"lane_{Guid.NewGuid()}";
+            Text = Localization.NewLane;
+            Category = NodeCategory.Lane;
 
             EventType = null;
             EventDimension = null;
-            GatewayType = null;
             TaskType = null;
-            IsSubProcess = true;
+            GatewayType = null;
+            IsSubProcess = null;
             BoundaryEventArray = null;
-            Color = null;
-            HexColor = null;
-            Size = null;
-            SizeF = null;
+
+            var rand = new Random();
+            HexColor = System.Drawing.Color.FromArgb(rand.Next(150, 255), rand.Next(150, 255), rand.Next(150, 255));
         }
 
         #endregion
-
 
     }
 }
