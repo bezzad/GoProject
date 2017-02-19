@@ -21,6 +21,20 @@ namespace GoProject
         [JsonProperty(PropertyName = "points", NullValueHandling = NullValueHandling.Ignore)]
         public List<double> Points { get; set; }
 
+        [JsonIgnore]
+        public string PointsJson
+        {
+            get { return $"[{string.Join(",", Points)}]"; }
+            set
+            {
+                if (!string.IsNullOrEmpty(value) && value.Length > 2)
+                {
+                    Points = JsonConvert.DeserializeObject<List<double>>(value);
+                }
+            }
+        }
+
+
         /// <summary>
         /// Show connector label or not?
         /// Sample:   '------lable-------+>'

@@ -1,9 +1,6 @@
 ﻿USE [master]
 GO
-/****** Object:  Database [GoProject]    Script Date: 01/02/2017 12:35:34 ب.ظ ******/
-DROP DATABASE IF EXISTS [GoProject]
-GO
-/****** Object:  Database [GoProject]    Script Date: 01/02/2017 12:35:34 ب.ظ ******/
+/****** Object:  Database [GoProject]    Script Date: 2/19/2017 3:49:38 PM ******/
 IF NOT EXISTS (SELECT name FROM sys.databases WHERE name = N'GoProject')
 BEGIN
 CREATE DATABASE [GoProject]
@@ -101,6 +98,267 @@ GO
 ALTER DATABASE SCOPED CONFIGURATION SET QUERY_OPTIMIZER_HOTFIXES = OFF;
 GO
 ALTER DATABASE SCOPED CONFIGURATION FOR SECONDARY SET QUERY_OPTIMIZER_HOTFIXES = PRIMARY;
+GO
+USE [GoProject]
+GO
+/****** Object:  UserDefinedTableType [dbo].[Link]    Script Date: 2/19/2017 3:49:38 PM ******/
+IF NOT EXISTS (SELECT * FROM sys.types st JOIN sys.schemas ss ON st.schema_id = ss.schema_id WHERE st.name = N'Link' AND ss.name = N'dbo')
+CREATE TYPE [dbo].[Link] AS TABLE(
+	[DiagramId] [varchar](100) NOT NULL,
+	[From] [int] NOT NULL,
+	[To] [int] NOT NULL,
+	[FromPort] [nvarchar](50) NULL,
+	[ToPort] [nvarchar](50) NULL,
+	[Visible] [bit] NULL,
+	[Text] [nvarchar](150) NULL,
+	[Category] [varchar](50) NULL,
+	[IsDefault] [bit] NULL,
+	[PointsJson] [varchar](max) NULL,
+	PRIMARY KEY CLUSTERED 
+(
+	[DiagramId] ASC,
+	[From] ASC,
+	[To] ASC
+)WITH (IGNORE_DUP_KEY = OFF)
+)
+GO
+/****** Object:  UserDefinedTableType [dbo].[Node]    Script Date: 2/19/2017 3:49:38 PM ******/
+IF NOT EXISTS (SELECT * FROM sys.types st JOIN sys.schemas ss ON st.schema_id = ss.schema_id WHERE st.name = N'Node' AND ss.name = N'dbo')
+CREATE TYPE [dbo].[Node] AS TABLE(
+	[DiagramId] [varchar](200) NOT NULL,
+	[Key] [varchar](100) NOT NULL,
+	[Category] [varchar](50) NOT NULL,
+	[Loc] [varchar](50) NULL,
+	[Text] [nvarchar](150) NULL,
+	[EventType] [int] NULL,
+	[EventDimension] [int] NULL,
+	[GatewayType] [int] NULL,
+	[TaskType] [int] NULL,
+	[Group] [varchar](100) NULL,
+	[IsGroup] [bit] NULL,
+	[Color] [varchar](50) NULL,
+	[Size] [varchar](50) NULL,
+	[IsSubProcess] [bit] NULL,
+	[Name] [nvarchar](150) NULL,
+	PRIMARY KEY CLUSTERED 
+(
+	[DiagramId] ASC,
+	[Key] ASC
+)WITH (IGNORE_DUP_KEY = OFF)
+)
+GO
+/****** Object:  Table [dbo].[Diagrams]    Script Date: 2/19/2017 3:49:38 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Diagrams]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[Diagrams](
+	[Id] [varchar](100) NOT NULL,
+	[Name] [nvarchar](200) NULL,
+	[Class] [varchar](50) NOT NULL,
+	[IsReadOnly] [bit] NOT NULL,
+	[ModifyDate] [datetime] NOT NULL,
+	[Position] [varchar](100) NULL,
+	[CreatorUserId] [int] NULL,
+ CONSTRAINT [PK_Diagram] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
+/****** Object:  Table [dbo].[Links]    Script Date: 2/19/2017 3:49:38 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Links]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[Links](
+	[DiagramId] [varchar](100) NOT NULL,
+	[From] [int] NOT NULL,
+	[To] [int] NOT NULL,
+	[FromPort] [nvarchar](50) NULL,
+	[ToPort] [nvarchar](50) NULL,
+	[Visible] [bit] NULL,
+	[Text] [nvarchar](150) NULL,
+	[Category] [varchar](50) NULL,
+	[IsDefault] [bit] NULL,
+	[PointsJson] [varchar](max) NULL,
+ CONSTRAINT [PK_Links_1] PRIMARY KEY CLUSTERED 
+(
+	[DiagramId] ASC,
+	[From] ASC,
+	[To] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+END
+GO
+/****** Object:  Table [dbo].[Nodes]    Script Date: 2/19/2017 3:49:38 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Nodes]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[Nodes](
+	[DiagramId] [varchar](200) NOT NULL,
+	[Key] [varchar](100) NOT NULL,
+	[Category] [varchar](50) NOT NULL,
+	[Loc] [varchar](50) NULL,
+	[Text] [nvarchar](150) NULL,
+	[EventType] [int] NULL,
+	[EventDimension] [int] NULL,
+	[GatewayType] [int] NULL,
+	[TaskType] [int] NULL,
+	[Group] [varchar](100) NULL,
+	[IsGroup] [bit] NULL,
+	[Color] [varchar](50) NULL,
+	[Size] [varchar](50) NULL,
+	[IsSubProcess] [bit] NULL,
+	[Name] [nvarchar](150) NULL,
+ CONSTRAINT [PK_Nodes] PRIMARY KEY CLUSTERED 
+(
+	[DiagramId] ASC,
+	[Key] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[DF_Diagram_Class]') AND type = 'D')
+BEGIN
+ALTER TABLE [dbo].[Diagrams] ADD  CONSTRAINT [DF_Diagram_Class]  DEFAULT ('go.GraphLinksModel') FOR [Class]
+END
+
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[DF_Diagram_IsReadOnly]') AND type = 'D')
+BEGIN
+ALTER TABLE [dbo].[Diagrams] ADD  CONSTRAINT [DF_Diagram_IsReadOnly]  DEFAULT ((0)) FOR [IsReadOnly]
+END
+
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[DF_Diagram_ModifyDate]') AND type = 'D')
+BEGIN
+ALTER TABLE [dbo].[Diagrams] ADD  CONSTRAINT [DF_Diagram_ModifyDate]  DEFAULT (getdate()) FOR [ModifyDate]
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[sp_InsertDiagramData]    Script Date: 2/19/2017 3:49:38 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[sp_InsertDiagramData]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[sp_InsertDiagramData] AS' 
+END
+GO
+-- =============================================
+-- Author:		Behzad
+-- Create date: 1395/12/01
+-- Description:	Fill Go.Js tables by input data
+-- =============================================
+ALTER PROCEDURE [dbo].[sp_InsertDiagramData]
+    @DiagramId varchar(100) ,
+    @DiagramName NVARCHAR(200) ,
+	@DiagramClass varchar(50),
+	@DiagramPosition varchar(100) = NULL,
+	@IsReadonly BIT = 0 ,
+    @CreatorUserId INT ,
+    @Nodes Node READONLY ,
+    @Links Link READONLY
+AS
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+		IF(@DiagramId IS NOT NULL)
+		BEGIN
+			-- Clear old data
+			DELETE  FROM dbo.Links WHERE   DiagramId = @DiagramId;
+			DELETE  FROM dbo.Nodes WHERE   DiagramId = @DiagramId;
+			DELETE  FROM dbo.Diagrams WHERE Id = @DiagramId;
+		END 
+		ELSE
+			SET @DiagramId = NEWID()
+            
+
+		/******************************* Make just diagram **************************/
+		INSERT INTO dbo.Diagrams
+		        ( Id ,
+		          [Name] ,
+		          Class ,
+		          IsReadOnly ,
+		          ModifyDate ,
+		          Position ,
+		          CreatorUserId
+		        )
+		VALUES  ( @DiagramId , -- Id - varchar(200)
+		          @DiagramName , -- Name - nvarchar(200)
+		          @DiagramClass , -- Class - varchar(50)
+		          @IsReadonly , -- IsReadOnly - bit
+		          GETDATE() , -- ModifyDate - datetime
+		          @DiagramPosition , -- Position - varchar(100)
+		          @CreatorUserId  -- CreatorUserId - int
+		        );
+		/*****************************************************************************/
+
+
+
+
+
+		/****************** Insert nodes by existing diagram id ****************/
+		INSERT INTO dbo.Nodes
+		        ( DiagramId ,
+		          [Key] ,
+		          Category ,
+		          Loc ,
+		          [Text] ,
+		          EventType ,
+		          EventDimension ,
+		          GatewayType ,
+		          TaskType ,
+		          [Group] ,
+		          IsGroup ,
+		          Color ,
+		          Size ,
+		          IsSubProcess ,
+		          Name
+		        )
+		SELECT * FROM @Nodes;
+		/***********************************************************************/
+
+	
+
+		/****************** Insert nodes by existing diagram id ****************/
+        INSERT  INTO dbo.Links
+                ( DiagramId ,
+                  [From] ,
+                  [To] ,
+                  FromPort ,
+                  ToPort ,
+                  Visible ,
+                  [Text] ,
+                  Category ,
+                  IsDefault ,
+                  PointsJson
+                )
+        SELECT * FROM @Links;
+		/***********************************************************************/
+
+		SELECT * FROM dbo.Diagrams WHERE Id = @DiagramId
+
+        COMMIT TRANSACTION;       
+    END TRY
+    BEGIN CATCH
+        ROLLBACK TRANSACTION;
+
+        THROW;
+    END CATCH;
+
+GO
+USE [master]
 GO
 ALTER DATABASE [GoProject] SET  READ_WRITE 
 GO

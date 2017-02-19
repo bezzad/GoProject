@@ -63,8 +63,14 @@ namespace GoProject
         [JsonProperty(PropertyName = "modelData", NullValueHandling = NullValueHandling.Ignore)]
         public ModelData ModelData { get; set; }
 
+        [JsonIgnore]
+        public string Position { get { return ModelData.Position; } set { ModelData.Position = value; } }
+
         [JsonProperty(PropertyName = "id", NullValueHandling = NullValueHandling.Ignore)]
         public string Id { get; set; } = Guid.NewGuid().ToString();
+
+        [JsonProperty(PropertyName = "name", NullValueHandling = NullValueHandling.Ignore)]
+        public string Name { get; set; }
 
         [JsonProperty(PropertyName = "isReadonly", NullValueHandling = NullValueHandling.Ignore)]
         public bool IsReadonly { get; set; } = false;

@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Web.Http;
 using GoProject.Nodes;
+using GoProject.Sample.Core;
 using GoProject.Sample.Models;
 
 namespace GoProject.Sample.Controllers
@@ -16,8 +17,16 @@ namespace GoProject.Sample.Controllers
         [HttpPost]
         public IHttpActionResult SaveDiagram([FromBody]Diagram diagram)
         {
+            // Save json text on local drives
             var json = JsonConvert.SerializeObject(diagram, Formatting.Indented);
             File.WriteAllText(FilePath, json);
+            //
+            // Store on Sql Server Database
+            if (diagram == null) return InternalServerError(new ArgumentNullException(nameof(diagram)));
+
+            diagram.Name = diagram.Name ?? "TestDiagramName"; // Very important param
+
+            diagram.StoreOnDb(0);
 
             return Ok(FilePath);
         }
@@ -63,5 +72,6 @@ namespace GoProject.Sample.Controllers
 
             return Ok(diagram);
         }
+
     }
 }
