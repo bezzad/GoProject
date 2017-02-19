@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Web.Http;
 using GoProject.Nodes;
@@ -42,16 +43,23 @@ namespace GoProject.Sample.Controllers
 
         public IHttpActionResult GetCustomPaletteNodes()
         {
+            var parentNode = new ExpenseCenterNode();
+            ((IGroupNode) parentNode.Nodes[0]).Nodes = new ObservableCollection<Node>()
+            {
+                new MaterialNode(),
+                new SemiFinishMaterialNode(),
+                new EndProductNode(),
+                new WorkStationNode()
+            };
+
             var diagram = new Diagram
             {
-                NodeDataArray = new List<Node>()
+                TreeNodes = new List<Node>()
                 {
-                    new MaterialNode(),
-                    new SemiFinishMaterialNode(),
-                    new WorkStationNode(),
-                    new ExpenseCenterNode()
+                    parentNode
                 }
             };
+            
 
             return Ok(diagram);
         }

@@ -53,15 +53,17 @@ namespace GoProject
                 new DataNode { Category = NodeCategory.dataobject, Text = Localization.DataObject },
                 new DataNode { Category = NodeCategory.datastore, Text = Localization.DataStorage },
                 new DataNode { Category = NodeCategory.privateProcess, Text = Localization.BlackBox, SizeF = new SizeF(300, 80)},
-                new DataNode { Category = NodeCategory.annotation, Text = Localization.Note },
-
-                new PoolNode { Key = "pool", Nodes =
-                {
-                    new LaneNode { Group = "pool" },
-                    new LaneNode { Group = "pool" }
-                }}
+                new DataNode { Category = NodeCategory.annotation, Text = Localization.Note }
             });
 
+            nodes.Add(new PoolNode
+            {
+                Nodes =
+                {
+                    new LaneNode (),
+                    new LaneNode ()
+                }
+            });
 
             return nodes;
         }
@@ -106,6 +108,14 @@ namespace GoProject
             }
 
             return tree;
+        }
+
+        public static void ForEach<T>(this IEnumerable<T> enumerable, Action<T> action)
+        {
+            foreach (var cur in enumerable)
+            {
+                action(cur);
+            }
         }
     }
 }

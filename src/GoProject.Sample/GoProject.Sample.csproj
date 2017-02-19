@@ -155,7 +155,12 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\EndProductNode.cs" />
+    <Compile Include="Models\ExpenseCenterNode.cs" />
     <Compile Include="Models\MaterialNode.cs" />
+    <Compile Include="Models\SemiFinishMaterialNode.cs" />
+    <Compile Include="Models\SubExpenseCenterNode.cs" />
+    <Compile Include="Models\WorkStationNode.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\Connections.tt">
