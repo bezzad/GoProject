@@ -1,8 +1,10 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.IO;
-using System.Threading.Tasks;
 using System.Web.Http;
+using GoProject.Nodes;
+using GoProject.Sample.Models;
 
 namespace GoProject.Sample.Controllers
 {
@@ -13,11 +15,8 @@ namespace GoProject.Sample.Controllers
         [HttpPost]
         public IHttpActionResult SaveDiagram([FromBody]Diagram diagram)
         {
-            Task.Run(async () =>
-            {
-                var json = await JsonConvert.SerializeObjectAsync(diagram, Formatting.Indented);
-                File.WriteAllText(FilePath, json);
-            });
+            var json = JsonConvert.SerializeObject(diagram, Formatting.Indented);
+            File.WriteAllText(FilePath, json);
 
             return Ok(FilePath);
         }
@@ -27,8 +26,32 @@ namespace GoProject.Sample.Controllers
             var json = File.ReadAllText(FilePath, System.Text.Encoding.UTF8);
             var diagram = JsonConvert.DeserializeObject<Diagram>(json);
 
-            //var diagram = new Diagram();
-            //diagram.NodeDataArray = Node.PaletteNodes();
+
+            return Ok(diagram);
+        }
+
+        public IHttpActionResult GetPaletteNodes()
+        {
+            var diagram = new Diagram
+            {
+                TreeNodes = GoHelper.PaletteTreeNodes()
+            };
+
+            return Ok(diagram);
+        }
+
+        public IHttpActionResult GetCustomPaletteNodes()
+        {
+            var diagram = new Diagram
+            {
+                NodeDataArray = new List<Node>()
+                {
+                    new MaterialNode(),
+                    new SemiFinishMaterialNode(),
+                    new WorkStationNode(),
+                    new ExpenseCenterNode()
+                }
+            };
 
             return Ok(diagram);
         }

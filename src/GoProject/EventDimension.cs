@@ -2,7 +2,7 @@ namespace GoProject
 {
     public enum EventDimension
     {
-        StartNone = 1,
+        Start = 1,
         StartInter = 2,
         StartNonInter = 3,
         IntermediateCatching = 4,

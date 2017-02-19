@@ -136,6 +136,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\GoProject\Properties\AssemblyInfo.cs">
+      <Link>Properties\AssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="App_Data\Connections.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -152,7 +155,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Models\MaterialNode.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\Connections.tt">
@@ -233,6 +236,7 @@
     <Content Include="Content\GoJs\BPMNdata\OMG BPMN by Example Figure 5.1.json" />
     <Content Include="Content\GoJs\BPMNdata\OMG BPMN by Example Figure 5.2.json" />
     <Content Include="Content\GoJs\BPMNdata\OMG BPMN by Example Figure 5.3.json" />
+    <Content Include="fonts\iransans.ttf" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
@@ -276,7 +280,6 @@
     <Content Include="Views\Go\PipesSample.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\" />
     <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>

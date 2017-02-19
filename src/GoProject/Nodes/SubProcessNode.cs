@@ -1,36 +1,42 @@
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using GoProject.Properties;
 
 namespace GoProject.Nodes
 {
-    public class DataNode : Node
+    public class SubProcessNode : GroupNode
     {
+
         #region Properties
 
+        private readonly NodeCategory _category = NodeCategory.subprocess;
+
+        public override NodeCategory Category => _category;
         public new GatewayType? GatewayType => null;
         public new EventType? EventType => null;
         public new EventDimension? EventDimension => null;
         public new TaskType? TaskType => null;
-        public new bool? IsSubProcess => null;
-        public new bool? IsGroup => null;
-        public new List<object> BoundaryEventArray => null;
         public new string Color => null;
         public new Color? HexColor => null;
+        public new string Size => null;
+        public new SizeF? SizeF => null;
+        public new bool? IsSubProcess => true;
 
         #endregion
 
         #region Constructs
 
-        public DataNode()
+        public SubProcessNode()
         {
-            Text = Localization.Data;
-            Category = NodeCategory.dataobject;
+            Key = $"subProcess_{Guid.NewGuid()}";
+            Text = Localization.Subprocess;
         }
 
-        public DataNode(INode node) : base(node)
-        { }
+        public SubProcessNode(INode node) : base(node)
+        {}
 
         #endregion
+
     }
 }

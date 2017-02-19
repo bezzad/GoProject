@@ -178,6 +178,15 @@ namespace GoProject.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Custome Palette.
+        /// </summary>
+        public static string CustomePalette {
+            get {
+                return ResourceManager.GetString("CustomePalette", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cut.
         /// </summary>
         public static string Cut {
@@ -408,6 +417,15 @@ namespace GoProject.Properties {
         public static string Overview {
             get {
                 return ResourceManager.GetString("Overview", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Palette.
+        /// </summary>
+        public static string Palette {
+            get {
+                return ResourceManager.GetString("Palette", resourceCulture);
             }
         }
         

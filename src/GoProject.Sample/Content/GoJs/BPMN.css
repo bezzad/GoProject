@@ -2,10 +2,15 @@
 
 /* Diagram and palette area */
 
+@font-face {
+    font-family: iransans;
+    src: url(../../fonts/iransans.ttf);
+}
+
 #myDiagramDiv {
     float: left;
     border: solid 1px blue;
-    width: 800px;
+    width: 80%;
     height: 600px;
     margin-right: 12px;
     background-color: ghostwhite;
@@ -60,10 +65,6 @@
     padding: 1px;
 }
 
-.ui-menu {
-    width: 120px;
-}
-
 #menuui {
     height: 30px;
     width: 100%;
@@ -88,7 +89,7 @@ input {
     background: #1874CD;
     width: 100%;
     text-align: center;
-    font-family: Arial;
+    font-family: iransans, Arial, tahoma;
     font-weight: bold;
     font-size: 14px;
     padding: 3px 0px;
@@ -115,7 +116,7 @@ input {
 }
 
 .elementText {
-    font-family: Arial;
+    font-family: iransans, Arial, tahoma;
     font-size: medium;
     margin-left: 10px;
     margin-top: 20px;
@@ -123,7 +124,7 @@ input {
 }
 
 .mySavedFiles {
-    font-family: Arial;
+    font-family: iransans, Arial, tahoma;
     font-size: medium;
     width: 250px;
     margin-left: 25px;
@@ -131,7 +132,7 @@ input {
 
 .elementBtn {
     margin-top: 20px;
-    font-family: Arial;
+    font-family: iransans, Arial, tahoma;
     font-size: medium;
     margin-left: 20px;
 }
@@ -158,7 +159,7 @@ figure {
     position: relative;
     width: 180px;
     /*height: 60px;*/
-    font-family: arial, helvetica, sans-serif;
+    font-family: iransans, Arial, tahoma, helvetica, sans-serif;
     font-weight: bold;
     font-size: 11px;
 }
