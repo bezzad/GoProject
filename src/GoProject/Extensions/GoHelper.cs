@@ -6,7 +6,7 @@ using GoProject.Enums;
 using GoProject.Nodes;
 using GoProject.Properties;
 
-namespace GoProject
+namespace GoProject.Extensions
 {
     public static class GoHelper
     {

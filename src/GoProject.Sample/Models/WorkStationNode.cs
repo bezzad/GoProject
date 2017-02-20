@@ -7,7 +7,7 @@ namespace GoProject.Sample.Models
         public WorkStationNode()
         {
             Text = "ایستگاه کاری";
-            TaskType = GoProject.TaskType.Service;
+            TaskType = Enums.TaskType.Service;
         }
     }
 }

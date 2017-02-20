@@ -1,4 +1,4 @@
-namespace GoProject
+namespace GoProject.Enums
 {
     public enum TaskType
     {

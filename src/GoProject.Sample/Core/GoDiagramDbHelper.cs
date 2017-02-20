@@ -1,5 +1,6 @@
 ﻿using System;
 using Dapper;
+using GoProject.DataTableHelper;
 
 namespace GoProject.Sample.Core
 {
@@ -29,9 +30,9 @@ namespace GoProject.Sample.Core
 
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception exp)
             {
-                return false;
+                throw;
             }
         }
     }

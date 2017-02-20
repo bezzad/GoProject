@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
+using GoProject.DataTableHelper;
+using GoProject.Extensions;
 using GoProject.Nodes;
 using Newtonsoft.Json;
 
@@ -27,19 +29,24 @@ namespace GoProject
         [JsonProperty(PropertyName = "class", NullValueHandling = NullValueHandling.Ignore)]
         public string Class { get; set; } = "go.GraphLinksModel";
 
+        [TableIgnore]
         [JsonProperty(PropertyName = "copiesArrays", NullValueHandling = NullValueHandling.Ignore)]
         public bool CopiesArrays { get; set; } = true;
 
+        [TableIgnore]
         [JsonProperty(PropertyName = "copiesArrayObjects", NullValueHandling = NullValueHandling.Ignore)]
         public bool CopiesArrayObjects { get; set; } = true;
 
+        [TableIgnore]
         [JsonProperty(PropertyName = "linkFromPortIdProperty", NullValueHandling = NullValueHandling.Ignore)]
         public string LinkFromPortIdProperty { get; set; }
 
+        [TableIgnore]
         [JsonProperty(PropertyName = "linkToPortIdProperty", NullValueHandling = NullValueHandling.Ignore)]
         public string LinkToPortIdProperty { get; set; }
 
         [JsonIgnore]
+        [TableIgnore]
         public List<Node> TreeNodes
         {
             get
@@ -60,6 +67,7 @@ namespace GoProject
         [JsonProperty(PropertyName = "linkDataArray", NullValueHandling = NullValueHandling.Ignore)]
         public List<LinkDataArray> LinkDataArray { get; set; }
 
+        [TableIgnore]
         [JsonProperty(PropertyName = "modelData", NullValueHandling = NullValueHandling.Ignore)]
         public ModelData ModelData { get; set; }
 

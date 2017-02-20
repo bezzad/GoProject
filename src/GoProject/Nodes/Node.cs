@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Drawing;
-using Newtonsoft.Json;
+using GoProject.Enums;
+
 // ReSharper disable VirtualMemberCallInConstructor
 
 namespace GoProject.Nodes

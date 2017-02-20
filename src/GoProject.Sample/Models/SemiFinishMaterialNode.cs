@@ -7,8 +7,8 @@ namespace GoProject.Sample.Models
         public SemiFinishMaterialNode()
         {
             Text = "محصول نهایی";
-            EventType = GoProject.EventType.Terminate;
-            EventDimension = GoProject.EventDimension.End;
+            EventType = Enums.EventType.Terminate;
+            EventDimension = Enums.EventDimension.End;
         }
     }
 }

@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using GoProject.DataTableHelper;
+using GoProject.Enums;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
@@ -18,6 +20,7 @@ namespace GoProject
         [JsonProperty(PropertyName = "toPort", NullValueHandling = NullValueHandling.Ignore)]
         public string ToPort { get; set; }
 
+        [TableIgnore]
         [JsonProperty(PropertyName = "points", NullValueHandling = NullValueHandling.Ignore)]
         public List<double> Points { get; set; }
 

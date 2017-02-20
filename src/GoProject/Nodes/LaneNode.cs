@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using GoProject.Enums;
 using GoProject.Properties;
 
 namespace GoProject.Nodes

@@ -1,4 +1,5 @@
 using System.Drawing;
+using GoProject.Enums;
 using GoProject.Properties;
 // ReSharper disable UnassignedGetOnlyAutoProperty
 

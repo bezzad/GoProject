@@ -8,8 +8,8 @@ namespace GoProject.Sample.Models
         public MaterialNode()
         {
             Text = "مواد اولیه";
-            EventType = GoProject.EventType.None;
-            EventDimension = GoProject.EventDimension.Start;
+            EventType = Enums.EventType.None;
+            EventDimension = Enums.EventDimension.Start;
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using GoProject.DataTableHelper;
+using Newtonsoft.Json;
 
 namespace GoProject.Nodes
 {
@@ -15,6 +17,9 @@ namespace GoProject.Nodes
 
         public override string Key { get { return _key; } set { _key = value; Nodes?.ForEach(c => c.Group = _key); } }
         public new bool? IsGroup => true;
+
+        [TableIgnore]
+        [JsonIgnore]
         public ObservableCollection<Node> Nodes
         {
             get
