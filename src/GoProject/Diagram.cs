@@ -72,7 +72,11 @@ namespace GoProject
         public ModelData ModelData { get; set; }
 
         [JsonIgnore]
-        public string Position { get { return ModelData.Position; } set { ModelData.Position = value; } }
+        public string Position
+        {
+            get { return ModelData?.Position; }
+            set { ModelData = new ModelData() { Position = value }; }
+        }
 
         [JsonProperty(PropertyName = "id", NullValueHandling = NullValueHandling.Ignore)]
         public string Id { get; set; } = Guid.NewGuid().ToString();

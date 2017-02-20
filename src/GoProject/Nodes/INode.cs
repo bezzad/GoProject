@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using GoProject.DataTableHelper;
 using GoProject.Enums;
@@ -29,21 +30,22 @@ namespace GoProject.Nodes
         [JsonProperty(PropertyName = "text", NullValueHandling = NullValueHandling.Ignore)]
         string Text { get; set; }
 
-        [TableConverter(ItemConverterType = typeof(int))]
+        [TableConverter(ItemConverterType = typeof(int?))]
         [JsonProperty(PropertyName = "eventType", NullValueHandling = NullValueHandling.Ignore)]
         EventType? EventType { get; set; }
 
-        [TableConverter(ItemConverterType = typeof(int))]
+        [TableConverter(ItemConverterType = typeof(int?))]
         [JsonProperty(PropertyName = "eventDimension", NullValueHandling = NullValueHandling.Ignore)]
         EventDimension? EventDimension { get; set; }
 
         [JsonProperty(PropertyName = "group", NullValueHandling = NullValueHandling.Ignore)]
         string Group { get; set; }
 
-        [TableConverter(ItemConverterType = typeof(int))]
+        [TableConverter(ItemConverterType = typeof(int?))]
         [JsonProperty(PropertyName = "taskType", NullValueHandling = NullValueHandling.Ignore)]
         TaskType? TaskType { get; set; }
 
+        [TableIgnore]
         [JsonProperty(PropertyName = "boundaryEventArray", NullValueHandling = NullValueHandling.Ignore)]
         List<object> BoundaryEventArray { get; set; }
 
@@ -56,7 +58,7 @@ namespace GoProject.Nodes
         [JsonProperty(PropertyName = "size", NullValueHandling = NullValueHandling.Ignore)]
         string Size { get; set; }
 
-        [TableConverter(ItemConverterType = typeof(int))]
+        [TableConverter(ItemConverterType = typeof(int?))]
         [JsonProperty(PropertyName = "gatewayType", NullValueHandling = NullValueHandling.Ignore)]
         GatewayType? GatewayType { get; set; }
 

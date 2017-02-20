@@ -8,27 +8,21 @@ namespace GoProject.DataTableHelper
 {
     public static class TypeReflector
     {
-        public static void ForEach<T>(this IEnumerable<T> enumerable, Action<T> action)
-        {
-            foreach (var cur in enumerable)
-            {
-                action(cur);
-            }
-        }
+
 
         public static DataTable ToDataTable<T>(this IEnumerable<T> data)
         {
             var dt = new DataTable();
 
             // create table columns by object properties
-            var properties = typeof(T).GetProperties().Where(p => p.GetAttribute<TableIgnoreAttribute>() == null).ToList();
+            var properties = typeof(T).GetProperties().Where(p => p.CanRead && p.GetAttribute<TableIgnoreAttribute>() == null).ToList();
+
+            var converterCache = new Dictionary<string, TableConverterAttribute>();
 
             foreach (var prop in properties)
             {
-                var tableAttr = prop.GetAttribute<TableConverterAttribute>();
-                var colName = tableAttr?.ColumnName ?? prop.Name;
-
-                dt.Columns.Add(colName);
+                converterCache[prop.Name] = prop.GetAttribute<TableConverterAttribute>();
+                dt.Columns.Add(converterCache[prop.Name]?.ColumnName ?? prop.Name);
             }
 
             if (data == null) return dt;
@@ -41,17 +35,58 @@ namespace GoProject.DataTableHelper
 
                 foreach (var prop in properties)
                 {
-                    var tableAttr = prop.GetAttribute<TableConverterAttribute>();
-
-                    var colName = tableAttr?.ColumnName ?? prop.Name;
+                    var converter = converterCache[prop.Name];
+                    var colName = converter?.ColumnName ?? prop.Name;
                     var colValue = prop.GetValue(item);
 
-                    if (tableAttr?.ItemConverterType != null)
+                    if (converter?.ItemConverterType != null)
                     {
-                        var colType = tableAttr.ItemConverterType;
-                        colValue = Convert.ChangeType(colValue, colType);
+                        //Coalesce to set the safe value using default(t) or the safe type.
+                        colValue = colValue.ChangeType(converter.ItemConverterType);
                     }
                     row[colName] = colValue;
+                }
+            }
+            return dt;
+        }
+
+        public static DataTable ToDataTable<T>(this IEnumerable<T> data, IEnumerable<string> columnsOrder)
+        {
+            var orders = columnsOrder as List<string> ?? columnsOrder?.ToList();
+            if (orders == null || !orders.Any()) return data.ToDataTable();
+
+            var dt = new DataTable();
+
+            // create table columns by object properties
+            var properties = typeof(T).GetProperties().Where(p => p.CanRead && p.GetAttribute<TableIgnoreAttribute>() == null)
+                .Select(p => new { Attr = p.GetAttribute<TableConverterAttribute>(), Prop = p }).ToList();
+
+            properties.Sort((x1, x2) =>
+                orders.FindIndex(co => (x1.Attr?.ColumnName ?? x1.Prop.Name) == co)
+                    .CompareTo(orders.FindIndex(co => (x2.Attr?.ColumnName ?? x2.Prop.Name) == co)));
+
+            foreach (var p in properties)
+            {
+                dt.Columns.Add(p.Attr?.ColumnName ?? p.Prop.Name);
+            }
+
+            if (data == null) return dt;
+
+            // add any rows to data table
+            foreach (var item in data)
+            {
+                var row = dt.Rows.Add();
+
+                foreach (var p in properties)
+                {
+                    var colValue = p.Prop.GetValue(item);
+
+                    if (p.Attr?.ItemConverterType != null)
+                    {
+                        //Coalesce to set the safe value using default(t) or the safe type.
+                        colValue = colValue.ChangeType(p.Attr.ItemConverterType);
+                    }
+                    row[p.Attr?.ColumnName ?? p.Prop.Name] = colValue;
                 }
             }
 
@@ -59,6 +94,47 @@ namespace GoProject.DataTableHelper
         }
 
 
+        public static void ForEach<T>(this IEnumerable<T> enumerable, Action<T> action)
+        {
+            foreach (var cur in enumerable)
+            {
+                action(cur);
+            }
+        }
+
+        public static T ChangeType<T>(this object value)
+        {
+            var t = typeof(T);
+
+            if (t.IsGenericType && t.GetGenericTypeDefinition() == typeof(Nullable<>))
+            {
+                if (value == null)
+                {
+                    return default(T);
+                }
+
+                t = Nullable.GetUnderlyingType(t);
+            }
+
+            return (T)Convert.ChangeType(value, t);
+        }
+
+        public static object ChangeType(this object value, Type conversion)
+        {
+            var t = conversion;
+
+            if (t.IsGenericType && t.GetGenericTypeDefinition() == typeof(Nullable<>))
+            {
+                if (value == null)
+                {
+                    return null;
+                }
+
+                t = Nullable.GetUnderlyingType(t);
+            }
+
+            return Convert.ChangeType(value, t);
+        }
 
 
         public static T GetAttribute<T>(this object attributeProvider) where T : Attribute
