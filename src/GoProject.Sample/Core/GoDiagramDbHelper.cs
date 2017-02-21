@@ -78,7 +78,7 @@ namespace GoProject.Sample.Core
                     dbConn.Query<Node>("Select * From Nodes Where DiagramId = @diagramId", new { diagramId })?.ToList().ConvertToTreeNodes();
 
                 diagram.LinkDataArray =
-                    dbConn.Query<LinkDataArray>("Select * From Links Where DiagramId = @diagramId", new { diagramId })?.ToList();
+                    dbConn.Query<Link>("Select * From Links Where DiagramId = @diagramId", new { diagramId })?.ToList();
 
                 return diagram;
             }

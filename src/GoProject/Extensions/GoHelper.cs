@@ -10,7 +10,6 @@ namespace GoProject.Extensions
 {
     public static class GoHelper
     {
-
         public static List<Node> PaletteTreeNodes()
         {
             var nodes = new List<Node>();

@@ -65,7 +65,7 @@ namespace GoProject
 
 
         [JsonProperty(PropertyName = "linkDataArray", NullValueHandling = NullValueHandling.Ignore)]
-        public List<LinkDataArray> LinkDataArray { get; set; }
+        public List<Link> LinkDataArray { get; set; }
 
         [TableIgnore]
         [JsonProperty(PropertyName = "modelData", NullValueHandling = NullValueHandling.Ignore)]

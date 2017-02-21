@@ -1,6 +1,6 @@
 ﻿USE [GoProject]
 GO
-/****** Object:  StoredProcedure [dbo].[sp_InsertDiagramData]    Script Date: 03/12/1395 12:15:52 ق.ظ ******/
+/****** Object:  StoredProcedure [dbo].[sp_InsertDiagramData]    Script Date: 2/21/2017 3:50:40 PM ******/
 DROP PROCEDURE IF EXISTS [dbo].[sp_InsertDiagramData]
 GO
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Nodes]') AND type in (N'U'))
@@ -18,30 +18,33 @@ GO
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Diagrams]') AND type in (N'U'))
 ALTER TABLE [dbo].[Diagrams] DROP CONSTRAINT IF EXISTS [DF_Diagram_Class]
 GO
-/****** Object:  Table [dbo].[Nodes]    Script Date: 03/12/1395 12:15:52 ق.ظ ******/
+/****** Object:  Table [dbo].[Nodes]    Script Date: 2/21/2017 3:50:40 PM ******/
 DROP TABLE IF EXISTS [dbo].[Nodes]
 GO
-/****** Object:  Table [dbo].[Links]    Script Date: 03/12/1395 12:15:52 ق.ظ ******/
+/****** Object:  Table [dbo].[Links]    Script Date: 2/21/2017 3:50:40 PM ******/
 DROP TABLE IF EXISTS [dbo].[Links]
 GO
-/****** Object:  Table [dbo].[Diagrams]    Script Date: 03/12/1395 12:15:52 ق.ظ ******/
+/****** Object:  Table [dbo].[Diagrams]    Script Date: 2/21/2017 3:50:40 PM ******/
 DROP TABLE IF EXISTS [dbo].[Diagrams]
 GO
-/****** Object:  UserDefinedTableType [dbo].[Node]    Script Date: 03/12/1395 12:15:52 ق.ظ ******/
+/****** Object:  UserDefinedFunction [dbo].[fn_GetPaletteNodes]    Script Date: 2/21/2017 3:50:40 PM ******/
+DROP FUNCTION IF EXISTS [dbo].[fn_GetPaletteNodes]
+GO
+/****** Object:  Table [dbo].[PaletteNodes]    Script Date: 2/21/2017 3:50:40 PM ******/
+DROP TABLE IF EXISTS [dbo].[PaletteNodes]
+GO
+/****** Object:  UserDefinedTableType [dbo].[Node]    Script Date: 2/21/2017 3:50:40 PM ******/
 DROP TYPE IF EXISTS [dbo].[Node]
 GO
-/****** Object:  UserDefinedTableType [dbo].[Link]    Script Date: 03/12/1395 12:15:52 ق.ظ ******/
+/****** Object:  UserDefinedTableType [dbo].[Link]    Script Date: 2/21/2017 3:50:40 PM ******/
 DROP TYPE IF EXISTS [dbo].[Link]
-GO
-/****** Object:  User [admin]    Script Date: 03/12/1395 12:15:52 ق.ظ ******/
-DROP USER IF EXISTS [admin]
 GO
 USE [master]
 GO
-/****** Object:  Database [GoProject]    Script Date: 03/12/1395 12:15:52 ق.ظ ******/
+/****** Object:  Database [GoProject]    Script Date: 2/21/2017 3:50:40 PM ******/
 DROP DATABASE IF EXISTS [GoProject]
 GO
-/****** Object:  Database [GoProject]    Script Date: 03/12/1395 12:15:52 ق.ظ ******/
+/****** Object:  Database [GoProject]    Script Date: 2/21/2017 3:50:40 PM ******/
 IF NOT EXISTS (SELECT name FROM sys.databases WHERE name = N'GoProject')
 BEGIN
 CREATE DATABASE [GoProject]
@@ -142,11 +145,7 @@ ALTER DATABASE SCOPED CONFIGURATION FOR SECONDARY SET QUERY_OPTIMIZER_HOTFIXES =
 GO
 USE [GoProject]
 GO
-/****** Object:  User [admin]    Script Date: 03/12/1395 12:15:53 ق.ظ ******/
-IF NOT EXISTS (SELECT * FROM sys.database_principals WHERE name = N'admin')
-CREATE USER [admin] FOR LOGIN [admin] WITH DEFAULT_SCHEMA=[dbo]
-GO
-/****** Object:  UserDefinedTableType [dbo].[Link]    Script Date: 03/12/1395 12:15:53 ق.ظ ******/
+/****** Object:  UserDefinedTableType [dbo].[Link]    Script Date: 2/21/2017 3:50:40 PM ******/
 IF NOT EXISTS (SELECT * FROM sys.types st JOIN sys.schemas ss ON st.schema_id = ss.schema_id WHERE st.name = N'Link' AND ss.name = N'dbo')
 CREATE TYPE [dbo].[Link] AS TABLE(
 	[From] [int] NOT NULL,
@@ -165,11 +164,11 @@ CREATE TYPE [dbo].[Link] AS TABLE(
 )WITH (IGNORE_DUP_KEY = OFF)
 )
 GO
-/****** Object:  UserDefinedTableType [dbo].[Node]    Script Date: 03/12/1395 12:15:53 ق.ظ ******/
+/****** Object:  UserDefinedTableType [dbo].[Node]    Script Date: 2/21/2017 3:50:40 PM ******/
 IF NOT EXISTS (SELECT * FROM sys.types st JOIN sys.schemas ss ON st.schema_id = ss.schema_id WHERE st.name = N'Node' AND ss.name = N'dbo')
 CREATE TYPE [dbo].[Node] AS TABLE(
 	[Key] [varchar](100) NOT NULL,
-	[Category] [varchar](50) NOT NULL,
+	[Category] [int] NOT NULL,
 	[Loc] [varchar](50) NULL,
 	[Text] [nvarchar](150) NULL,
 	[EventType] [int] NULL,
@@ -188,7 +187,74 @@ CREATE TYPE [dbo].[Node] AS TABLE(
 )WITH (IGNORE_DUP_KEY = ON)
 )
 GO
-/****** Object:  Table [dbo].[Diagrams]    Script Date: 03/12/1395 12:15:53 ق.ظ ******/
+/****** Object:  Table [dbo].[PaletteNodes]    Script Date: 2/21/2017 3:50:40 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[PaletteNodes]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[PaletteNodes](
+	[Key] [int] NOT NULL,
+	[Category] [int] NOT NULL,
+	[CategoryName] [varchar](50) NOT NULL,
+	[Text] [nvarchar](150) NULL,
+	[EventType] [int] NULL,
+	[EventDimension] [int] NULL,
+	[GatewayType] [int] NULL,
+	[TaskType] [int] NULL,
+	[Group] [varchar](100) NULL,
+	[IsGroup] [bit] NULL,
+	[Color] [varchar](50) NULL,
+	[Size] [varchar](50) NULL,
+	[IsSubProcess] [bit] NULL,
+	[Name] [nvarchar](150) NULL,
+ CONSTRAINT [PK_PaletteNodes] PRIMARY KEY CLUSTERED 
+(
+	[Key] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
+/****** Object:  UserDefinedFunction [dbo].[fn_GetPaletteNodes]    Script Date: 2/21/2017 3:50:40 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[fn_GetPaletteNodes]') AND type in (N'FN', N'IF', N'TF', N'FS', N'FT'))
+BEGIN
+execute dbo.sp_executesql @statement = N'-- =============================================
+-- Author:		Behzad Khosravifar
+-- Create date: 1395/12/03
+-- Description:	Get ready nodes to palette tools
+-- =============================================
+CREATE FUNCTION [dbo].[fn_GetPaletteNodes] ( @UserId INT )
+RETURNS TABLE
+AS
+RETURN
+    ( 
+		SELECT 
+	      --ROW_NUMBER() OVER(ORDER BY [Key] ASC) AS Row#,
+		  [Key] ,
+          Category ,
+          [Text] ,
+          EventType ,
+          EventDimension ,
+          GatewayType ,
+          TaskType ,
+          [Group] ,
+          IsGroup ,
+          Color ,
+          Size ,
+          IsSubProcess ,
+          [Name]
+		  FROM dbo.PaletteNodes
+    );
+' 
+END
+
+GO
+/****** Object:  Table [dbo].[Diagrams]    Script Date: 2/21/2017 3:50:40 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -210,7 +276,7 @@ CREATE TABLE [dbo].[Diagrams](
 ) ON [PRIMARY]
 END
 GO
-/****** Object:  Table [dbo].[Links]    Script Date: 03/12/1395 12:15:53 ق.ظ ******/
+/****** Object:  Table [dbo].[Links]    Script Date: 2/21/2017 3:50:40 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -237,7 +303,7 @@ CREATE TABLE [dbo].[Links](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 END
 GO
-/****** Object:  Table [dbo].[Nodes]    Script Date: 03/12/1395 12:15:53 ق.ظ ******/
+/****** Object:  Table [dbo].[Nodes]    Script Date: 2/21/2017 3:50:40 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -247,7 +313,7 @@ BEGIN
 CREATE TABLE [dbo].[Nodes](
 	[DiagramId] [varchar](100) NOT NULL,
 	[Key] [varchar](100) NOT NULL,
-	[Category] [varchar](50) NOT NULL,
+	[Category] [int] NOT NULL,
 	[Loc] [varchar](50) NULL,
 	[Text] [nvarchar](150) NULL,
 	[EventType] [int] NULL,
@@ -267,6 +333,48 @@ CREATE TABLE [dbo].[Nodes](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 END
+GO
+INSERT [dbo].[PaletteNodes] ([Key], [Category], [CategoryName], [Text], [EventType], [EventDimension], [GatewayType], [TaskType], [Group], [IsGroup], [Color], [Size], [IsSubProcess], [Name]) VALUES (1, 0, N'event', N'Start', 1, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, N'EventNode')
+GO
+INSERT [dbo].[PaletteNodes] ([Key], [Category], [CategoryName], [Text], [EventType], [EventDimension], [GatewayType], [TaskType], [Group], [IsGroup], [Color], [Size], [IsSubProcess], [Name]) VALUES (2, 0, N'event', N'Message', 2, 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, N'EventNode')
+GO
+INSERT [dbo].[PaletteNodes] ([Key], [Category], [CategoryName], [Text], [EventType], [EventDimension], [GatewayType], [TaskType], [Group], [IsGroup], [Color], [Size], [IsSubProcess], [Name]) VALUES (3, 0, N'event', N'Timer', 3, 3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, N'EventNode')
+GO
+INSERT [dbo].[PaletteNodes] ([Key], [Category], [CategoryName], [Text], [EventType], [EventDimension], [GatewayType], [TaskType], [Group], [IsGroup], [Color], [Size], [IsSubProcess], [Name]) VALUES (4, 0, N'event', N'End', 1, 8, NULL, NULL, NULL, NULL, NULL, NULL, NULL, N'EventNode')
+GO
+INSERT [dbo].[PaletteNodes] ([Key], [Category], [CategoryName], [Text], [EventType], [EventDimension], [GatewayType], [TaskType], [Group], [IsGroup], [Color], [Size], [IsSubProcess], [Name]) VALUES (5, 0, N'event', N'Message', 2, 8, NULL, NULL, NULL, NULL, NULL, NULL, NULL, N'EventNode')
+GO
+INSERT [dbo].[PaletteNodes] ([Key], [Category], [CategoryName], [Text], [EventType], [EventDimension], [GatewayType], [TaskType], [Group], [IsGroup], [Color], [Size], [IsSubProcess], [Name]) VALUES (6, 0, N'event', N'Terminate', 13, 8, NULL, NULL, NULL, NULL, NULL, NULL, NULL, N'EventNode')
+GO
+INSERT [dbo].[PaletteNodes] ([Key], [Category], [CategoryName], [Text], [EventType], [EventDimension], [GatewayType], [TaskType], [Group], [IsGroup], [Color], [Size], [IsSubProcess], [Name]) VALUES (7, 1, N'activity', N'Task', NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, N'ActivityNode')
+GO
+INSERT [dbo].[PaletteNodes] ([Key], [Category], [CategoryName], [Text], [EventType], [EventDimension], [GatewayType], [TaskType], [Group], [IsGroup], [Color], [Size], [IsSubProcess], [Name]) VALUES (8, 1, N'activiry', N'UserTask', NULL, NULL, NULL, 2, NULL, NULL, NULL, NULL, NULL, N'ActivityNode')
+GO
+INSERT [dbo].[PaletteNodes] ([Key], [Category], [CategoryName], [Text], [EventType], [EventDimension], [GatewayType], [TaskType], [Group], [IsGroup], [Color], [Size], [IsSubProcess], [Name]) VALUES (9, 1, N'activity', N'ServiceTask', NULL, NULL, NULL, 6, NULL, NULL, NULL, NULL, NULL, N'ActivityNode')
+GO
+INSERT [dbo].[PaletteNodes] ([Key], [Category], [CategoryName], [Text], [EventType], [EventDimension], [GatewayType], [TaskType], [Group], [IsGroup], [Color], [Size], [IsSubProcess], [Name]) VALUES (10, 2, N'subprocess', N'Subprocess', NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, 1, N'SubprocessNode')
+GO
+INSERT [dbo].[PaletteNodes] ([Key], [Category], [CategoryName], [Text], [EventType], [EventDimension], [GatewayType], [TaskType], [Group], [IsGroup], [Color], [Size], [IsSubProcess], [Name]) VALUES (11, 0, N'event', N'Start', 1, 1, NULL, NULL, N'10', NULL, NULL, NULL, NULL, N'EventNode')
+GO
+INSERT [dbo].[PaletteNodes] ([Key], [Category], [CategoryName], [Text], [EventType], [EventDimension], [GatewayType], [TaskType], [Group], [IsGroup], [Color], [Size], [IsSubProcess], [Name]) VALUES (12, 0, N'event', N'End', 1, 8, NULL, NULL, N'10', NULL, NULL, NULL, NULL, N'EventNode')
+GO
+INSERT [dbo].[PaletteNodes] ([Key], [Category], [CategoryName], [Text], [EventType], [EventDimension], [GatewayType], [TaskType], [Group], [IsGroup], [Color], [Size], [IsSubProcess], [Name]) VALUES (13, 3, N'gateway', N'Parallel', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, N'GatewayNode')
+GO
+INSERT [dbo].[PaletteNodes] ([Key], [Category], [CategoryName], [Text], [EventType], [EventDimension], [GatewayType], [TaskType], [Group], [IsGroup], [Color], [Size], [IsSubProcess], [Name]) VALUES (14, 3, N'gateway', N'Exclusive', NULL, NULL, 4, NULL, NULL, NULL, NULL, NULL, NULL, N'GatewayNode')
+GO
+INSERT [dbo].[PaletteNodes] ([Key], [Category], [CategoryName], [Text], [EventType], [EventDimension], [GatewayType], [TaskType], [Group], [IsGroup], [Color], [Size], [IsSubProcess], [Name]) VALUES (15, 4, N'dataobject', N'DataObject', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, N'DataNode')
+GO
+INSERT [dbo].[PaletteNodes] ([Key], [Category], [CategoryName], [Text], [EventType], [EventDimension], [GatewayType], [TaskType], [Group], [IsGroup], [Color], [Size], [IsSubProcess], [Name]) VALUES (16, 5, N'datastore', N'DataStorage', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, N'DataNode')
+GO
+INSERT [dbo].[PaletteNodes] ([Key], [Category], [CategoryName], [Text], [EventType], [EventDimension], [GatewayType], [TaskType], [Group], [IsGroup], [Color], [Size], [IsSubProcess], [Name]) VALUES (17, 6, N'privateProcess', N'BlackBox', NULL, NULL, NULL, NULL, NULL, NULL, NULL, N'300 100', NULL, N'DataNode')
+GO
+INSERT [dbo].[PaletteNodes] ([Key], [Category], [CategoryName], [Text], [EventType], [EventDimension], [GatewayType], [TaskType], [Group], [IsGroup], [Color], [Size], [IsSubProcess], [Name]) VALUES (18, 9, N'annotation', N'Note', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, N'DataNode')
+GO
+INSERT [dbo].[PaletteNodes] ([Key], [Category], [CategoryName], [Text], [EventType], [EventDimension], [GatewayType], [TaskType], [Group], [IsGroup], [Color], [Size], [IsSubProcess], [Name]) VALUES (19, 7, N'Pool', N'Pool', NULL, NULL, NULL, NULL, NULL, 1, NULL, N'300 160', NULL, N'PoolNode')
+GO
+INSERT [dbo].[PaletteNodes] ([Key], [Category], [CategoryName], [Text], [EventType], [EventDimension], [GatewayType], [TaskType], [Group], [IsGroup], [Color], [Size], [IsSubProcess], [Name]) VALUES (20, 8, N'Lane', N'NewLane', NULL, NULL, NULL, NULL, N'19', 1, N'#FF9FAA', N'300 80', NULL, N'LaneNode')
+GO
+INSERT [dbo].[PaletteNodes] ([Key], [Category], [CategoryName], [Text], [EventType], [EventDimension], [GatewayType], [TaskType], [Group], [IsGroup], [Color], [Size], [IsSubProcess], [Name]) VALUES (21, 8, N'Lane', N'NewLane', NULL, NULL, NULL, NULL, N'19', 1, N'#FF9FAA', N'300 80', NULL, N'LaneNode')
 GO
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[DF_Diagram_Class]') AND type = 'D')
 BEGIN
@@ -300,7 +408,7 @@ GO
 IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_Nodes_Diagrams]') AND parent_object_id = OBJECT_ID(N'[dbo].[Nodes]'))
 ALTER TABLE [dbo].[Nodes] CHECK CONSTRAINT [FK_Nodes_Diagrams]
 GO
-/****** Object:  StoredProcedure [dbo].[sp_InsertDiagramData]    Script Date: 03/12/1395 12:15:53 ق.ظ ******/
+/****** Object:  StoredProcedure [dbo].[sp_InsertDiagramData]    Script Date: 2/21/2017 3:50:40 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -384,22 +492,7 @@ AS
 		          IsSubProcess ,
 		          [Name]
 		        )
-		SELECT   @DiagramId,
-				  n.[Key] ,
-		          n.Category ,
-		          n.Loc ,
-		          n.[Text] ,
-		          n.EventType ,
-		          n.EventDimension ,
-		          n.GatewayType ,
-		          n.TaskType ,
-		          n.[Group] ,
-		          n.IsGroup ,
-		          n.Color ,
-		          n.Size ,
-		          n.IsSubProcess ,
-		          n.[Name] 
-		FROM @Nodes n;
+		SELECT   @DiagramId, * FROM @Nodes;
 		/***********************************************************************/
 
 	
@@ -429,6 +522,7 @@ AS
 
         THROW;
     END CATCH;
+
 
 
 GO

@@ -82,7 +82,7 @@
     <Compile Include="Extensions\HtmlHelper.cs" />
     <Compile Include="Enums\LinkCategory.cs" />
     <Compile Include="Enums\NodeCategory.cs" />
-    <Compile Include="LinkDataArray.cs" />
+    <Compile Include="Link.cs" />
     <Compile Include="ModelData.cs" />
     <Compile Include="Nodes\GroupNode.cs" />
     <Compile Include="Nodes\IGroupNode.cs" />

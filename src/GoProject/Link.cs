@@ -6,7 +6,7 @@ using Newtonsoft.Json.Converters;
 
 namespace GoProject
 {
-    public class LinkDataArray
+    public class Link
     {
         [JsonProperty(PropertyName = "from", NullValueHandling = NullValueHandling.Ignore)]
         public int From { get; set; }
@@ -43,14 +43,14 @@ namespace GoProject
         /// Sample:   '------lable-------+>'
         /// </summary>
         [JsonProperty(PropertyName = "visible", NullValueHandling = NullValueHandling.Ignore)]
-        public bool? Visible { get; set; } = true;
+        public bool? Visible { get; set; }
 
         [JsonProperty(PropertyName = "text", NullValueHandling = NullValueHandling.Ignore)]
         public string Text { get; set; }
 
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty(PropertyName = "category", NullValueHandling = NullValueHandling.Ignore)]
-        public LinkCategory Category { get; set; }
+        public LinkCategory? Category { get; set; }
 
         /// <summary>
         /// Is Default Connection by symbole '--/----+>'
