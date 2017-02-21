@@ -21,10 +21,21 @@ namespace GoProject.Sample.Controllers
         {
             string cultureName = GetUrlCulture(Request); // read route culture?
 
-            // Modify current thread's cultures            
-            CultureInfo.DefaultThreadCurrentCulture =
-                Thread.CurrentThread.CurrentCulture =
-                Thread.CurrentThread.CurrentUICulture = new CultureInfo(cultureName);
+            CultureInfo culture;
+            try
+            {
+                culture = new CultureInfo(cultureName);
+            }
+            catch (CultureNotFoundException)
+            {
+                culture = new CultureInfo("en");
+            }
+
+            // Modify current thread's cultures  
+            CultureInfo.DefaultThreadCurrentUICulture =
+                CultureInfo.DefaultThreadCurrentCulture =
+                    Thread.CurrentThread.CurrentCulture =
+                        Thread.CurrentThread.CurrentUICulture = culture;
 
             RouteData.Values["culture"] = cultureName;  // set culture
 
