@@ -27,7 +27,7 @@ namespace GoProject.Sample.Controllers
 
             diagram.Name = diagram.Name ?? "TestDiagramName"; // Very important param
 
-            diagram.StoreOnDb(0);
+            Connections.GoProjectDb.SqlConn.StoreOnDb(diagram, 0);
 
             return Ok(FilePath);
         }
