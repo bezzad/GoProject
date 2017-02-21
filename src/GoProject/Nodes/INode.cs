@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using GoProject.DataTableHelper;
 using GoProject.Enums;
@@ -15,7 +14,7 @@ namespace GoProject.Nodes
         [JsonProperty(PropertyName = "key", NullValueHandling = NullValueHandling.Ignore)]
         string Key { get; set; }
 
-        [TableConverter(ItemConverterType = typeof(string))]
+        [TableConverter(ItemConverterType = typeof(int))]
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty(PropertyName = "category", NullValueHandling = NullValueHandling.Ignore)]
         NodeCategory Category { get; set; }

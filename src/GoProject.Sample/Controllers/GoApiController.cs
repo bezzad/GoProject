@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Web.Http;
 using GoProject.Extensions;
 using GoProject.Nodes;
@@ -45,7 +46,8 @@ namespace GoProject.Sample.Controllers
         {
             var diagram = new Diagram
             {
-                TreeNodes = GoHelper.PaletteTreeNodes()
+                //TreeNodes = GoHelper.PaletteTreeNodes()
+                NodeDataArray = Connections.GoProjectDb.SqlConn.GetPaletteNodesByUserRole(0).ToList()
             };
 
             return Ok(diagram);

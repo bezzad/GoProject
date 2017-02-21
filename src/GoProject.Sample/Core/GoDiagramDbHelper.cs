@@ -88,7 +88,7 @@ namespace GoProject.Sample.Core
             }
         }
 
-        public static IEnumerable<INode> GetPaletteNodesByUserRole(this DbConnection dbConn, int userId)
+        public static IEnumerable<Node> GetPaletteNodesByUserRole(this DbConnection dbConn, int userId)
         {
             var shapes = dbConn.Query<Node>("SELECT * FROM fn_GetPaletteNodes(@UserId)", new { UserId = userId });
 
