@@ -6,7 +6,7 @@
 // This file holds all of the JavaScript code specific to the BPMN.html page.
 
 
-//var lastStroked = null;  // this remembers the last highlit Shape
+
 
 // Setup all of the Diagrams and what they need.
 // This is called after the page is loaded.
@@ -1202,7 +1202,7 @@ function init() {
     }
 
     // initialize the first Palette, BPMN Spec Level 1
-    var myPaletteLevel1 = $(go.Palette, "myPaletteLevel1",
+    var myPaletteLevel = $(go.Palette, "myPaletteLevel",
         { // share the templates with the main Diagram
             nodeTemplateMap: palNodeTemplateMap,
             groupTemplateMap: palGroupTemplateMap,
@@ -1216,11 +1216,11 @@ function init() {
 
     jQuery("#accordion").accordion({
         activate: function (event, ui) {
-            myPaletteLevel1.requestUpdate();
+            myPaletteLevel.requestUpdate();
         }
     });
 
-    myPaletteLevel1.model = $(go.GraphLinksModel,
+    myPaletteLevel.model = $(go.GraphLinksModel,
       {
           copiesArrays: true,
           copiesArrayObjects: true,
@@ -1257,36 +1257,11 @@ function init() {
 
     //------------------------------------------  Overview   ----------------------------------------------
 
-    var myOverview =
-      $(go.Overview, "myOverviewDiv",
+    var myOverview = $(go.Overview, "myOverviewDiv",
         { observed: myDiagram, maxScale: 0.5, contentAlignment: go.Spot.Center });
     // change color of viewport border in Overview
     myOverview.box.elt(0).stroke = "dodgerblue";
-
-
-    // Make sure the infoBox is momentarily hidden if the user tries to mouse over it
-    var infoBoxH = document.getElementById("infoBoxHolder");
-    infoBoxH.addEventListener("mousemove", function () {
-        var box = document.getElementById("infoBoxHolder");
-        box.style.left = parseInt(box.style.left) + "px";
-        box.style.top = parseInt(box.style.top) + 30 + "px";
-    }, false);
-
-    // Make sure the infoBox is hidden when the mouse is not over the Diagram
-    // var diagramDiv = document.getElementById("myDiagramDiv");
-    //diagramDiv.addEventListener("mouseout", function (e) {
-    //    if (lastStroked !== null) lastStroked.stroke = null;
-    //    lastStroked = null;
-
-    //    var infoBox = document.getElementById("infoBox");
-    //    var elem = document.elementFromPoint(e.clientX, e.clientY);
-    //    if (elem !== null && (elem === infoBox || elem.parentNode === infoBox)) {
-    //        // do nothing
-    //    } else {
-    //        var box = document.getElementById("infoBoxHolder");
-    //        box.innerHTML = "";
-    //    }
-    //}, false);
+    
 
     return myDiagram;
 } // end init
@@ -1295,10 +1270,35 @@ function init() {
 
 
 
-
-
-
 /*
+
+var lastStroked = null;  // this remembers the last highlit Shape
+
+// Make sure the infoBox is momentarily hidden if the user tries to mouse over it
+    var infoBoxH = document.getElementById("infoBoxHolder");
+    infoBoxH.addEventListener("mousemove", function () {
+        var box = document.getElementById("infoBoxHolder");
+        box.style.left = parseInt(box.style.left) + "px";
+        box.style.top = parseInt(box.style.top) + 30 + "px";
+    }, false);
+
+// Make sure the infoBox is hidden when the mouse is not over the Diagram
+// var diagramDiv = document.getElementById("myDiagramDiv");
+diagramDiv.addEventListener("mouseout", function (e) {
+    if (lastStroked !== null) lastStroked.stroke = null;
+    lastStroked = null;
+
+    var infoBox = document.getElementById("infoBox");
+    var elem = document.elementFromPoint(e.clientX, e.clientY);
+    if (elem !== null && (elem === infoBox || elem.parentNode === infoBox)) {
+        // do nothing
+    } else {
+        var box = document.getElementById("infoBoxHolder");
+        box.innerHTML = "";
+    }
+}, false);
+
+
 // Called when the mouse is over the diagram's background
 function doMouseOver(e) {
     if (e === undefined) e = myDiagram.lastInput;
