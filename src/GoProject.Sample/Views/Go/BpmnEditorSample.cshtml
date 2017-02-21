@@ -5,13 +5,12 @@
     <li>
         <a href="#">@Localization.File</a>
         <ul>
-            <li><a href="#" onclick="newDocument()">@Localization.New</a></li>
-            <li><a href="#" onclick="openFromServer('api/goApi/GetPaletteNodes')">@Localization.Palette</a></li>
-            <li><a href="#" onclick="openFromServer('api/goApi/GetCustomPaletteNodes')">@Localization.CustomePalette</a></li>
-            <li><a href="#" onclick="openFromServer('api/goApi/GetDiagram')">@Localization.Reset</a></li>
-            <li><a href="#" onclick="saveDocument('api/goApi/SaveDiagram')">@Localization.Save</a></li>
-            <li><a href="#" onclick="removeDocument()">@Localization.Delete</a></li>
-            <li><a href="#" onclick="myDiagram.layoutDiagram(true)">@Localization.Layout</a></li>
+            <li><a href="#" onclick="newDocument(diagram)">@Localization.New</a></li>
+            <li><a href="#" onclick="loadJSON(diagram, window.location.origin + '/api/goApi/GetPaletteNodes')">@Localization.Palette</a></li>
+            <li><a href="#" onclick="loadJSON(diagram, window.location.origin + '/api/goApi/GetCustomPaletteNodes')">@Localization.CustomePalette</a></li>
+            <li><a href="#" onclick="loadJSON(diagram, window.location.origin + '/api/goApi/GetDiagram')">@Localization.Reset</a></li>
+            <li><a href="#" onclick="saveDocument(diagram, 'api/goApi/SaveDiagram')">@Localization.Save</a></li>
+            <li><a href="#" onclick="diagram.layoutDiagram(true)">@Localization.Layout</a></li>
         </ul>
     </li>
     <li>
@@ -31,12 +30,12 @@
         <ul>
             <li>
                 <a href="#">
-                    <input id="grid" type="checkbox" name="options" value="grid" onclick="updateGridOption()">@Localization.Grid
+                    <input id="grid" type="checkbox" name="options" value="grid" onclick="updateGridOption(diagram)">@Localization.Grid
                 </a>
             </li>
             <li>
                 <a href="#">
-                    <input id="snap" type="checkbox" name="options" value="0" onclick="updateSnapOption()">@Localization.Snapping
+                    <input id="snap" type="checkbox" name="options" value="0" onclick="updateSnapOption(diagram)">@Localization.Snapping
                 </a>
             </li>
         </ul>
@@ -64,7 +63,7 @@
 @section scripts{
     @Scripts.Render("~/bundles/bpmnJs")
     <script>
-        init();
-        updateSnapOption();
+        var diagram = init();
+        updateSnapOption(diagram);
     </script>
 }
