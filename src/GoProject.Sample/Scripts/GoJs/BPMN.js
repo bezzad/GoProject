@@ -682,8 +682,8 @@ function init() {
       $(go.Node, "Auto",
         {
             background: gradientLightGray,
-            locationSpot: go.Spot.Center,
-            click: doMouseOver  // this event handler is defined below
+            locationSpot: go.Spot.Center
+            //,click: doMouseOver  // this event handler is defined below
         },
         new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
         $(go.Shape, "Annotation", // A left bracket shape
@@ -1183,11 +1183,11 @@ function init() {
             "SelectionCopied": relayoutDiagram,
 
             //"animationManager.isEnabled": true,  // don't bother with layout animation
-            //contentAlignment: go.Spot.Center,  // content is always centered in the viewport
-            //autoScale: go.Diagram.Uniform,  // scale always has all content fitting in the viewport
+            contentAlignment: go.Spot.Center,  // content is always centered in the viewport
+            autoScale: go.Diagram.Uniform  // scale always has all content fitting in the viewport
             //isReadOnly: true,  // don't let users modify anything
-            mouseOver: doMouseOver,  // this event handler is defined below
-            click: doMouseOver  // this event handler is defined below
+           // ,mouseOver: doMouseOver,  // this event handler is defined below
+           // click: doMouseOver  // this event handler is defined below
         });
 
     myDiagram.toolManager.mouseDownTools.insertAt(0, new LaneResizingTool());
@@ -1582,11 +1582,10 @@ function resetModel() {
     myDiagram.isModified = false;
 }
 
-function saveDocument() {
+function saveDocument(apiName) {
     if (myDiagram.isModified) {
-        var saveName = "Saved";
         saveDiagramProperties();
-        $.post(window.location.origin + '/api/goApi/SaveDiagram',
+        $.post(window.location.origin + '/' + apiName,
                 JSON.parse(myDiagram.model.toJson()),
                 function (d) {
                     alert("Stored Successfull at path: " + d + "!");
@@ -1631,7 +1630,8 @@ function loadDiagramProperties(e) {
 
 
 function nodeInfo(d) {  // Tooltip info for a node data object
-    var str = "Node " + d.key + ": " + d.text + "\n";
+    var str = d.text + "\n\n";
+    str += "Category: " + d.category + "\n";
     if (d.group)
         str += "member of " + d.group;
     else
@@ -1660,22 +1660,6 @@ function doMouseOver(e) {
     if (closest !== undefined && closest !== null)
         updateInfoBox(e.viewPoint, closest.data);
 }
-
-// Called with a Node (or null) that the mouse is over or near
-//function highlightNode(e, node) {
-//    if (node !== null) {
-//        var shape = node.findObject("SHAPE");
-//        if (shape !== null && shape.figure === "Circle") shape.scale = 1.1;
-//        if (lastStroked !== null && lastStroked !== shape) lastStroked.scale = 1;
-//        lastStroked = shape;
-//        updateInfoBox(e.viewPoint, node.data);
-//    } else {
-//        if (lastStroked !== null && lastStroked.figure === "Circle") lastStroked.scale = 1;
-//        lastStroked = null;
-//        document.getElementById("infoBoxHolder").innerHTML = "";
-//    }
-//}
-
 
 // This function is called to update the tooltip information
 // depending on the bound data of the Node that is closest to the pointer.

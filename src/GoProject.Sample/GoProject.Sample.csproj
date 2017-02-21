@@ -286,9 +286,7 @@
     <Content Include="Views\Go\BpmnEditorSample.cshtml" />
     <Content Include="Views\Go\PipesSample.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Base\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>

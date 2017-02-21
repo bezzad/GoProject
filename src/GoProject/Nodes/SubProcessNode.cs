@@ -19,8 +19,6 @@ namespace GoProject.Nodes
         public new TaskType? TaskType => null;
         public new string Color => null;
         public new Color? HexColor => null;
-        public new string Size => null;
-        public new SizeF? SizeF => null;
         public new bool? IsSubProcess => true;
 
         #endregion
