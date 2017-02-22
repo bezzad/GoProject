@@ -11,19 +11,11 @@
 // Setup all of the Diagrams and what they need.
 // This is called after the page is loaded.
 function init() {
-    // setup the menubar
-    jQuery("#menuui").menu();
-    jQuery(function () {
-        jQuery("#menuui").menu({ position: { my: "left top", at: "left top+30" } });
-    });
-    jQuery("#menuui").menu({
-        icons: { submenu: "ui-icon-triangle-1-s" }
-    });
+
 
     var $ = go.GraphObject.make;  // for more concise visual tree definitions
 
     // constants for design choices
-
     var gradientYellow = $(go.Brush, "Linear", { 0: "LightGoldenRodYellow", 1: "#FFFF66" });
     var gradientLightGreen = $(go.Brush, "Linear", { 0: "#E0FEE0", 1: "PaleGreen" });
     var gradientLightGray = $(go.Brush, "Linear", { 0: "White", 1: "#DADADA" });

@@ -1,69 +1,106 @@
 ﻿@using GoProject.Properties
 
-<div id="currentFile">(@Localization.Unsaved)</div>
-<ul id="menuui">
-    <li>
-        <a href="#">@Localization.File</a>
-        <ul>
-            <li><a href="#" onclick="newDocument(diagram)">@Localization.New</a></li>
-            <li><a href="#" onclick="loadJSON(diagram, window.location.origin + '/api/goApi/GetPaletteNodes')">@Localization.Palette</a></li>
-            <li><a href="#" onclick="loadJSON(diagram, window.location.origin + '/api/goApi/GetCustomPaletteNodes')">@Localization.CustomePalette</a></li>
-            <li><a href="#" onclick="loadJSON(diagram, window.location.origin + '/api/goApi/GetDiagram')">@Localization.Reset</a></li>
-            <li><a href="#" onclick="saveDocument(diagram, 'api/goApi/SaveDiagram')">@Localization.Save</a></li>
-            <li><a href="#" onclick="diagram.layoutDiagram(true)">@Localization.Layout</a></li>
-        </ul>
-    </li>
-    <li>
-        <a href="#">@Localization.Edit</a>
-        <ul>
-            <li><a href="#" onclick="diagram.commandHandler.undo()">@Localization.Undo</a></li>
-            <li><a href="#" onclick="diagram.commandHandler.redo()">@Localization.Redo</a></li>
-            <li><a href="#" onclick="diagram.commandHandler.cutSelection()">@Localization.Cut</a></li>
-            <li><a href="#" onclick="diagram.commandHandler.copySelection()">@Localization.Copy</a></li>
-            <li><a href="#" onclick="diagram.commandHandler.pasteSelection()">@Localization.Paste</a></li>
-            <li><a href="#" onclick="diagram.commandHandler.deleteSelection()">@Localization.Delete</a></li>
-            <li><a href="#" onclick="diagram.commandHandler.selectAll()">@Localization.SelectAll</a></li>
-        </ul>
-    </li>
-    <li>
-        <a href="#">@Localization.Options</a>
-        <ul>
-            <li>
-                <a href="#">
-                    <input id="grid" type="checkbox" name="options" value="grid" onclick="updateGridOption(diagram)">@Localization.Grid
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <input id="snap" type="checkbox" name="options" value="0" onclick="updateSnapOption(diagram)">@Localization.Snapping
-                </a>
-            </li>
-        </ul>
-    </li>
-</ul>
+@model GoProject.Diagram
 
-<div id="PaletteAndDiagram">
-    <div id="sideBar">
-        <div class="handle">@Localization.Overview:</div>
-        <div id="myOverviewDiv"></div>
-
-        <div id="accordion">
-            <h4>@Localization.Tools</h4>
-            <div>
-                <div id="myPaletteLevel" class="myPaletteDiv"></div>
-            </div>
-        </div>
+<div class="row">
+    <div class="col-lg-2">
+        @Html.Action("GoDiagramsTablePartial", "Go")
     </div>
-    <div id="myDiagramDiv"></div>
-    <div id="infoBoxHolder">
-        <!-- Initially Empty, it is populated when updateInfoBox is called -->
+    <div class="col-lg-10">
+        <div id="currentFile">(@Localization.Unsaved)</div>
+        <ul id="menuui">
+            <li>
+                <a href="#">@Localization.File</a>
+                <ul>
+                    <li><a href="#" onclick="newDocument(diagram)">@Localization.New</a></li>
+                    <li><a href="#" onclick="loadJSON(diagram, window.location.origin + '/api/goApi/GetPaletteNodes')">@Localization.Palette</a></li>
+                    <li><a href="#" onclick="loadJSON(diagram, window.location.origin + '/api/goApi/GetCustomPaletteNodes')">@Localization.CustomePalette</a></li>
+                    <li><a href="#" onclick="loadJSON(diagram, window.location.origin + '/api/goApi/GetDiagram')">@Localization.Reset</a></li>
+                    <li><a href="#" onclick="saveDocument(diagram, 'api/goApi/SaveDiagram')">@Localization.Save</a></li>
+                    <li><a href="#" onclick="diagram.layoutDiagram(true)">@Localization.Layout</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">@Localization.Edit</a>
+                <ul>
+                    <li><a href="#" onclick="diagram.commandHandler.undo()">@Localization.Undo</a></li>
+                    <li><a href="#" onclick="diagram.commandHandler.redo()">@Localization.Redo</a></li>
+                    <li><a href="#" onclick="diagram.commandHandler.cutSelection()">@Localization.Cut</a></li>
+                    <li><a href="#" onclick="diagram.commandHandler.copySelection()">@Localization.Copy</a></li>
+                    <li><a href="#" onclick="diagram.commandHandler.pasteSelection()">@Localization.Paste</a></li>
+                    <li><a href="#" onclick="diagram.commandHandler.deleteSelection()">@Localization.Delete</a></li>
+                    <li><a href="#" onclick="diagram.commandHandler.selectAll()">@Localization.SelectAll</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">@Localization.Options</a>
+                <ul>
+                    <li>
+                        <a href="#">
+                            <input id="grid" type="checkbox" name="options" value="grid" onclick="updateGridOption(diagram)">@Localization.Grid
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <input id="snap" type="checkbox" name="options" value="0" onclick="updateSnapOption(diagram)">@Localization.Snapping
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
+
+        <div id="PaletteAndDiagram">
+            <div id="sideBar">
+                <div class="handle">@Localization.Overview:</div>
+                <div id="myOverviewDiv"></div>
+
+                <div id="accordion">
+                    <h4>@Localization.Tools</h4>
+                    <div>
+                        <div id="myPaletteLevel" class="myPaletteDiv"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="myDiagramDiv"></div>
+            @*@Html.Diagram(AlloyHelper.GetAvailableFieldsByUserRole(0), Model, "diagramStore")*@
+
+        </div>
+
+
     </div>
 </div>
 
 @section scripts{
     @Scripts.Render("~/bundles/bpmnJs")
+    <!-- Load Grid.Mvc libraries -->
+    <link href="@Url.Content("~/Content/Gridmvc.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/gridmvc.min.js")" type="text/javascript"> </script>
+
+    <!-- Initial this diagram dependecies -->
     <script>
+
+        // setup the menubar ---------------------------------------------------
+        jQuery("#menuui").menu();
+        jQuery(function () {
+            jQuery("#menuui").menu({ position: { my: "left top", at: "left top+30" } });
+        });
+        jQuery("#menuui").menu({
+            icons: { submenu: "ui-icon-triangle-1-s" }
+        });
+        //----------------------------------------------------------------------------
+
         var diagram = init();
         updateSnapOption(diagram);
+
+        $(function () {
+            pageGrids.diagramsGrid.onRowSelect(function (e) {
+                loadJSON(diagram, window.location.origin + '/api/goApi/GetDiagram/?id=' + e.row.Id, function () {
+                    diagram.model.id = e.row.Id;
+                    diagram.model.name = e.row.Name;
+                });
+            });
+        });
     </script>
 }

@@ -42,6 +42,13 @@ namespace GoProject.Sample.Controllers
             return Ok(diagram);
         }
 
+        public IHttpActionResult GetDiagram(string id)
+        {
+            var diagram = Connections.GoProjectDb.SqlConn.LoadFromDb(id);
+
+            return Ok(diagram);
+        }
+
         public IHttpActionResult GetPaletteNodes()
         {
             var diagram = new Diagram

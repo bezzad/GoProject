@@ -3,6 +3,8 @@
 *  Copyright (C) 1998-2017 by Northwoods Software Corporation. All Rights Reserved.
 */
 
+var diagram;
+
 // Contains PoolLink and BPMNLinkingTool classes for the BPMN sample
 
 // PoolLink, a special Link class for message flows from edges of pools
@@ -355,6 +357,7 @@ function addActivityNodeBoundaryEvent(diagram, evType, evDim) {
 
 // this is called after nodes have been moved or lanes resized, to layout all of the Pool Groups again
 function relayoutDiagram(diagram) {
+    if (diagram === undefined || diagram === null) diagram = window.myDiagram;
     diagram.layout.invalidateLayout();
     diagram.findTopLevelGroups().each(function (g) { if (g.category === "Pool") g.layout.invalidateLayout(); });
     diagram.layoutDiagram();
@@ -429,11 +432,16 @@ function resetModel(diagram) {
 function saveDocument(diagram, apiName) {
     if (diagram.isModified) {
         saveDiagramProperties(diagram);
-        $.post(window.location.origin + '/' + apiName,
-                JSON.parse(myDiagram.model.toJson()),
-                function (d) {
-                    alert("Stored Successfull at path: " + d + "!");
-                })
+        var data = JSON.parse(myDiagram.model.toJson());
+        if (diagram.model.id !== undefined && diagram.model.id !== null) {
+            data.name = diagram.model.name;
+            data.id = diagram.model.id;
+        } else {
+            data.name = prompt("Please enter diagram name", "Test Diagram1");
+        }
+        $.post(window.location.origin + '/' + apiName, data, function (d) {
+            alert("Stored Successfull at path: " + d + "!");
+        })
             .fail(function (d) { alert("Fail to store on path: " + d); });
         myDiagram.isModified = false; // save and have no changes
     }
@@ -442,7 +450,7 @@ function saveDocument(diagram, apiName) {
 
 // these functions are called when panel buttons are clicked
 
-function loadJSON(diagram, file) {
+function loadJSON(diagram, file, callback) {
     jQuery.getJSON(file, function (jsondata) {
         // set these kinds of Diagram properties after initialization, not now
         diagram.addDiagramListener("InitialLayoutCompleted", function (e) { loadDiagramProperties(e, diagram); });  // defined below
@@ -452,6 +460,8 @@ function loadJSON(diagram, file) {
         loadDiagramProperties(null, diagram);
         diagram.model.undoManager.isEnabled = true;
         diagram.isModified = false;
+        if (callback !== undefined)
+            callback();
     });
 }
 
