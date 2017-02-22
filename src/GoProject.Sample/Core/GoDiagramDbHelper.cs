@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Common;
 using System.Linq;
 using Dapper;
@@ -87,6 +88,33 @@ namespace GoProject.Sample.Core
                 throw;
             }
         }
+
+        public static Diagram LoadFromCasDb(this DbConnection dbConn, string diagramId, int userId = 0, bool forceReadonly = false)
+        {
+            try
+            {
+                var diagram =
+                    dbConn.Query<Diagram>("SELECT ExpenseCenterId AS Id, [NAME], UserId AS CreatorUserId FROM  dbo.ExpenseCenter Where ExpenseCenterId = @diagramId", new { diagramId }).FirstOrDefault();
+
+                if (diagram == null) return null;
+
+                if (diagram.IsReadOnly == false)
+                    diagram.IsReadOnly = forceReadonly; // set force to readonly when from database is false
+
+                using (var res = dbConn.QueryMultiple("sp_GetDiagramNodes", new { DiagramId = diagramId }, commandType: CommandType.StoredProcedure))
+                {
+                    diagram.TreeNodes = res.Read<Node>()?.ToList().ConvertToTreeNodes();
+                    diagram.LinkDataArray = res.Read<Link>().ToList();
+                }
+
+                return diagram;
+            }
+            catch (Exception exp)
+            {
+                throw;
+            }
+        }
+
 
         public static IEnumerable<Node> GetPaletteNodesByUserRole(this DbConnection dbConn, int userId)
         {

@@ -99,6 +99,7 @@
                 loadJSON(diagram, window.location.origin + '/api/goApi/GetDiagram/?id=' + e.row.Id, function () {
                     diagram.model.id = e.row.Id;
                     diagram.model.name = e.row.Name;
+                    diagram.layoutDiagram(true);
                 });
             });
         });

@@ -44,7 +44,9 @@ namespace GoProject.Sample.Controllers
 
         public IHttpActionResult GetDiagram(string id)
         {
-            var diagram = Connections.GoProjectDb.SqlConn.LoadFromDb(id);
+            //var diagram = Connections.GoProjectDb.SqlConn.LoadFromDb(id);
+            var diagram = Connections.CAS.SqlConn.LoadFromCasDb(id);
+
 
             return Ok(diagram);
         }
