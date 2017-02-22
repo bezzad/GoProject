@@ -205,7 +205,7 @@ namespace GoProject.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Data Object.
+        ///   Looks up a localized string similar to Data\nObject.
         /// </summary>
         public static string DataObject {
             get {
@@ -214,7 +214,7 @@ namespace GoProject.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Data Storage.
+        ///   Looks up a localized string similar to Data\nStorage.
         /// </summary>
         public static string DataStorage {
             get {

@@ -1,4 +1,5 @@
 using System.Drawing;
+using GoProject.Enums;
 using GoProject.Properties;
 // ReSharper disable UnassignedGetOnlyAutoProperty
 
@@ -19,8 +20,6 @@ namespace GoProject.Nodes
         public new bool? IsGroup => null;
         public new string Color => null;
         public new Color? HexColor => null;
-        public new string Size => null;
-        public new SizeF? SizeF => null;
         
         #endregion
 

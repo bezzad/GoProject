@@ -6,11 +6,10 @@ using GoProject.Enums;
 using GoProject.Nodes;
 using GoProject.Properties;
 
-namespace GoProject
+namespace GoProject.Extensions
 {
     public static class GoHelper
     {
-
         public static List<Node> PaletteTreeNodes()
         {
             var nodes = new List<Node>();
@@ -18,37 +17,12 @@ namespace GoProject
             // -------------------------- Event Nodes -------------------------------
             nodes.AddRange(new List<Node>
             {
-                new EventNode
-                {
-                    Text = Localization.Start,
-                    EventType = EventType.None,
-                    EventDimension = EventDimension.Start
-                },
-                new EventNode
-                {
-                    Text = Localization.Message,
-                    EventType = EventType.Message,
-                    EventDimension = EventDimension.StartInter
-                },
-                new EventNode
-                {
-                    Text = Localization.Timer,
-                    EventType = EventType.Timer,
-                    EventDimension = EventDimension.StartNonInter
-                },
-                new EventNode {Text = Localization.End, EventType = EventType.None, EventDimension = EventDimension.End},
-                new EventNode
-                {
-                    Text = Localization.Message,
-                    EventType = EventType.Message,
-                    EventDimension = EventDimension.End
-                },
-                new EventNode
-                {
-                    Text = Localization.Terminate,
-                    EventType = EventType.Terminate,
-                    EventDimension = EventDimension.End
-                }
+                new EventNode { Text = Localization.Start, EventType = EventType.None, EventDimension = EventDimension.Start },
+                new EventNode { Text = Localization.Message, EventType = EventType.Message, EventDimension = EventDimension.StartInter },
+                new EventNode { Text = Localization.Timer, EventType = EventType.Timer, EventDimension = EventDimension.StartNonInter },
+                new EventNode {Text = Localization.End, EventType = EventType.None, EventDimension = EventDimension.End },
+                new EventNode { Text = Localization.Message, EventType = EventType.Message, EventDimension = EventDimension.End },
+                new EventNode { Text = Localization.Terminate, EventType = EventType.Terminate, EventDimension = EventDimension.End }
             });
 
             // -------------------------- Task/Activity Nodes -------------------------------
@@ -63,27 +37,9 @@ namespace GoProject
             // -------------------------- Subprocess and start and end -------------------------------
             nodes.AddRange(new List<Node>
             {
-                new SubProcessNode
-                {
-                    Key = "task",
-                    Text = Localization.Subprocess,
-                    Nodes =
-                    {
-                        new EventNode
-                        {
-                            Text = Localization.Start,
-                            EventType = EventType.None,
-                            EventDimension = EventDimension.Start,
-                            Group = "task",
-                            Position = new PointF(0, 0)
-                        },
-                        new EventNode
-                        {
-                            Text = Localization.End,
-                            EventType = EventType.None,
-                            EventDimension = EventDimension.End,
-                            Group = "task",
-                            Position = new PointF(250, 0)
+                new SubProcessNode { Key = "task", Text = Localization.Subprocess, Nodes = {
+                        new EventNode { Text = Localization.Start, EventType = EventType.None, EventDimension = EventDimension.Start, Position = new PointF(0, 0) },
+                        new EventNode { Text = Localization.End, EventType = EventType.None, EventDimension = EventDimension.End, Group = "task", Position = new PointF(250, 0)
                         }
                     }
                 }
@@ -97,12 +53,7 @@ namespace GoProject
 
                 new DataNode {Category = NodeCategory.dataobject, Text = Localization.DataObject},
                 new DataNode {Category = NodeCategory.datastore, Text = Localization.DataStorage},
-                new DataNode
-                {
-                    Category = NodeCategory.privateProcess,
-                    Text = Localization.BlackBox,
-                    SizeF = new SizeF(300, 80)
-                },
+                new DataNode {Category = NodeCategory.privateProcess, Text = Localization.BlackBox, SizeF = new SizeF(300, 80)},
                 new DataNode {Category = NodeCategory.annotation, Text = Localization.Note}
             });
 

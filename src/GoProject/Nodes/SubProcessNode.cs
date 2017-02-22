@@ -1,6 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.Drawing;
+using GoProject.Enums;
 using GoProject.Properties;
 
 namespace GoProject.Nodes
@@ -19,8 +19,6 @@ namespace GoProject.Nodes
         public new TaskType? TaskType => null;
         public new string Color => null;
         public new Color? HexColor => null;
-        public new string Size => null;
-        public new SizeF? SizeF => null;
         public new bool? IsSubProcess => true;
 
         #endregion

@@ -75,14 +75,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EventDimension.cs" />
-    <Compile Include="EventType.cs" />
-    <Compile Include="GatewayType.cs" />
-    <Compile Include="GoHelper.cs" />
-    <Compile Include="HtmlHelperExtensions.cs" />
-    <Compile Include="LinkCategory.cs" />
-    <Compile Include="NodeCategory.cs" />
-    <Compile Include="LinkDataArray.cs" />
+    <Compile Include="Enums\EventDimension.cs" />
+    <Compile Include="Enums\EventType.cs" />
+    <Compile Include="Enums\GatewayType.cs" />
+    <Compile Include="Extensions\GoHelper.cs" />
+    <Compile Include="Extensions\HtmlHelper.cs" />
+    <Compile Include="Enums\LinkCategory.cs" />
+    <Compile Include="Enums\NodeCategory.cs" />
+    <Compile Include="Link.cs" />
     <Compile Include="ModelData.cs" />
     <Compile Include="Nodes\GroupNode.cs" />
     <Compile Include="Nodes\IGroupNode.cs" />
@@ -107,7 +107,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Localization.fa.resx</DependentUpon>
     </Compile>
-    <Compile Include="TaskType.cs" />
+    <Compile Include="DataTableHelper\TableConverterAttribute.cs" />
+    <Compile Include="DataTableHelper\TableIgnoreAttribute.cs" />
+    <Compile Include="Enums\TaskType.cs" />
+    <Compile Include="DataTableHelper\TypeReflector.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassesDiagram.cd" />

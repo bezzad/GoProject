@@ -57,6 +57,10 @@
       <HintPath>..\packages\Dapper.1.50.2\lib\net45\Dapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="GridMvc, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Grid.Mvc.3.0.0\lib\net40\GridMvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
@@ -152,10 +156,17 @@
     <Compile Include="Controllers\GoApiController.cs" />
     <Compile Include="Controllers\GoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Core\ExtensionHelper.cs" />
+    <Compile Include="Core\GoDiagramDbHelper.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\EndProductNode.cs" />
+    <Compile Include="Models\ExpenseCenterNode.cs" />
     <Compile Include="Models\MaterialNode.cs" />
+    <Compile Include="Models\SemiFinishMaterialNode.cs" />
+    <Compile Include="Models\SubExpenseCenterNode.cs" />
+    <Compile Include="Models\WorkStationNode.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\Connections.tt">
@@ -169,10 +180,11 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\GoJs\BPMN.css" />
-    <Content Include="Content\GoJs\BPMNdata\BasicOrderProcess.png" />
-    <Content Include="Content\GoJs\BPMNdata\OMG BPMN by Example Figure 5.1.png" />
-    <Content Include="Content\GoJs\BPMNdata\OMG BPMN by Example Figure 5.2.png" />
-    <Content Include="Content\GoJs\BPMNdata\OMG BPMN by Example Figure 5.3.png" />
+    <Content Include="App_Data\BPMNdata\BasicOrderProcess.png" />
+    <Content Include="App_Data\BPMNdata\OMG BPMN by Example Figure 5.1.png" />
+    <Content Include="App_Data\BPMNdata\OMG BPMN by Example Figure 5.2.png" />
+    <Content Include="App_Data\BPMNdata\OMG BPMN by Example Figure 5.3.png" />
+    <Content Include="Content\Gridmvc.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -232,12 +244,15 @@
     <Content Include="Scripts\GoJs\BPMNClasses.js" />
     <Content Include="Scripts\GoJs\DrawCommandHandler.js" />
     <Content Include="Scripts\GoJs\go.js" />
-    <Content Include="Content\GoJs\BPMNdata\BasicOrderProcess.json" />
-    <Content Include="Content\GoJs\BPMNdata\OMG BPMN by Example Figure 5.1.json" />
-    <Content Include="Content\GoJs\BPMNdata\OMG BPMN by Example Figure 5.2.json" />
-    <Content Include="Content\GoJs\BPMNdata\OMG BPMN by Example Figure 5.3.json" />
+    <Content Include="App_Data\BPMNdata\BasicOrderProcess.json" />
+    <Content Include="App_Data\BPMNdata\OMG BPMN by Example Figure 5.1.json" />
+    <Content Include="App_Data\BPMNdata\OMG BPMN by Example Figure 5.2.json" />
+    <Content Include="App_Data\BPMNdata\OMG BPMN by Example Figure 5.3.json" />
     <Content Include="fonts\iransans.ttf" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
+    <Content Include="Scripts\gridmvc.js" />
+    <Content Include="Scripts\gridmvc.lang.ru.js" />
+    <Content Include="Scripts\gridmvc.min.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.js" />
@@ -278,10 +293,11 @@
     <Content Include="Views\Go\DoubleTreeSample.cshtml" />
     <Content Include="Views\Go\BpmnEditorSample.cshtml" />
     <Content Include="Views\Go\PipesSample.cshtml" />
+    <Content Include="Views\Shared\_GridPager.cshtml" />
+    <Content Include="Views\Shared\_Grid.cshtml" />
+    <Content Include="Views\Go\_GoDiagramsTablePartial.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Base\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>

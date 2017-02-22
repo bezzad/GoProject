@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Drawing;
-using Newtonsoft.Json;
+using GoProject.Enums;
+
 // ReSharper disable VirtualMemberCallInConstructor
 
 namespace GoProject.Nodes
@@ -11,7 +12,7 @@ namespace GoProject.Nodes
 
         public virtual NodeCategory Category { get; set; }
         public string Item { get; set; }
-        public string Key { get; set; }
+        public virtual string Key { get; set; }
         public string Loc { get; set; }
         public string Text { get; set; }
         public EventType? EventType { get; set; }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Newtonsoft.Json;
 
 namespace GoProject.Nodes
@@ -6,7 +7,7 @@ namespace GoProject.Nodes
     public interface IGroupNode
     {
         [JsonIgnore]
-        List<Node> Nodes { get; set; }
+        ObservableCollection<Node> Nodes { get; set; }
 
         IEnumerable<Node> GetNodes();
     }

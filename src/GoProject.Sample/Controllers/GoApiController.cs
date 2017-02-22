@@ -1,9 +1,13 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Web.Http;
+using GoProject.Extensions;
 using GoProject.Nodes;
+using GoProject.Sample.Core;
 using GoProject.Sample.Models;
 
 namespace GoProject.Sample.Controllers
@@ -15,8 +19,16 @@ namespace GoProject.Sample.Controllers
         [HttpPost]
         public IHttpActionResult SaveDiagram([FromBody]Diagram diagram)
         {
+            // Save json text on local drives
             var json = JsonConvert.SerializeObject(diagram, Formatting.Indented);
             File.WriteAllText(FilePath, json);
+            //
+            // Store on Sql Server Database
+            if (diagram == null) return InternalServerError(new ArgumentNullException(nameof(diagram)));
+
+            diagram.Name = diagram.Name ?? "TestDiagramName"; // Very important param
+
+            Connections.GoProjectDb.SqlConn.StoreOnDb(diagram, 0);
 
             return Ok(FilePath);
         }
@@ -30,11 +42,19 @@ namespace GoProject.Sample.Controllers
             return Ok(diagram);
         }
 
+        public IHttpActionResult GetDiagram(string id)
+        {
+            var diagram = Connections.GoProjectDb.SqlConn.LoadFromDb(id);
+
+            return Ok(diagram);
+        }
+
         public IHttpActionResult GetPaletteNodes()
         {
             var diagram = new Diagram
             {
-                TreeNodes = GoHelper.PaletteTreeNodes()
+                //TreeNodes = GoHelper.PaletteTreeNodes()
+                NodeDataArray = Connections.GoProjectDb.SqlConn.GetPaletteNodesByUserRole(0).ToList()
             };
 
             return Ok(diagram);
@@ -42,18 +62,26 @@ namespace GoProject.Sample.Controllers
 
         public IHttpActionResult GetCustomPaletteNodes()
         {
+            var parentNode = new ExpenseCenterNode();
+            ((IGroupNode) parentNode.Nodes[0]).Nodes = new ObservableCollection<Node>()
+            {
+                new MaterialNode(),
+                new SemiFinishMaterialNode(),
+                new EndProductNode(),
+                new WorkStationNode()
+            };
+
             var diagram = new Diagram
             {
-                NodeDataArray = new List<Node>()
+                TreeNodes = new List<Node>()
                 {
-                    new MaterialNode(),
-                    new SemiFinishMaterialNode(),
-                    new WorkStationNode(),
-                    new ExpenseCenterNode()
+                    parentNode
                 }
             };
+            
 
             return Ok(diagram);
         }
+
     }
 }

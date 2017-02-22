@@ -1,6 +1,6 @@
 ﻿namespace GoProject
 {
-    public static class HtmlHelperExtensions
+    public static class HtmlHelper
     {
         //public static MvcHtmlString Diagram(this HtmlHelper html, Diagram diagram)
         //{
