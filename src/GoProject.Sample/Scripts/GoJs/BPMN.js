@@ -1206,40 +1206,43 @@ function init(paletteApi) {
         }
     });
 
-    myPaletteLevel.model = $(go.GraphLinksModel,
-      {
-          copiesArrays: true,
-          copiesArrayObjects: true,
-          nodeDataArray: [
-          // -------------------------- Event Nodes
-            { category: "event", text: "Start", eventType: 1, eventDimension: 1 },
-            { category: "event", text: "Message", eventType: 2, eventDimension: 2 }, // BpmnTaskMessage
-            { category: "event", text: "Timer", eventType: 3, eventDimension: 3 },
-            { category: "event", text: "End", eventType: 1, eventDimension: 8 },
-            { category: "event", text: "Message", eventType: 2, eventDimension: 8 },// BpmnTaskMessage
-            { category: "event", text: "Terminate", eventType: 13, eventDimension: 8 },
-          // -------------------------- Task/Activity Nodes
-            { key: 131, category: "activity", text: "Task", item: "generic task", taskType: 0 },
-            { key: 132, category: "activity", text: "User Task", item: "User task", taskType: 2 },
-            { key: 133, category: "activity", text: "Service\nTask", item: "service task", taskType: 6 },
-          // subprocess and start and end
-            { key: 134, category: "subprocess", loc: "0 0", text: "Subprocess", isGroup: true, isSubProcess: true, taskType: 0 },
-              { key: -802, category: "event", loc: "0 0", group: 134, text: "Start", eventType: 1, eventDimension: 1, item: "start" },
-              { key: -803, category: "event", loc: "350 0", group: 134, text: "End", eventType: 1, eventDimension: 8, item: "end", name: "end" },
-          // -------------------------- Gateway Nodes, Data, Pool and Annotation
-            { key: 201, category: "gateway", text: "Parallel", gatewayType: 1 },
-            { key: 204, category: "gateway", text: "Exclusive", gatewayType: 4 },
-            { key: 301, category: "dataobject", text: "Data\nObject" },
-            { key: 302, category: "datastore", text: "Data\nStorage" },
-            { key: 401, category: "privateProcess", text: "Black Box" },
+    jQuery.getJSON(paletteApi, function (jsondata) {
+        myPaletteLevel.model = go.Model.fromJson(jsondata); //$(go.GraphLinksModel, jsondata);
+    });
+    //myPaletteLevel.model = $(go.GraphLinksModel,
+    //  {
+    //      copiesArrays: true,
+    //      copiesArrayObjects: true,
+    //      nodeDataArray: [
+    //      // -------------------------- Event Nodes
+    //        { category: "event", text: "Start", eventType: 1, eventDimension: 1 },
+    //        { category: "event", text: "Message", eventType: 2, eventDimension: 2 }, // BpmnTaskMessage
+    //        { category: "event", text: "Timer", eventType: 3, eventDimension: 3 },
+    //        { category: "event", text: "End", eventType: 1, eventDimension: 8 },
+    //        { category: "event", text: "Message", eventType: 2, eventDimension: 8 },// BpmnTaskMessage
+    //        { category: "event", text: "Terminate", eventType: 13, eventDimension: 8 },
+    //      // -------------------------- Task/Activity Nodes
+    //        { key: 131, category: "activity", text: "Task", item: "generic task", taskType: 0 },
+    //        { key: 132, category: "activity", text: "User Task", item: "User task", taskType: 2 },
+    //        { key: 133, category: "activity", text: "Service\nTask", item: "service task", taskType: 6 },
+    //      // subprocess and start and end
+    //        { key: 134, category: "subprocess", loc: "0 0", text: "Subprocess", isGroup: true, isSubProcess: true, taskType: 0 },
+    //          { key: -802, category: "event", loc: "0 0", group: 134, text: "Start", eventType: 1, eventDimension: 1, item: "start" },
+    //          { key: -803, category: "event", loc: "350 0", group: 134, text: "End", eventType: 1, eventDimension: 8, item: "end", name: "end" },
+    //      // -------------------------- Gateway Nodes, Data, Pool and Annotation
+    //        { key: 201, category: "gateway", text: "Parallel", gatewayType: 1 },
+    //        { key: 204, category: "gateway", text: "Exclusive", gatewayType: 4 },
+    //        { key: 301, category: "dataobject", text: "Data\nObject" },
+    //        { key: 302, category: "datastore", text: "Data\nStorage" },
+    //        { key: 401, category: "privateProcess", text: "Black Box" },
 
-            { key: "501", "text": "Pool 1", "isGroup": "true", "category": "Pool" },
-              { key: "Lane5", "text": "Lane 1", "isGroup": "true", "group": "501", "color": "lightyellow", "category": "Lane" },
-              { key: "Lane6", "text": "Lane 2", "isGroup": "true", "group": "501", "color": "lightgreen", "category": "Lane" },
+    //        { key: "501", "text": "Pool 1", "isGroup": "true", "category": "Pool" },
+    //          { key: "Lane5", "text": "Lane 1", "isGroup": "true", "group": "501", "color": "lightyellow", "category": "Lane" },
+    //          { key: "Lane6", "text": "Lane 2", "isGroup": "true", "group": "501", "color": "lightgreen", "category": "Lane" },
 
-            { key: 701, category: "annotation", text: "note" }
-          ]  // end nodeDataArray
-      });  // end model
+    //        { key: 701, category: "annotation", text: "note" }
+    //      ]  // end nodeDataArray
+    //  });  // end model
 
     //------------------------------------------  Overview   ----------------------------------------------
 
@@ -1247,7 +1250,7 @@ function init(paletteApi) {
         { observed: myDiagram, maxScale: 0.5, contentAlignment: go.Spot.Center });
     // change color of viewport border in Overview
     myOverview.box.elt(0).stroke = "dodgerblue";
-    
+
 
     return myDiagram;
 } // end init

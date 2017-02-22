@@ -1,6 +1,6 @@
 ﻿USE [GoProject]
 GO
-/****** Object:  StoredProcedure [dbo].[sp_InsertDiagramData]    Script Date: 2/21/2017 3:50:40 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_InsertDiagramData]    Script Date: 2/22/2017 12:50:16 PM ******/
 DROP PROCEDURE IF EXISTS [dbo].[sp_InsertDiagramData]
 GO
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Nodes]') AND type in (N'U'))
@@ -18,33 +18,39 @@ GO
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Diagrams]') AND type in (N'U'))
 ALTER TABLE [dbo].[Diagrams] DROP CONSTRAINT IF EXISTS [DF_Diagram_Class]
 GO
-/****** Object:  Table [dbo].[Nodes]    Script Date: 2/21/2017 3:50:40 PM ******/
+/****** Object:  Table [dbo].[Roles]    Script Date: 2/22/2017 12:50:16 PM ******/
+DROP TABLE IF EXISTS [dbo].[Roles]
+GO
+/****** Object:  Table [dbo].[PaletteNodeRoles]    Script Date: 2/22/2017 12:50:16 PM ******/
+DROP TABLE IF EXISTS [dbo].[PaletteNodeRoles]
+GO
+/****** Object:  Table [dbo].[Nodes]    Script Date: 2/22/2017 12:50:16 PM ******/
 DROP TABLE IF EXISTS [dbo].[Nodes]
 GO
-/****** Object:  Table [dbo].[Links]    Script Date: 2/21/2017 3:50:40 PM ******/
+/****** Object:  Table [dbo].[Links]    Script Date: 2/22/2017 12:50:16 PM ******/
 DROP TABLE IF EXISTS [dbo].[Links]
 GO
-/****** Object:  Table [dbo].[Diagrams]    Script Date: 2/21/2017 3:50:40 PM ******/
+/****** Object:  Table [dbo].[Diagrams]    Script Date: 2/22/2017 12:50:16 PM ******/
 DROP TABLE IF EXISTS [dbo].[Diagrams]
 GO
-/****** Object:  UserDefinedFunction [dbo].[fn_GetPaletteNodes]    Script Date: 2/21/2017 3:50:40 PM ******/
+/****** Object:  UserDefinedFunction [dbo].[fn_GetPaletteNodes]    Script Date: 2/22/2017 12:50:16 PM ******/
 DROP FUNCTION IF EXISTS [dbo].[fn_GetPaletteNodes]
 GO
-/****** Object:  Table [dbo].[PaletteNodes]    Script Date: 2/21/2017 3:50:40 PM ******/
+/****** Object:  Table [dbo].[PaletteNodes]    Script Date: 2/22/2017 12:50:16 PM ******/
 DROP TABLE IF EXISTS [dbo].[PaletteNodes]
 GO
-/****** Object:  UserDefinedTableType [dbo].[Node]    Script Date: 2/21/2017 3:50:40 PM ******/
+/****** Object:  UserDefinedTableType [dbo].[Node]    Script Date: 2/22/2017 12:50:16 PM ******/
 DROP TYPE IF EXISTS [dbo].[Node]
 GO
-/****** Object:  UserDefinedTableType [dbo].[Link]    Script Date: 2/21/2017 3:50:40 PM ******/
+/****** Object:  UserDefinedTableType [dbo].[Link]    Script Date: 2/22/2017 12:50:16 PM ******/
 DROP TYPE IF EXISTS [dbo].[Link]
 GO
 USE [master]
 GO
-/****** Object:  Database [GoProject]    Script Date: 2/21/2017 3:50:40 PM ******/
+/****** Object:  Database [GoProject]    Script Date: 2/22/2017 12:50:16 PM ******/
 DROP DATABASE IF EXISTS [GoProject]
 GO
-/****** Object:  Database [GoProject]    Script Date: 2/21/2017 3:50:40 PM ******/
+/****** Object:  Database [GoProject]    Script Date: 2/22/2017 12:50:16 PM ******/
 IF NOT EXISTS (SELECT name FROM sys.databases WHERE name = N'GoProject')
 BEGIN
 CREATE DATABASE [GoProject]
@@ -145,7 +151,7 @@ ALTER DATABASE SCOPED CONFIGURATION FOR SECONDARY SET QUERY_OPTIMIZER_HOTFIXES =
 GO
 USE [GoProject]
 GO
-/****** Object:  UserDefinedTableType [dbo].[Link]    Script Date: 2/21/2017 3:50:40 PM ******/
+/****** Object:  UserDefinedTableType [dbo].[Link]    Script Date: 2/22/2017 12:50:16 PM ******/
 IF NOT EXISTS (SELECT * FROM sys.types st JOIN sys.schemas ss ON st.schema_id = ss.schema_id WHERE st.name = N'Link' AND ss.name = N'dbo')
 CREATE TYPE [dbo].[Link] AS TABLE(
 	[From] [int] NOT NULL,
@@ -164,7 +170,7 @@ CREATE TYPE [dbo].[Link] AS TABLE(
 )WITH (IGNORE_DUP_KEY = OFF)
 )
 GO
-/****** Object:  UserDefinedTableType [dbo].[Node]    Script Date: 2/21/2017 3:50:40 PM ******/
+/****** Object:  UserDefinedTableType [dbo].[Node]    Script Date: 2/22/2017 12:50:16 PM ******/
 IF NOT EXISTS (SELECT * FROM sys.types st JOIN sys.schemas ss ON st.schema_id = ss.schema_id WHERE st.name = N'Node' AND ss.name = N'dbo')
 CREATE TYPE [dbo].[Node] AS TABLE(
 	[Key] [varchar](100) NOT NULL,
@@ -187,7 +193,7 @@ CREATE TYPE [dbo].[Node] AS TABLE(
 )WITH (IGNORE_DUP_KEY = ON)
 )
 GO
-/****** Object:  Table [dbo].[PaletteNodes]    Script Date: 2/21/2017 3:50:40 PM ******/
+/****** Object:  Table [dbo].[PaletteNodes]    Script Date: 2/22/2017 12:50:16 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -216,7 +222,7 @@ CREATE TABLE [dbo].[PaletteNodes](
 ) ON [PRIMARY]
 END
 GO
-/****** Object:  UserDefinedFunction [dbo].[fn_GetPaletteNodes]    Script Date: 2/21/2017 3:50:40 PM ******/
+/****** Object:  UserDefinedFunction [dbo].[fn_GetPaletteNodes]    Script Date: 2/22/2017 12:50:16 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -254,7 +260,7 @@ RETURN
 END
 
 GO
-/****** Object:  Table [dbo].[Diagrams]    Script Date: 2/21/2017 3:50:40 PM ******/
+/****** Object:  Table [dbo].[Diagrams]    Script Date: 2/22/2017 12:50:16 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -276,7 +282,7 @@ CREATE TABLE [dbo].[Diagrams](
 ) ON [PRIMARY]
 END
 GO
-/****** Object:  Table [dbo].[Links]    Script Date: 2/21/2017 3:50:40 PM ******/
+/****** Object:  Table [dbo].[Links]    Script Date: 2/22/2017 12:50:16 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -303,7 +309,7 @@ CREATE TABLE [dbo].[Links](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 END
 GO
-/****** Object:  Table [dbo].[Nodes]    Script Date: 2/21/2017 3:50:40 PM ******/
+/****** Object:  Table [dbo].[Nodes]    Script Date: 2/22/2017 12:50:16 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -330,6 +336,36 @@ CREATE TABLE [dbo].[Nodes](
 (
 	[DiagramId] ASC,
 	[Key] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
+/****** Object:  Table [dbo].[PaletteNodeRoles]    Script Date: 2/22/2017 12:50:16 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[PaletteNodeRoles]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[PaletteNodeRoles](
+	[PaletteNodeKey] [int] NOT NULL,
+	[RoleId] [int] NOT NULL
+) ON [PRIMARY]
+END
+GO
+/****** Object:  Table [dbo].[Roles]    Script Date: 2/22/2017 12:50:16 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Roles]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[Roles](
+	[RoleId] [int] NOT NULL,
+	[RoleName] [nvarchar](100) NOT NULL,
+ CONSTRAINT [PK_Roles] PRIMARY KEY CLUSTERED 
+(
+	[RoleId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 END
@@ -376,6 +412,12 @@ INSERT [dbo].[PaletteNodes] ([Key], [Category], [CategoryName], [Text], [EventTy
 GO
 INSERT [dbo].[PaletteNodes] ([Key], [Category], [CategoryName], [Text], [EventType], [EventDimension], [GatewayType], [TaskType], [Group], [IsGroup], [Color], [Size], [IsSubProcess], [Name]) VALUES (21, 8, N'Lane', N'NewLane', NULL, NULL, NULL, NULL, N'19', 1, N'#FF9FAA', N'300 80', NULL, N'LaneNode')
 GO
+INSERT [dbo].[Roles] ([RoleId], [RoleName]) VALUES (0, N'None')
+GO
+INSERT [dbo].[Roles] ([RoleId], [RoleName]) VALUES (1, N'Custom')
+GO
+INSERT [dbo].[Roles] ([RoleId], [RoleName]) VALUES (2, N'Special')
+GO
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[DF_Diagram_Class]') AND type = 'D')
 BEGIN
 ALTER TABLE [dbo].[Diagrams] ADD  CONSTRAINT [DF_Diagram_Class]  DEFAULT ('go.GraphLinksModel') FOR [Class]
@@ -408,7 +450,7 @@ GO
 IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_Nodes_Diagrams]') AND parent_object_id = OBJECT_ID(N'[dbo].[Nodes]'))
 ALTER TABLE [dbo].[Nodes] CHECK CONSTRAINT [FK_Nodes_Diagrams]
 GO
-/****** Object:  StoredProcedure [dbo].[sp_InsertDiagramData]    Script Date: 2/21/2017 3:50:40 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_InsertDiagramData]    Script Date: 2/22/2017 12:50:16 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON

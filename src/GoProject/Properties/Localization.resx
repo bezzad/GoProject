@@ -166,10 +166,10 @@
     <value>Data</value>
   </data>
   <data name="DataObject" xml:space="preserve">
-    <value>Data Object</value>
+    <value>Data\nObject</value>
   </data>
   <data name="DataStorage" xml:space="preserve">
-    <value>Data Storage</value>
+    <value>Data\nStorage</value>
   </data>
   <data name="DefaultFlow" xml:space="preserve">
     <value>Default Flow</value>
