@@ -47,7 +47,7 @@ namespace GoProject.Sample.Core
                         DiagramName = diagram.Name,
                         DiagramClass = diagram.Class,
                         DiagramPosition = diagram.Position,
-                        diagram.IsReadonly,
+                        diagram.IsReadOnly,
                         CreatorUserId = userId,
                         Nodes = diagram.NodeDataArray.ToDataTable(dbConn.GetTableValueParameterColumnsOrder("Node")).AsTableValuedParameter("Node"),
                         Links = diagram.LinkDataArray.ToDataTable(dbConn.GetTableValueParameterColumnsOrder("Link")).AsTableValuedParameter("Link")
@@ -71,8 +71,8 @@ namespace GoProject.Sample.Core
 
                 if (diagram == null) return null;
 
-                if (diagram.IsReadonly == false)
-                    diagram.IsReadonly = forceReadonly; // set force to readonly when from database is false
+                if (diagram.IsReadOnly == false)
+                    diagram.IsReadOnly = forceReadonly; // set force to readonly when from database is false
 
                 diagram.TreeNodes =
                     dbConn.Query<Node>("Select * From Nodes Where DiagramId = @diagramId", new { diagramId })?.ToList().ConvertToTreeNodes();

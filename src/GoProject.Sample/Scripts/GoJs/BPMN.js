@@ -5,14 +5,9 @@
 
 // This file holds all of the JavaScript code specific to the BPMN.html page.
 
-
-
-
 // Setup all of the Diagrams and what they need.
 // This is called after the page is loaded.
-function init() {
-
-
+function init(paletteApi) {
     var $ = go.GraphObject.make;  // for more concise visual tree definitions
 
     // constants for design choices
@@ -51,7 +46,6 @@ function init() {
     var gatewayNodeSymbolStrokeWidth = 3;
 
     var dataFill = gradientLightGray;
-
 
     // custom figures for Shapes
 
@@ -1257,88 +1251,3 @@ function init() {
 
     return myDiagram;
 } // end init
-
-
-
-
-
-/*
-
-var lastStroked = null;  // this remembers the last highlit Shape
-
-// Make sure the infoBox is momentarily hidden if the user tries to mouse over it
-    var infoBoxH = document.getElementById("infoBoxHolder");
-    infoBoxH.addEventListener("mousemove", function () {
-        var box = document.getElementById("infoBoxHolder");
-        box.style.left = parseInt(box.style.left) + "px";
-        box.style.top = parseInt(box.style.top) + 30 + "px";
-    }, false);
-
-// Make sure the infoBox is hidden when the mouse is not over the Diagram
-// var diagramDiv = document.getElementById("myDiagramDiv");
-diagramDiv.addEventListener("mouseout", function (e) {
-    if (lastStroked !== null) lastStroked.stroke = null;
-    lastStroked = null;
-
-    var infoBox = document.getElementById("infoBox");
-    var elem = document.elementFromPoint(e.clientX, e.clientY);
-    if (elem !== null && (elem === infoBox || elem.parentNode === infoBox)) {
-        // do nothing
-    } else {
-        var box = document.getElementById("infoBoxHolder");
-        box.innerHTML = "";
-    }
-}, false);
-
-
-// Called when the mouse is over the diagram's background
-function doMouseOver(e) {
-    if (e === undefined) e = myDiagram.lastInput;
-    var doc = e.documentPoint;
-    // find all Nodes that are within 100 units
-    var list = myDiagram.findObjectsNear(doc, 4, null, function (x) { return x instanceof go.Node; });
-    // now find the one that is closest to e.documentPoint
-    var closest = null;
-    var closestDist = 999999999;
-    list.each(function (node) {
-        var dist = doc.distanceSquaredPoint(node.getDocumentPoint(go.Spot.Center));
-        if (dist < closestDist) {
-            closestDist = dist;
-            closest = node;
-        }
-    });
-    //highlightNode(e, closest);
-    if (closest !== undefined && closest !== null)
-        updateInfoBox(e.viewPoint, closest.data);
-}
-
-// This function is called to update the tooltip information
-// depending on the bound data of the Node that is closest to the pointer.
-function updateInfoBox(mousePt, data) {
-    var x =
-    "<div id='infoBox'>" +
-        "<div class='tooltipTitle'>" + data.text + "</div>" +
-        "<div class='aline'><div class='infoTitle'>Category</div><div class='infoValues'>" + data.category + "</div></div>" +
-        "<div class='aline'><div class='infoTitle'>Key</div><div class='infoValues'>" + data.key + "</div></div>" +
-        "<div class='aline'><div class='infoTitle'>eventDimension</div><div class='infoValues'>" + data.eventDimension + "</div></div>" +
-        "<div class='aline'><div class='infoTitle'>eventType</div><div class='infoValues'>" + data.eventType + "</div></div>" +
-        "<div class='aline'><div class='infoTitle'>gatewayType</div><div class='infoValues'>" + data.gatewayType + "</div></div>" +
-        "<div class='aline'><div class='infoTitle'>loc</div><div class='infoValues'>" + data.loc + "</div></div>" +
-        "<div class='aline'><div class='infoTitle'>taskType</div><div class='infoValues'>" + data.taskType + "</div></div>";
-
-    if (data.attributes !== undefined && data.attributes !== null) {
-        x += "<div class='aline'><div class='infoTitle'>------ Detials ------</div><div class='infoValues'>----</div></div>";
-        for (var prop in data.attributes) {
-            x += "<div class='aline'><div class='infoTitle'>" + prop + "</div><div class='infoValues'>" + data.attributes[prop] + "</div></div>";
-        }
-    }
-
-    x += "</div>";
-
-    var box = document.getElementById("infoBoxHolder");
-    box.innerHTML = x;
-
-    box.style.left = mousePt.x + 160 + "px";
-    box.style.top = mousePt.y + 30 + "px";
-}
-*/

@@ -5,6 +5,16 @@
 
 var diagram;
 
+var myLocation = {  // this controls the data properties used by data binding conversions
+    x: "sepalLength",
+    y: "sepalWidth"
+}
+
+// swimlanes
+var MINLENGTH = 400;  // this controls the minimum length of any swimlane
+var MINBREADTH = 20;  // this controls the minimum breadth of any non-collapsed swimlane
+
+
 // Contains PoolLink and BPMNLinkingTool classes for the BPMN sample
 
 // PoolLink, a special Link class for message flows from edges of pools
@@ -135,19 +145,8 @@ BPMNLinkingTool.validateMessageLinkConnection = function (fromnode, fromport, to
     return common === null;
 };
 
-
-
-
-var myLocation = {  // this controls the data properties used by data binding conversions
-    x: "sepalLength",
-    y: "sepalWidth"
-}
-
 //------------------------------------------  pools / lanes   ----------------------------------------------
 
-// swimlanes
-var MINLENGTH = 400;  // this controls the minimum length of any swimlane
-var MINBREADTH = 20;  // this controls the minimum breadth of any non-collapsed swimlane
 
 // compute the minimum size of a Pool Group needed to hold all of the Lane Groups
 function computeMinPoolSize(pool) {
@@ -268,9 +267,6 @@ LaneResizingTool.prototype.resize = function (newr) {
     relayoutDiagram();  // now that the lane has changed size, layout the pool again
 };
 // end LaneResizingTool class
-
-
-
 
 // define a custom grid layout that makes sure the length of each lane is the same
 // and that each lane is broad enough to hold its subgraph
@@ -395,8 +391,6 @@ function updateSnapOption(diagram) {
     }
 }
 
-
-
 function setCurrentFileName(diagram, name) {
     var currentFile = document.getElementById("currentFile");
     if (diagram.isModified) {
@@ -460,6 +454,7 @@ function loadJSON(diagram, file, callback) {
         loadDiagramProperties(null, diagram);
         diagram.model.undoManager.isEnabled = true;
         diagram.isModified = false;
+        diagram.isReadOnly = jsondata.isReadOnly;
         if (callback !== undefined)
             callback();
     });
@@ -482,9 +477,12 @@ function loadDiagramProperties(e, diagram) {
 function nodeInfo(d) {  // Tooltip info for a node data object
     var str = d.text + "\n\n";
     str += "Category: " + d.category + "\n";
-    if (d.group)
-        str += "member of " + d.group;
-    else
-        str += "top-level node";
+
+    if (d.details !== undefined && d.details !== null) {
+        str += "\n\n------ Detials ------\n";
+        for (var prop in d.details) {
+            str += prop + ":   " + d.details[prop] + "\n";
+        }
+    }
     return str;
 }

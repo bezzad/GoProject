@@ -84,7 +84,7 @@ namespace GoProject
         [JsonProperty(PropertyName = "name", NullValueHandling = NullValueHandling.Ignore)]
         public string Name { get; set; }
 
-        [JsonProperty(PropertyName = "isReadonly", NullValueHandling = NullValueHandling.Ignore)]
-        public bool IsReadonly { get; set; } = false;
+        [JsonProperty(PropertyName = "isReadOnly", NullValueHandling = NullValueHandling.Ignore)]
+        public bool IsReadOnly { get; set; } = false;
     }
 }
