@@ -38,20 +38,20 @@
 #sideBar {
     float: left;
     width: 15%;
-    min-height: 500px;
+    /*min-height: 500px;*/
     text-align: center;
     border: 1px solid gray;
 }
 
 .myPaletteDiv {
     width: 100%;
-    min-height: 625px;
+    min-height: 300px;
 }
 
 #accordion {
     margin: 0px;
     width: 97%;
-    min-height: 625px;
+    /*min-height: 625px;*/
 }
 
 #myOverviewDiv {

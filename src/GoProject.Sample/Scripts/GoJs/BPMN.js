@@ -688,7 +688,8 @@ function init(paletteApi) {
         $(go.TextBlock,
           {
               margin: 5,
-              editable: true
+              editable: true,
+              font: "bold 11px iransans, sans-serif"
           },
             new go.Binding("text").makeTwoWay())
       );
