@@ -439,7 +439,7 @@ function init(paletteApi) {
         makeMarkerPanel(false, palscale) // sub-process,  loop, parallel, sequential, ad doc and compensation markers
       ), // End Spot panel
       $(go.TextBlock,  // the center text
-          { alignment: go.Spot.Center, textAlign: "center", margin: 2, font: "11px iransans, sans-serif" },
+          { alignment: go.Spot.Center, textAlign: "center", margin: 2, font: "bold 11px iransans, sans-serif" },
           new go.Binding("text"))
       );  // End Node
 
@@ -908,7 +908,7 @@ function init(paletteApi) {
             alignment: go.Spot.LeftCenter, alignmentFocus: go.Spot.LeftCenter
         },
           $(go.TextBlock,  // the lane label
-            { editable: true, margin: new go.Margin(2, 0, 0, 8), font: "bold 11px iransans, sans-serif" },
+            { editable: true, margin: new go.Margin(2, 0, 0, 8), font: "bold 12px iransans, sans-serif" },
             new go.Binding("visible", "isSubGraphExpanded").ofObject(),
             new go.Binding("text", "text").makeTwoWay()),
           $("SubGraphExpanderButton", { margin: 4, angle: -270 })  // but this remains always visible!
@@ -967,7 +967,7 @@ function init(paletteApi) {
            $(go.Panel, "Horizontal",
              { column: 0, angle: 270 },
              $(go.TextBlock,
-               { editable: true, margin: new go.Margin(5, 0, 5, 0), font: "bold 11px iransans, sans-serif" },  // margin matches private process (black box pool)
+               { editable: true, margin: new go.Margin(10, 0, 10, 0), font: "bold 13px iransans, sans-serif" },  // margin matches private process (black box pool)
                new go.Binding("text").makeTwoWay())
            ),
            $(go.Placeholder,
@@ -1145,8 +1145,8 @@ function init(paletteApi) {
             "SelectionCopied": function () { relayoutDiagram(myDiagram) },
 
             //"animationManager.isEnabled": true,  // don't bother with layout animation
-            contentAlignment: go.Spot.Center,  // content is always centered in the viewport
-            autoScale: go.Diagram.Uniform  // scale always has all content fitting in the viewport
+            //contentAlignment: go.Spot.Center,  // content is always centered in the viewport
+            //autoScale: go.Diagram.Uniform  // scale always has all content fitting in the viewport
             //isReadOnly: true,  // don't let users modify anything
             // ,mouseOver: doMouseOver,  // this event handler is defined below
             // click: doMouseOver  // this event handler is defined below

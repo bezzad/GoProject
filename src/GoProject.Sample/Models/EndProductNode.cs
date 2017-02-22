@@ -7,9 +7,9 @@ namespace GoProject.Sample.Models
 
         public EndProductNode()
         {
-            Text = "مواد نیمه ساخته";
-            EventType = Enums.EventType.Multiple;
-            EventDimension = Enums.EventDimension.IntermediateNonInter;
+            Text = "محصول نهایی";
+            EventType = Enums.EventType.Terminate;
+            EventDimension = Enums.EventDimension.End;
         }
     }
 }
