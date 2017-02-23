@@ -9,6 +9,17 @@ namespace GoProject.DataTableHelper
     public static class TypeReflector
     {
 
+        public static Dictionary<string, object> GetDictionary(this object lstObjects)
+        {
+            var dic = new Dictionary<string, object>();
+
+            foreach (var prop in lstObjects.GetType().GetProperties())
+            {
+                dic[prop.Name] = prop.GetValue(lstObjects);
+            }
+
+            return dic;
+        }
 
         public static DataTable ToDataTable<T>(this IEnumerable<T> data)
         {

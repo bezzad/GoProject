@@ -27,7 +27,11 @@ namespace GoProject
         [JsonIgnore]
         public string PointsJson
         {
-            get { return $"[{string.Join(",", Points)}]"; }
+            get
+            {
+                if (Points == null) return null;
+                return $"[{string.Join(",", Points)}]";
+            }
             set
             {
                 if (!string.IsNullOrEmpty(value) && value.Length > 2)

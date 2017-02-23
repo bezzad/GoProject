@@ -6,7 +6,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-ALTER PROCEDURE [dbo].[sp_GetDiagramNodes]
+CREATE PROCEDURE [dbo].[sp_GetDiagramNodes]
 	@DiagramId VARCHAR(100)
 AS
 BEGIN

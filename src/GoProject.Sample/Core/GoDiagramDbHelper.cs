@@ -103,7 +103,15 @@ namespace GoProject.Sample.Core
 
                 using (var res = dbConn.QueryMultiple("sp_GetDiagramNodes", new { DiagramId = diagramId }, commandType: CommandType.StoredProcedure))
                 {
-                    diagram.TreeNodes = res.Read<Node>()?.ToList().ConvertToTreeNodes();
+                    var nodes = res.Read<Node>()?.ToList();
+                    var nodeDetails = res.Read<dynamic>()?.ToList();
+
+                    foreach (var node in nodes)
+                    {
+                        node.Details = nodeDetails?.FirstOrDefault(d => d.Key == node.Key)?.GetDictionary();
+                    }
+
+                    diagram.TreeNodes = nodes.ConvertToTreeNodes();
                     diagram.LinkDataArray = res.Read<Link>().ToList();
                 }
 
