@@ -436,7 +436,9 @@ function saveDocument(diagram, apiName) {
         $.post(window.location.origin + '/' + apiName, data, function (d) {
             alert("Stored Successfull at path: " + d + "!");
         })
-            .fail(function (d) { alert("Fail to store on path: " + d); });
+            .fail(function(d) {
+                alert("Fail to store on path: \n" + d.responseText);
+            });
         myDiagram.isModified = false; // save and have no changes
     }
 }
