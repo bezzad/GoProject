@@ -5,7 +5,9 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-
+	IF EXISTS ( SELECT  * FROM    sys.objects WHERE   object_id = OBJECT_ID(N'sp_GetDiagramNodes') AND type IN ( N'P', N'PC' ) ) 
+		DROP PROCEDURE [dbo].[sp_GetDiagramNodes]
+Go
 CREATE PROCEDURE [dbo].[sp_GetDiagramNodes]
 	@DiagramId VARCHAR(100)
 AS
