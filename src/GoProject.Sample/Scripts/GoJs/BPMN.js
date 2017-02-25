@@ -120,26 +120,32 @@ function init(paletteApi) {
 
     // define the appearance of tooltips, shared by various templates
     var tooltiptemplate =
-      $(go.Adornment, go.Panel.Auto,
-        $(go.Shape, "RoundedRectangle",
-          {
-              fill: "white", // the default fill, if there is no data-binding
-              portId: "", cursor: "pointer",  // the Shape is the port, not the whole Node
-              // allow all kinds of links from and to this port
-              fromLinkable: true, fromLinkableSelfNode: true, fromLinkableDuplicates: true,
-              toLinkable: true, toLinkableSelfNode: true, toLinkableDuplicates: true
-          }),
-        $(go.TextBlock,
-          {
-              font: "bold 14px iransans, sans-serif",
-              stroke: '#333',
-              margin: 6,  // make some extra space for the shape around the text
-              isMultiline: true,  // don't allow newlines in text
-              editable: true  // allow in-place editing by user
-          },
+        $(go.Adornment,
+            go.Panel.Auto,
+            $(go.Shape,
+                "RoundedRectangle",
+                {
+                    fill: "white", // the default fill, if there is no data-binding
+                    portId: "",
+                    cursor: "pointer", // the Shape is the port, not the whole Node
+                    // allow all kinds of links from and to this port
+                    fromLinkable: true,
+                    fromLinkableSelfNode: true,
+                    fromLinkableDuplicates: true,
+                    toLinkable: true,
+                    toLinkableSelfNode: true,
+                    toLinkableDuplicates: true
+                }),
+            $(go.TextBlock,
+            {
+                font: "9pt tahoma, sans-serif",
+                stroke: '#333',
+                margin: 6, // make some extra space for the shape around the text
+                isMultiline: true, // don't allow newlines in text
+                editable: true // allow in-place editing by user
+            },
           new go.Binding("text", "", nodeInfo))
       );
-
 
     // conversion functions used by data Bindings
 
@@ -1121,7 +1127,6 @@ function init(paletteApi) {
 
 
     //------------------------------------------the main Diagram----------------------------------------------
-
     window.myDiagram =
       $(go.Diagram, "myDiagramDiv",
         {
@@ -1144,13 +1149,12 @@ function init(paletteApi) {
             linkingTool: new BPMNLinkingTool(), // defined in BPMNClasses.js
             "SelectionMoved": function () { relayoutDiagram(myDiagram) },  // defined below
             "SelectionCopied": function () { relayoutDiagram(myDiagram) },
-
+            //click: doMouseOver  // this event handler is defined below
+            //mouseOver: doMouseOver  // this event handler is defined below
             //"animationManager.isEnabled": true,  // don't bother with layout animation
             //contentAlignment: go.Spot.Center,  // content is always centered in the viewport
             //autoScale: go.Diagram.Uniform  // scale always has all content fitting in the viewport
             //isReadOnly: true,  // don't let users modify anything
-            // ,mouseOver: doMouseOver,  // this event handler is defined below
-            // click: doMouseOver  // this event handler is defined below
         });
 
     myDiagram.toolManager.mouseDownTools.insertAt(0, new LaneResizingTool());
@@ -1210,40 +1214,6 @@ function init(paletteApi) {
     jQuery.getJSON(paletteApi, function (jsondata) {
         myPaletteLevel.model = go.Model.fromJson(jsondata); //$(go.GraphLinksModel, jsondata);
     });
-    //myPaletteLevel.model = $(go.GraphLinksModel,
-    //  {
-    //      copiesArrays: true,
-    //      copiesArrayObjects: true,
-    //      nodeDataArray: [
-    //      // -------------------------- Event Nodes
-    //        { category: "event", text: "Start", eventType: 1, eventDimension: 1 },
-    //        { category: "event", text: "Message", eventType: 2, eventDimension: 2 }, // BpmnTaskMessage
-    //        { category: "event", text: "Timer", eventType: 3, eventDimension: 3 },
-    //        { category: "event", text: "End", eventType: 1, eventDimension: 8 },
-    //        { category: "event", text: "Message", eventType: 2, eventDimension: 8 },// BpmnTaskMessage
-    //        { category: "event", text: "Terminate", eventType: 13, eventDimension: 8 },
-    //      // -------------------------- Task/Activity Nodes
-    //        { key: 131, category: "activity", text: "Task", item: "generic task", taskType: 0 },
-    //        { key: 132, category: "activity", text: "User Task", item: "User task", taskType: 2 },
-    //        { key: 133, category: "activity", text: "Service\nTask", item: "service task", taskType: 6 },
-    //      // subprocess and start and end
-    //        { key: 134, category: "subprocess", loc: "0 0", text: "Subprocess", isGroup: true, isSubProcess: true, taskType: 0 },
-    //          { key: -802, category: "event", loc: "0 0", group: 134, text: "Start", eventType: 1, eventDimension: 1, item: "start" },
-    //          { key: -803, category: "event", loc: "350 0", group: 134, text: "End", eventType: 1, eventDimension: 8, item: "end", name: "end" },
-    //      // -------------------------- Gateway Nodes, Data, Pool and Annotation
-    //        { key: 201, category: "gateway", text: "Parallel", gatewayType: 1 },
-    //        { key: 204, category: "gateway", text: "Exclusive", gatewayType: 4 },
-    //        { key: 301, category: "dataobject", text: "Data\nObject" },
-    //        { key: 302, category: "datastore", text: "Data\nStorage" },
-    //        { key: 401, category: "privateProcess", text: "Black Box" },
-
-    //        { key: "501", "text": "Pool 1", "isGroup": "true", "category": "Pool" },
-    //          { key: "Lane5", "text": "Lane 1", "isGroup": "true", "group": "501", "color": "lightyellow", "category": "Lane" },
-    //          { key: "Lane6", "text": "Lane 2", "isGroup": "true", "group": "501", "color": "lightgreen", "category": "Lane" },
-
-    //        { key: 701, category: "annotation", text: "note" }
-    //      ]  // end nodeDataArray
-    //  });  // end model
 
     //------------------------------------------  Overview   ----------------------------------------------
 
@@ -1252,6 +1222,11 @@ function init(paletteApi) {
     // change color of viewport border in Overview
     myOverview.box.elt(0).stroke = "dodgerblue";
 
+    myDiagram.addDiagramListener("ObjectSingleClicked",
+      function (e) {
+          var part = e.subject.part;
+          if (!(part instanceof go.Link)) alert("Clicked on " + part.data.key);
+      });
 
     return myDiagram;
 } // end init

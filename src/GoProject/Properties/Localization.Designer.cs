@@ -250,6 +250,15 @@ namespace GoProject.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ltr.
+        /// </summary>
+        public static string Direction {
+            get {
+                return ResourceManager.GetString("Direction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit.
         /// </summary>
         public static string Edit {

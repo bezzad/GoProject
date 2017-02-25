@@ -180,6 +180,9 @@
   <data name="Devider" xml:space="preserve">
     <value>Devider</value>
   </data>
+  <data name="Direction" xml:space="preserve">
+    <value>ltr</value>
+  </data>
   <data name="Edit" xml:space="preserve">
     <value>Edit</value>
   </data>

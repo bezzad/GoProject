@@ -180,6 +180,9 @@
   <data name="Devider" xml:space="preserve">
     <value>تقسیم کننده</value>
   </data>
+  <data name="Direction" xml:space="preserve">
+    <value>rtl</value>
+  </data>
   <data name="Edit" xml:space="preserve">
     <value>ویرایش</value>
   </data>

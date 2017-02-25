@@ -31,7 +31,7 @@
 
 #PaletteAndDiagram {
     position: relative;
-    overflow: hidden;
+    overflow: auto;
     width: 100%;
 }
 
@@ -46,6 +46,7 @@
 .myPaletteDiv {
     width: 100%;
     min-height: 300px;
+    overflow-x: hidden !important;
 }
 
 #accordion {
@@ -144,41 +145,11 @@ figure {
     margin: 10px;
 }
 
-
-#infoBoxHolder {
-    z-index: 300;
-    position: absolute;
-    left: 5px;
-}
-
-#infoBox {
-    border: 1px dashed #AAA;
-    padding: 8px;
-    background-color: azure;
-    opacity: 1;
-    position: relative;
-    width: 180px;
-    /*height: 60px;*/
-    font-family: iransans, Arial, tahoma, helvetica, sans-serif;
-    font-weight: bold;
-    font-size: 11px;
-}
-    /* this is known as the "clearfix" hack to allow
-    floated objects to add to the height of a div */
-    #infoBox:after {
-        visibility: hidden;
-        display: block;
-        font-size: 0;
-        content: " ";
-        clear: both;
-        height: 0;
-    }
-
 div.infoTitle {
     width: 50%;
     font-weight: normal;
     color: #777777;
-    float: left;   
+    float: left;
 }
 
 div.infoValues {
@@ -191,11 +162,12 @@ label:hover, label:focus {
     background: #CEDFF2;
 }
 
-.aline{
+.aline {
     clear: both;
     width: 100%;
 }
-.tooltipTitle{
+
+.tooltipTitle {
     font-size: 13px;
     padding-top: 5px;
     padding-bottom: 10px;
