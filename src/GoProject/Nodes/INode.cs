@@ -72,7 +72,7 @@ namespace GoProject.Nodes
         /// </summary>
         [TableIgnore]
         [JsonProperty(PropertyName = "details", NullValueHandling = NullValueHandling.Ignore)]
-        Dictionary<string, object> Details { get; set; }
+        IDictionary<string, object> Details { get; set; }
 
         [TableIgnore]
         [JsonIgnore]

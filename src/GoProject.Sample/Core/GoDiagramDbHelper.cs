@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
+using System.Dynamic;
 using System.Linq;
 using Dapper;
 using GoProject.DataTableHelper;
@@ -104,14 +105,26 @@ namespace GoProject.Sample.Core
                 using (var res = dbConn.QueryMultiple("sp_GetDiagramNodes", new { DiagramId = diagramId }, commandType: CommandType.StoredProcedure))
                 {
                     var nodes = res.Read<Node>()?.ToList();
-                    var nodeDetails = res.Read<dynamic>()?.ToList();
+                    IEnumerable<ExpandoObject> nodeDetails = res.Read<dynamic>()?.ToExpandoObjects();
 
-                    foreach (var node in nodes)
+                    if (nodes != null && nodeDetails != null)
                     {
-                        node.Details = nodeDetails?.FirstOrDefault(d => d.Key == node.Key)?.GetDictionary();
+                        foreach (var node in nodes)
+                        {
+                            //node.Details = nodeDetails?.FirstOrDefault(d => string.Equals(((IDictionary<string, object>)d)["Key"].ToString(), node.Key))?.Where(x=>x.Key != "Key").Select(x=> (IDictionary<string, object>)x);
+                            foreach (IDictionary<string, object> d in nodeDetails)
+                            {
+                                if (node.Key == d["Key"].ToString())
+                                {
+                                    d.Remove("Key");
+                                    node.Details = d;
+                                }
+                            }
+                        }
+
+                        diagram.TreeNodes = nodes.ConvertToTreeNodes();
                     }
 
-                    diagram.TreeNodes = nodes.ConvertToTreeNodes();
                     diagram.LinkDataArray = res.Read<Link>().ToList();
                 }
 

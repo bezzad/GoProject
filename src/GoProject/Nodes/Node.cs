@@ -26,7 +26,7 @@ namespace GoProject.Nodes
         public string Size { get; set; }
         public bool? IsSubProcess { get; set; }
         public string Name { get; set; }
-        public Dictionary<string, object> Details { get; set; }
+        public IDictionary<string, object> Details { get; set; }
         public PointF? Position
         {
             get
