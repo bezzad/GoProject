@@ -10,9 +10,7 @@
 #myDiagramDiv {
     float: left;
     border: solid 1px blue;
-    width: 80%;
     height: 600px;
-    margin-right: 12px;
     background-color: ghostwhite;
 }
 
@@ -31,16 +29,17 @@
 
 #PaletteAndDiagram {
     position: relative;
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
     width: 100%;
 }
 
 #sideBar {
     float: left;
-    width: 15%;
-    /*min-height: 500px;*/
     text-align: center;
     border: 1px solid gray;
+    padding-right: 14px;
+    padding-left: 2px;
 }
 
 .myPaletteDiv {
@@ -50,9 +49,8 @@
 }
 
 #accordion {
-    margin: 0px;
+    margin: 0;
     width: 97%;
-    /*min-height: 625px;*/
 }
 
 #myOverviewDiv {
@@ -93,7 +91,7 @@ input {
     font-family: iransans, Arial, tahoma;
     font-weight: bold;
     font-size: 14px;
-    padding: 3px 0px;
+    padding: 3px 0;
     color: white;
 }
 
@@ -172,3 +170,22 @@ label:hover, label:focus {
     padding-top: 5px;
     padding-bottom: 10px;
 }
+
+.frm {
+    padding: 10px 40px;
+}
+
+#frmNodeEditor {
+    padding: 10px;
+    font-family: iransans, Arial, tahoma;
+    font-weight: lighter;
+    font-size: 9pt;
+}
+
+    #frmNodeEditor input {
+        font-size: 9pt;
+    }
+
+    #frmNodeEditor label {
+        padding: 3px 0;
+    }

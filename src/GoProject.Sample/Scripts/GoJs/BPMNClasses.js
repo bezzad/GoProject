@@ -436,7 +436,7 @@ function saveDocument(diagram, apiName) {
         $.post(window.location.origin + '/' + apiName, data, function (d) {
             alert("Stored Successfull at path: " + d + "!");
         })
-            .fail(function(d) {
+            .fail(function (d) {
                 alert("Fail to store on path: \n" + d.responseText);
             });
         myDiagram.isModified = false; // save and have no changes
@@ -477,7 +477,7 @@ function loadDiagramProperties(e, diagram) {
 
 
 function nodeInfo(d) {  // Tooltip info for a node data object
-    var str = d.text + "\n\n";
+    var str = "<b>" + d.text + "</b>\n\n";
 
     if (d.details !== undefined && d.details !== null) {
         for (var prop in d.details) {

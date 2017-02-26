@@ -117,10 +117,8 @@ function init(paletteApi) {
         return geo;
     });
 
-
     // define the appearance of tooltips, shared by various templates
-    var tooltiptemplate =
-        $(go.Adornment,
+    var tooltiptemplate = $(go.Adornment, // This go.Adornment or go.HTMLInfo is shown when the mouse stays motionless in the background. The default value is null, which means no tooltip is shown.
             go.Panel.Auto,
             $(go.Shape,
                 "RoundedRectangle",
@@ -1130,16 +1128,34 @@ function init(paletteApi) {
     window.myDiagram =
       $(go.Diagram, "myDiagramDiv",
         {
+            // more options: http://gojs.net/latest/api/symbols/Diagram.html
             nodeTemplateMap: nodeTemplateMap,
             linkTemplateMap: linkTemplateMap,
             groupTemplateMap: groupTemplateMap,
-
+            allowZoom: true,
             allowDrop: true,  // accept drops from palette
+            "undoManager.isEnabled": true,  // enable undo & redo
+            initialContentAlignment: go.Spot.Center,  // center the content
+            //contentAlignment: go.Spot.Center,  // content is always centered in the viewport
+            initialAutoScale: go.Diagram.Uniform, // scale all content fitting in the viewport
+            //autoScale: go.Diagram.Uniform,  // scale always has all content fitting in the viewport
+            "animationManager.isEnabled": false,  // turn off automatic animations,  don't bother with layout animation
+            "grid.visible": true,  // display a background grid for the whole diagram
+            "grid.gridCellSize": new go.Size(20, 20),
+            //"clickCreatingTool.archetypeNodeData": { text: "Node" }, // allow double-click in background to create a new node
 
+            // allow Ctrl-G to call the groupSelection command
+            //"commandHandler.archetypeGroupData": { text: "Group", isGroup: true, color: "blue" },
+            "commandHandler.copiesTree": true,  // for the copy command
+            "commandHandler.deletesTree": true, // for the delete command
+            "toolManager.hoverDelay": 10,  // how quickly tooltips are shown
+            "toolManager.mouseWheelBehavior": go.ToolManager.WheelZoom, // mouse wheel zooms instead of scrolls
+            "draggingTool.dragsTree": true,  // dragging for both move and copy
+            "draggingTool.isGridSnapEnabled": true,
+            //layout: $(go.TreeLayout, { angle: 90, sorting: go.TreeLayout.SortingAscending }),
+            //  "ModelChanged": function(e) { if (e.isTransactionFinished) saveModel(); }, // a Changed listener on the Diagram.model
             commandHandler: new DrawCommandHandler(),  // defined in DrawCommandHandler.js
-            // default to having arrow keys move selected nodes
-            "commandHandler.arrowKeyBehavior": "move",
-
+            "commandHandler.arrowKeyBehavior": "move", // default to having arrow keys move selected nodes
             mouseDrop: function (e) {
                 // when the selection is dropped in the diagram's background,
                 // make sure the selected Parts no longer belong to any Group
@@ -1147,14 +1163,11 @@ function init(paletteApi) {
                 if (!ok) myDiagram.currentTool.doCancel();
             },
             linkingTool: new BPMNLinkingTool(), // defined in BPMNClasses.js
-            "SelectionMoved": function () { relayoutDiagram(myDiagram) },  // defined below
-            "SelectionCopied": function () { relayoutDiagram(myDiagram) },
             //click: doMouseOver  // this event handler is defined below
             //mouseOver: doMouseOver  // this event handler is defined below
-            //"animationManager.isEnabled": true,  // don't bother with layout animation
-            //contentAlignment: go.Spot.Center,  // content is always centered in the viewport
-            //autoScale: go.Diagram.Uniform  // scale always has all content fitting in the viewport
             //isReadOnly: true,  // don't let users modify anything
+            "SelectionMoved": function () { relayoutDiagram(myDiagram) },  // defined below
+            "SelectionCopied": function () { relayoutDiagram(myDiagram) }
         });
 
     myDiagram.toolManager.mouseDownTools.insertAt(0, new LaneResizingTool());
@@ -1222,11 +1235,51 @@ function init(paletteApi) {
     // change color of viewport border in Overview
     myOverview.box.elt(0).stroke = "dodgerblue";
 
-    myDiagram.addDiagramListener("ObjectSingleClicked",
-      function (e) {
-          var part = e.subject.part;
-          if (!(part instanceof go.Link)) alert("Clicked on " + part.data.key);
-      });
+    myDiagram.addDiagramListener("ObjectSingleClicked", onNodeClick);
 
     return myDiagram;
 } // end init
+
+
+function onNodeClick(e) {
+    var part = e.subject.part;
+    var html = "";
+    if (!(part instanceof go.Link) && part.data.details !== undefined && part.data.details !== null) {
+
+        if (Object.prototype.hasOwnProperty.call(part.data, "text")) {
+            html += "<div class='row'><label class='col-xs-12'>" + part.data["text"] + "</label></div>";
+            html += "<div class='row'><input readonly class='col-xs-7' type='number' name='key' value='" + part.data["key"] + "' placeholder='شناسه' title='شناسه'  /><label class='col-xs-5'>شناسه:</label></div>";
+        }
+
+        for (var key in part.data.details) {
+            if (Object.prototype.hasOwnProperty.call(part.data.details, key)) {
+                var val = part.data.details[key];
+                var id = ("node_" + key + "_" + part.data["key"]).replace(/\s/g, '');
+
+                html += "<div class='row'><input class='col-xs-7' type='text' id='" + id + "' name='" + key + "' value='" + val + "' placeholder='" + key + "' title='" + key + "' />" + "<label class='col-xs-5'>" + key + ":</label></div>";
+            }
+        }
+        var btnId = "Save_" + part.data["key"];
+        html += "<input  type='button' id='" + btnId + "' value='ذخیره'/>";
+
+        $(document).off("click", "#" + btnId);
+        $(document).on("click", "#" + btnId, function () {
+            updateNodeDataFromApi(e);
+        });
+    }
+    $("#frmNodeEditor").html(html); // set target properties placea inner Html
+}
+
+function updateNodeDataFromApi(e) {
+    var part = e.subject.part;
+
+    if (part.data.details !== undefined && part.data.details !== null) {
+        for (var key in part.data.details) {
+            if (Object.prototype.hasOwnProperty.call(part.data.details, key)) {
+                var id = ("#node_" + key + "_" + part.data["key"]).replace(/\s/g, '');
+                part.data.details[key] = $(id).val();
+            }
+        }
+        e.diagram.isModified = true;
+    }
+}
