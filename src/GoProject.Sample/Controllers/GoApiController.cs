@@ -1,11 +1,13 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Web.Http;
-using GoProject.Extensions;
 using GoProject.Nodes;
 using GoProject.Sample.Core;
 using GoProject.Sample.Models;
@@ -44,7 +46,9 @@ namespace GoProject.Sample.Controllers
 
         public IHttpActionResult GetDiagram(string id)
         {
-            var diagram = Connections.GoProjectDb.SqlConn.LoadFromDb(id);
+            //var diagram = Connections.GoProjectDb.SqlConn.LoadFromDb(id);
+            var diagram = Connections.CAS.SqlConn.LoadFromCasDb(id);
+
 
             return Ok(diagram);
         }
@@ -83,5 +87,16 @@ namespace GoProject.Sample.Controllers
             return Ok(diagram);
         }
 
+        public IHttpActionResult GetLocalization()
+        {
+            var jsonResources = GoProject.Properties.Localization
+                .ResourceManager.GetResourceSet(CultureInfo.DefaultThreadCurrentCulture, true, true) 
+                .Cast<DictionaryEntry>()
+                .ToDictionary(x => x.Key.ToString(),
+                         x => x.Value.ToString());
+            
+
+            return Ok(jsonResources);
+        }
     }
 }

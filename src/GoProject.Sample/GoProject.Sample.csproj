@@ -169,6 +169,7 @@
     <Compile Include="Models\WorkStationNode.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\CasSp.sql" />
     <Content Include="App_Data\Connections.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Connections.cs</LastGenOutput>

@@ -10,9 +10,7 @@
 #myDiagramDiv {
     float: left;
     border: solid 1px blue;
-    width: 80%;
     height: 600px;
-    margin-right: 12px;
     background-color: ghostwhite;
 }
 
@@ -31,27 +29,28 @@
 
 #PaletteAndDiagram {
     position: relative;
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
     width: 100%;
 }
 
 #sideBar {
     float: left;
-    width: 15%;
-    min-height: 500px;
     text-align: center;
     border: 1px solid gray;
+    padding-right: 14px;
+    padding-left: 2px;
 }
 
 .myPaletteDiv {
     width: 100%;
-    min-height: 625px;
+    min-height: 300px;
+    overflow-x: hidden !important;
 }
 
 #accordion {
-    margin: 0px;
+    margin: 0;
     width: 97%;
-    min-height: 625px;
 }
 
 #myOverviewDiv {
@@ -92,7 +91,7 @@ input {
     font-family: iransans, Arial, tahoma;
     font-weight: bold;
     font-size: 14px;
-    padding: 3px 0px;
+    padding: 3px 0;
     color: white;
 }
 
@@ -144,41 +143,11 @@ figure {
     margin: 10px;
 }
 
-
-#infoBoxHolder {
-    z-index: 300;
-    position: absolute;
-    left: 5px;
-}
-
-#infoBox {
-    border: 1px dashed #AAA;
-    padding: 8px;
-    background-color: azure;
-    opacity: 1;
-    position: relative;
-    width: 180px;
-    /*height: 60px;*/
-    font-family: iransans, Arial, tahoma, helvetica, sans-serif;
-    font-weight: bold;
-    font-size: 11px;
-}
-    /* this is known as the "clearfix" hack to allow
-    floated objects to add to the height of a div */
-    #infoBox:after {
-        visibility: hidden;
-        display: block;
-        font-size: 0;
-        content: " ";
-        clear: both;
-        height: 0;
-    }
-
 div.infoTitle {
     width: 50%;
     font-weight: normal;
     color: #777777;
-    float: left;   
+    float: left;
 }
 
 div.infoValues {
@@ -191,12 +160,32 @@ label:hover, label:focus {
     background: #CEDFF2;
 }
 
-.aline{
+.aline {
     clear: both;
     width: 100%;
 }
-.tooltipTitle{
+
+.tooltipTitle {
     font-size: 13px;
     padding-top: 5px;
     padding-bottom: 10px;
 }
+
+.frm {
+    padding: 10px 40px;
+}
+
+#frmNodeEditor {
+    padding: 10px;
+    font-family: iransans, Arial, tahoma;
+    font-weight: lighter;
+    font-size: 9pt;
+}
+
+    #frmNodeEditor input {
+        font-size: 9pt;
+    }
+
+    #frmNodeEditor label {
+        padding: 3px 0;
+    }

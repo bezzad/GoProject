@@ -106,6 +106,15 @@ namespace GoProject.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add N-I Escalation Event.
+        /// </summary>
+        public static string AddN_IEscalationEvent {
+            get {
+                return ResourceManager.GetString("AddN_IEscalationEvent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add Signal Event.
         /// </summary>
         public static string AddSignalEvent {
@@ -250,6 +259,15 @@ namespace GoProject.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ltr.
+        /// </summary>
+        public static string Direction {
+            get {
+                return ResourceManager.GetString("Direction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit.
         /// </summary>
         public static string Edit {
@@ -304,6 +322,15 @@ namespace GoProject.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fail to store on path.
+        /// </summary>
+        public static string FailToStoreOnPath {
+            get {
+                return ResourceManager.GetString("FailToStoreOnPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to File.
         /// </summary>
         public static string File {
@@ -336,6 +363,15 @@ namespace GoProject.Properties {
         public static string Group {
             get {
                 return ResourceManager.GetString("Group", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Identity.
+        /// </summary>
+        public static string Identity {
+            get {
+                return ResourceManager.GetString("Identity", resourceCulture);
             }
         }
         
@@ -381,6 +417,15 @@ namespace GoProject.Properties {
         public static string NewLane {
             get {
                 return ResourceManager.GetString("NewLane", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NotAllowed.
+        /// </summary>
+        public static string NotAllowed {
+            get {
+                return ResourceManager.GetString("NotAllowed", resourceCulture);
             }
         }
         
@@ -444,6 +489,15 @@ namespace GoProject.Properties {
         public static string Paste {
             get {
                 return ResourceManager.GetString("Paste", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please enter diagram name.
+        /// </summary>
+        public static string PleaseEnterDiagramName {
+            get {
+                return ResourceManager.GetString("PleaseEnterDiagramName", resourceCulture);
             }
         }
         
@@ -583,11 +637,38 @@ namespace GoProject.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Store.
+        /// </summary>
+        public static string Store {
+            get {
+                return ResourceManager.GetString("Store", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stored Successfull at path.
+        /// </summary>
+        public static string StoredSuccessfullAtPath {
+            get {
+                return ResourceManager.GetString("StoredSuccessfullAtPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Subprocess.
         /// </summary>
         public static string Subprocess {
             get {
                 return ResourceManager.GetString("Subprocess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Successfully updated the node!.
+        /// </summary>
+        public static string SuccessfullyUpdatedNode {
+            get {
+                return ResourceManager.GetString("SuccessfullyUpdatedNode", resourceCulture);
             }
         }
         
@@ -615,6 +696,15 @@ namespace GoProject.Properties {
         public static string Timer {
             get {
                 return ResourceManager.GetString("Timer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to to.
+        /// </summary>
+        public static string to {
+            get {
+                return ResourceManager.GetString("to", resourceCulture);
             }
         }
         
@@ -669,6 +759,15 @@ namespace GoProject.Properties {
         public static string UserTask {
             get {
                 return ResourceManager.GetString("UserTask", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Would you like to save changes ?.
+        /// </summary>
+        public static string Would_you_like_save_changes {
+            get {
+                return ResourceManager.GetString("Would_you_like_save_changes", resourceCulture);
             }
         }
     }

@@ -32,7 +32,7 @@ namespace GoProject.Nodes
 
             var rand = new Random();
             HexColor = System.Drawing.Color.FromArgb(rand.Next(150, 255), rand.Next(150, 255), rand.Next(150, 255));
-            SizeF = new SizeF(300, 40);
+            SizeF = new SizeF(500, 40);
         }
 
         public LaneNode(INode node) : base(node)

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Common;
+using System.Dynamic;
 using System.Linq;
 using Dapper;
 using GoProject.DataTableHelper;
@@ -87,6 +89,53 @@ namespace GoProject.Sample.Core
                 throw;
             }
         }
+
+        public static Diagram LoadFromCasDb(this DbConnection dbConn, string diagramId, int userId = 0, bool forceReadonly = false)
+        {
+            try
+            {
+                var diagram =
+                    dbConn.Query<Diagram>("SELECT ExpenseCenterId AS Id, [NAME], UserId AS CreatorUserId FROM  dbo.ExpenseCenter Where ExpenseCenterId = @diagramId", new { diagramId }).FirstOrDefault();
+
+                if (diagram == null) return null;
+
+                if (diagram.IsReadOnly == false)
+                    diagram.IsReadOnly = forceReadonly; // set force to readonly when from database is false
+
+                using (var res = dbConn.QueryMultiple("sp_GetDiagramNodes", new { DiagramId = diagramId }, commandType: CommandType.StoredProcedure))
+                {
+                    var nodes = res.Read<Node>()?.ToList();
+                    IEnumerable<ExpandoObject> nodeDetails = res.Read<dynamic>()?.ToExpandoObjects();
+
+                    if (nodes != null && nodeDetails != null)
+                    {
+                        foreach (var node in nodes)
+                        {
+                            //node.Details = nodeDetails?.FirstOrDefault(d => string.Equals(((IDictionary<string, object>)d)["Key"].ToString(), node.Key))?.Where(x=>x.Key != "Key").Select(x=> (IDictionary<string, object>)x);
+                            foreach (IDictionary<string, object> d in nodeDetails)
+                            {
+                                if (node.Key == d["Key"].ToString())
+                                {
+                                    d.Remove("Key");
+                                    node.Details = d;
+                                }
+                            }
+                        }
+
+                        diagram.TreeNodes = nodes.ConvertToTreeNodes();
+                    }
+
+                    diagram.LinkDataArray = res.Read<Link>().ToList();
+                }
+
+                return diagram;
+            }
+            catch (Exception exp)
+            {
+                throw;
+            }
+        }
+
 
         public static IEnumerable<Node> GetPaletteNodesByUserRole(this DbConnection dbConn, int userId)
         {

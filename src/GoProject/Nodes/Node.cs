@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using GoProject.Enums;
 
 // ReSharper disable VirtualMemberCallInConstructor
@@ -26,14 +28,14 @@ namespace GoProject.Nodes
         public string Size { get; set; }
         public bool? IsSubProcess { get; set; }
         public string Name { get; set; }
-        public Dictionary<string, object> Details { get; set; }
+        public IDictionary<string, object> Details { get; set; }
         public PointF? Position
         {
             get
             {
                 if (string.IsNullOrEmpty(Loc)) return null;
                 var data = Loc.Split(' ');
-                return new PointF(float.Parse(data[0]), float.Parse(data[1]));
+                return new PointF(float.Parse(data[0], CultureInfo.InvariantCulture), float.Parse(data[1], CultureInfo.InvariantCulture));
             }
 
             set
@@ -47,7 +49,7 @@ namespace GoProject.Nodes
             {
                 if (string.IsNullOrEmpty(Size)) return null;
                 var data = Size.Split(' ');
-                return new SizeF(float.Parse(data[0]), float.Parse(data[1]));
+                return new SizeF(float.Parse(data[0], CultureInfo.InvariantCulture), float.Parse(data[1], CultureInfo.InvariantCulture));
             }
 
             set
@@ -73,7 +75,7 @@ namespace GoProject.Nodes
 
         #region Constructors
 
-        public Node(){}
+        public Node() { }
 
         public Node(INode node) : this()
         {

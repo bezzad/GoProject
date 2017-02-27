@@ -7,7 +7,10 @@
 
 // Setup all of the Diagrams and what they need.
 // This is called after the page is loaded.
-function init(paletteApi) {
+function init(paletteApi, localizationConfig) {
+    // load localization
+    window.goLocalization = localizationConfig;
+
     var $ = go.GraphObject.make;  // for more concise visual tree definitions
 
     // constants for design choices
@@ -117,29 +120,33 @@ function init(paletteApi) {
         return geo;
     });
 
-
     // define the appearance of tooltips, shared by various templates
-    var tooltiptemplate =
-      $(go.Adornment, go.Panel.Auto,
-        $(go.Shape, "RoundedRectangle",
-          {
-              fill: "white", // the default fill, if there is no data-binding
-              portId: "", cursor: "pointer",  // the Shape is the port, not the whole Node
-              // allow all kinds of links from and to this port
-              fromLinkable: true, fromLinkableSelfNode: true, fromLinkableDuplicates: true,
-              toLinkable: true, toLinkableSelfNode: true, toLinkableDuplicates: true
-          }),
-        $(go.TextBlock,
-          {
-              font: "bold 14px iransans, sans-serif",
-              stroke: '#333',
-              margin: 6,  // make some extra space for the shape around the text
-              isMultiline: true,  // don't allow newlines in text
-              editable: true  // allow in-place editing by user
-          },
+    var tooltiptemplate = $(go.Adornment, // This go.Adornment or go.HTMLInfo is shown when the mouse stays motionless in the background. The default value is null, which means no tooltip is shown.
+            go.Panel.Auto,
+            $(go.Shape,
+                "RoundedRectangle",
+                {
+                    fill: "white", // the default fill, if there is no data-binding
+                    portId: "",
+                    cursor: "pointer", // the Shape is the port, not the whole Node
+                    // allow all kinds of links from and to this port
+                    fromLinkable: true,
+                    fromLinkableSelfNode: true,
+                    fromLinkableDuplicates: true,
+                    toLinkable: true,
+                    toLinkableSelfNode: true,
+                    toLinkableDuplicates: true
+                }),
+            $(go.TextBlock,
+            {
+                font: "9pt tahoma, sans-serif",
+                stroke: '#333',
+                margin: 6, // make some extra space for the shape around the text
+                isMultiline: true, // don't allow newlines in text
+                editable: true // allow in-place editing by user
+            },
           new go.Binding("text", "", nodeInfo))
       );
-
 
     // conversion functions used by data Bindings
 
@@ -263,50 +270,29 @@ function init(paletteApi) {
 
     //------------------------------------------  Activity Node contextMenu   ----------------------------------------------
 
-    //var activityNodeMenu =
-    //     $(go.Adornment, "Vertical",
-    //       $("ContextMenuButton",
-    //           $(go.TextBlock, "Add Email Event", { margin: 3, font: "10px iransans, sans-serif" }),
-    //           { click: function (e, obj) { addActivityNodeBoundaryEvent(myDiagram, 2, 5); } }),
-    //       $("ContextMenuButton",
-    //           $(go.TextBlock, "Add Timer Event", { margin: 3, font: "10px iransans, sans-serif" }),
-    //           { click: function (e, obj) { addActivityNodeBoundaryEvent(myDiagram, 3, 5); } }),
-    //       $("ContextMenuButton",
-    //           $(go.TextBlock, "Add Escalation Event", { margin: 3, font: "10px iransans, sans-serif" }),
-    //           { click: function (e, obj) { addActivityNodeBoundaryEvent(myDiagram, 4, 5); } }),
-    //       $("ContextMenuButton",
-    //           $(go.TextBlock, "Add Error Event", { margin: 3, font: "10px iransans, sans-serif" }),
-    //           { click: function (e, obj) { addActivityNodeBoundaryEvent(myDiagram, 7, 5); } }),
-    //       $("ContextMenuButton",
-    //           $(go.TextBlock, "Add Signal Event", { margin: 3, font: "10px iransans, sans-serif" }),
-    //           { click: function (e, obj) { addActivityNodeBoundaryEvent(myDiagram, 10, 5); } }),
-    //       $("ContextMenuButton",
-    //           $(go.TextBlock, "Add N-I Escalation Event", { margin: 3, font: "10px iransans, sans-serif" }),
-    //           { click: function (e, obj) { addActivityNodeBoundaryEvent(myDiagram, 4, 6); } }),
-    //       $("ContextMenuButton",
-    //           $(go.TextBlock, "Rename", { margin: 3, font: "10px iransans, sans-serif" }),
-    //           { click: function (e, obj) { rename(myDiagram, obj); } }));
-
     var activityNodeMenu =
-     $(go.Adornment, "Vertical",
-       $("ContextMenuButton",
-           $(go.TextBlock, "اضافه کردن رخداد ایمیل", { margin: 3, font: "10px iransans, sans-serif" }),
-           { click: function (e, obj) { addActivityNodeBoundaryEvent(myDiagram, 2, 5); } }),
-       $("ContextMenuButton",
-           $(go.TextBlock, "اضافه کردن رخداد زماندار", { margin: 3, font: "10px iransans, sans-serif" }),
-           { click: function (e, obj) { addActivityNodeBoundaryEvent(myDiagram, 3, 5); } }),
-       $("ContextMenuButton",
-           $(go.TextBlock, "اضافه کردن رخداد تشدید", { margin: 3, font: "10px iransans, sans-serif" }),
-           { click: function (e, obj) { addActivityNodeBoundaryEvent(myDiagram, 4, 5); } }),
-       $("ContextMenuButton",
-           $(go.TextBlock, "اضافه کردن رخداد خطا", { margin: 3, font: "10px iransans, sans-serif" }),
-           { click: function (e, obj) { addActivityNodeBoundaryEvent(myDiagram, 7, 5); } }),
-       $("ContextMenuButton",
-           $(go.TextBlock, "اضافه کردن رخداد سیگنال", { margin: 3, font: "10px iransans, sans-serif" }),
-           { click: function (e, obj) { addActivityNodeBoundaryEvent(myDiagram, 10, 5); } }),
-       $("ContextMenuButton",
-           $(go.TextBlock, "تغییر نام", { margin: 3, font: "10px iransans, sans-serif" }),
-           { click: function (e, obj) { rename(myDiagram, obj); } }));
+         $(go.Adornment, "Vertical",
+           $("ContextMenuButton",
+               $(go.TextBlock, goLocalization.AddEmailEvent, { margin: 3, font: "10px iransans, sans-serif" }),
+               { click: function (e, obj) { addActivityNodeBoundaryEvent(myDiagram, 2, 5); } }),
+           $("ContextMenuButton",
+               $(go.TextBlock, goLocalization.AddTimerEvent, { margin: 3, font: "10px iransans, sans-serif" }),
+               { click: function (e, obj) { addActivityNodeBoundaryEvent(myDiagram, 3, 5); } }),
+           $("ContextMenuButton",
+               $(go.TextBlock, goLocalization.AddEscalationEvent, { margin: 3, font: "10px iransans, sans-serif" }),
+               { click: function (e, obj) { addActivityNodeBoundaryEvent(myDiagram, 4, 5); } }),
+           $("ContextMenuButton",
+               $(go.TextBlock, goLocalization.AddErrorEvent, { margin: 3, font: "10px iransans, sans-serif" }),
+               { click: function (e, obj) { addActivityNodeBoundaryEvent(myDiagram, 7, 5); } }),
+           $("ContextMenuButton",
+               $(go.TextBlock, goLocalization.AddSignalEvent, { margin: 3, font: "10px iransans, sans-serif" }),
+               { click: function (e, obj) { addActivityNodeBoundaryEvent(myDiagram, 10, 5); } }),
+           $("ContextMenuButton",
+               $(go.TextBlock, goLocalization.AddN_IEscalationEvent, { margin: 3, font: "10px iransans, sans-serif" }),
+               { click: function (e, obj) { addActivityNodeBoundaryEvent(myDiagram, 4, 6); } }),
+           $("ContextMenuButton",
+               $(go.TextBlock, goLocalization.Rename, { margin: 3, font: "10px iransans, sans-serif" }),
+               { click: function (e, obj) { rename(myDiagram, obj); } }));
 
 
     // sub-process,  loop, parallel, sequential, ad doc and compensation markers in horizontal array
@@ -688,7 +674,8 @@ function init(paletteApi) {
         $(go.TextBlock,
           {
               margin: 5,
-              editable: true
+              editable: true,
+              font: "bold 11px iransans, sans-serif"
           },
             new go.Binding("text").makeTwoWay())
       );
@@ -841,7 +828,7 @@ function init(paletteApi) {
     var laneEventMenu =  // context menu for each lane
         $(go.Adornment, "Vertical",
           $("ContextMenuButton",
-            $(go.TextBlock, "ایجاد بخش"),
+            $(go.TextBlock, goLocalization.AddLane),
             // in the click event handler, the obj.part is the Adornment; its adornedObject is the port
               { click: function (e, obj) { addLaneEvent(myDiagram, obj.part.adornedObject); } })
          );
@@ -1120,20 +1107,37 @@ function init(paletteApi) {
 
 
     //------------------------------------------the main Diagram----------------------------------------------
-
     window.myDiagram =
       $(go.Diagram, "myDiagramDiv",
         {
+            // more options: http://gojs.net/latest/api/symbols/Diagram.html
             nodeTemplateMap: nodeTemplateMap,
             linkTemplateMap: linkTemplateMap,
             groupTemplateMap: groupTemplateMap,
-
+            allowZoom: true,
             allowDrop: true,  // accept drops from palette
+            "undoManager.isEnabled": true,  // enable undo & redo
+            initialContentAlignment: go.Spot.Center,  // center the content
+            //contentAlignment: go.Spot.Center,  // content is always centered in the viewport
+            initialAutoScale: go.Diagram.Uniform, // scale all content fitting in the viewport
+            //autoScale: go.Diagram.Uniform,  // scale always has all content fitting in the viewport
+            "animationManager.isEnabled": false,  // turn off automatic animations,  don't bother with layout animation
+            "grid.visible": true,  // display a background grid for the whole diagram
+            "grid.gridCellSize": new go.Size(20, 20),
+            //"clickCreatingTool.archetypeNodeData": { text: "Node" }, // allow double-click in background to create a new node
 
+            // allow Ctrl-G to call the groupSelection command
+            //"commandHandler.archetypeGroupData": { text: "Group", isGroup: true, color: "blue" },
+            "commandHandler.copiesTree": true,  // for the copy command
+            "commandHandler.deletesTree": true, // for the delete command
+            "toolManager.hoverDelay": 10,  // how quickly tooltips are shown
+            "toolManager.mouseWheelBehavior": go.ToolManager.WheelZoom, // mouse wheel zooms instead of scrolls
+            "draggingTool.dragsTree": true,  // dragging for both move and copy
+            "draggingTool.isGridSnapEnabled": true,
+            //layout: $(go.TreeLayout, { angle: 90, sorting: go.TreeLayout.SortingAscending }),
+            //  "ModelChanged": function(e) { if (e.isTransactionFinished) saveModel(); }, // a Changed listener on the Diagram.model
             commandHandler: new DrawCommandHandler(),  // defined in DrawCommandHandler.js
-            // default to having arrow keys move selected nodes
-            "commandHandler.arrowKeyBehavior": "move",
-
+            "commandHandler.arrowKeyBehavior": "move", // default to having arrow keys move selected nodes
             mouseDrop: function (e) {
                 // when the selection is dropped in the diagram's background,
                 // make sure the selected Parts no longer belong to any Group
@@ -1141,15 +1145,11 @@ function init(paletteApi) {
                 if (!ok) myDiagram.currentTool.doCancel();
             },
             linkingTool: new BPMNLinkingTool(), // defined in BPMNClasses.js
-            "SelectionMoved": function () { relayoutDiagram(myDiagram) },  // defined below
-            "SelectionCopied": function () { relayoutDiagram(myDiagram) },
-
-            //"animationManager.isEnabled": true,  // don't bother with layout animation
-            //contentAlignment: go.Spot.Center,  // content is always centered in the viewport
-            //autoScale: go.Diagram.Uniform  // scale always has all content fitting in the viewport
+            //click: doMouseOver  // this event handler is defined below
+            //mouseOver: doMouseOver  // this event handler is defined below
             //isReadOnly: true,  // don't let users modify anything
-            // ,mouseOver: doMouseOver,  // this event handler is defined below
-            // click: doMouseOver  // this event handler is defined below
+            "SelectionMoved": function () { relayoutDiagram(myDiagram) },  // defined below
+            "SelectionCopied": function () { relayoutDiagram(myDiagram) }
         });
 
     myDiagram.toolManager.mouseDownTools.insertAt(0, new LaneResizingTool());
@@ -1209,40 +1209,6 @@ function init(paletteApi) {
     jQuery.getJSON(paletteApi, function (jsondata) {
         myPaletteLevel.model = go.Model.fromJson(jsondata); //$(go.GraphLinksModel, jsondata);
     });
-    //myPaletteLevel.model = $(go.GraphLinksModel,
-    //  {
-    //      copiesArrays: true,
-    //      copiesArrayObjects: true,
-    //      nodeDataArray: [
-    //      // -------------------------- Event Nodes
-    //        { category: "event", text: "Start", eventType: 1, eventDimension: 1 },
-    //        { category: "event", text: "Message", eventType: 2, eventDimension: 2 }, // BpmnTaskMessage
-    //        { category: "event", text: "Timer", eventType: 3, eventDimension: 3 },
-    //        { category: "event", text: "End", eventType: 1, eventDimension: 8 },
-    //        { category: "event", text: "Message", eventType: 2, eventDimension: 8 },// BpmnTaskMessage
-    //        { category: "event", text: "Terminate", eventType: 13, eventDimension: 8 },
-    //      // -------------------------- Task/Activity Nodes
-    //        { key: 131, category: "activity", text: "Task", item: "generic task", taskType: 0 },
-    //        { key: 132, category: "activity", text: "User Task", item: "User task", taskType: 2 },
-    //        { key: 133, category: "activity", text: "Service\nTask", item: "service task", taskType: 6 },
-    //      // subprocess and start and end
-    //        { key: 134, category: "subprocess", loc: "0 0", text: "Subprocess", isGroup: true, isSubProcess: true, taskType: 0 },
-    //          { key: -802, category: "event", loc: "0 0", group: 134, text: "Start", eventType: 1, eventDimension: 1, item: "start" },
-    //          { key: -803, category: "event", loc: "350 0", group: 134, text: "End", eventType: 1, eventDimension: 8, item: "end", name: "end" },
-    //      // -------------------------- Gateway Nodes, Data, Pool and Annotation
-    //        { key: 201, category: "gateway", text: "Parallel", gatewayType: 1 },
-    //        { key: 204, category: "gateway", text: "Exclusive", gatewayType: 4 },
-    //        { key: 301, category: "dataobject", text: "Data\nObject" },
-    //        { key: 302, category: "datastore", text: "Data\nStorage" },
-    //        { key: 401, category: "privateProcess", text: "Black Box" },
-
-    //        { key: "501", "text": "Pool 1", "isGroup": "true", "category": "Pool" },
-    //          { key: "Lane5", "text": "Lane 1", "isGroup": "true", "group": "501", "color": "lightyellow", "category": "Lane" },
-    //          { key: "Lane6", "text": "Lane 2", "isGroup": "true", "group": "501", "color": "lightgreen", "category": "Lane" },
-
-    //        { key: 701, category: "annotation", text: "note" }
-    //      ]  // end nodeDataArray
-    //  });  // end model
 
     //------------------------------------------  Overview   ----------------------------------------------
 
@@ -1251,6 +1217,194 @@ function init(paletteApi) {
     // change color of viewport border in Overview
     myOverview.box.elt(0).stroke = "dodgerblue";
 
+    myDiagram.addDiagramListener("ObjectSingleClicked", onNodeClick);
 
     return myDiagram;
 } // end init
+
+
+
+// this is called after nodes have been moved or lanes resized, to layout all of the Pool Groups again
+function relayoutDiagram(diagram) {
+    if (diagram === undefined || diagram === null) diagram = window.myDiagram;
+    diagram.layout.invalidateLayout();
+    diagram.findTopLevelGroups().each(function (g) { if (g.category === "Pool") g.layout.invalidateLayout(); });
+    diagram.layoutDiagram();
+}
+
+
+// changes the item of the object
+function rename(diagram, obj) {
+    diagram.startTransaction("rename");
+    var newName = prompt(goLocalization.Rename + " " + obj.part.data.item + " " + goLocalization.to + ":");
+    diagram.model.setDataProperty(obj.part.data, "item", newName);
+    diagram.commitTransaction("rename");
+}
+
+// shows/hides gridlines
+// to be implemented onclick of a button
+function updateGridOption(diagram) {
+    diagram.startTransaction("grid");
+    var grid = document.getElementById("grid");
+    diagram.grid.visible = grid.checked;
+    diagram.commitTransaction("grid");
+}
+
+
+// enables/disables snapping tools, to be implemented by buttons
+function updateSnapOption(diagram) {
+    // no transaction needed, because we are modifying tools for future use
+    var snap = document.getElementById("snap");
+    if (snap.checked) {
+        diagram.toolManager.draggingTool.isGridSnapEnabled = true;
+        diagram.toolManager.resizingTool.isGridSnapEnabled = true;
+    } else {
+        diagram.toolManager.draggingTool.isGridSnapEnabled = false;
+        diagram.toolManager.resizingTool.isGridSnapEnabled = false;
+    }
+}
+
+function setCurrentFileName(diagram, name) {
+    var currentFile = document.getElementById("currentFile");
+    if (diagram.isModified) {
+        name += "*";
+    }
+    currentFile.textContent = name;
+}
+
+function newDocument(diagram) {
+    // checks to see if all changes have been saved
+    if (diagram.isModified) {
+        var save = confirm(goLocalization.Would_you_like_save_changes);
+        if (save) {
+            saveDocument();
+        }
+    }
+    setCurrentFileName(diagram, "(Unsaved File)");
+    // loads an empty diagram
+    diagram.model = new go.GraphLinksModel();
+    resetModel(diagram);
+}
+
+function resetModel(diagram) {
+    diagram.model.undoManager.isEnabled = true;
+    diagram.model.linkFromPortIdProperty = "fromPort";
+    diagram.model.linkToPortIdProperty = "toPort";
+
+    diagram.model.copiesArrays = true;
+    diagram.model.copiesArrayObjects = true;
+    diagram.isModified = false;
+}
+
+function saveDocument(diagram, apiName) {
+    if (diagram.isModified) {
+        saveDiagramProperties(diagram);
+        var data = JSON.parse(myDiagram.model.toJson());
+        if (diagram.model.id !== undefined && diagram.model.id !== null) {
+            data.name = diagram.model.name;
+            data.id = diagram.model.id;
+        } else {
+            data.name = prompt(goLocalization.PleaseEnterDiagramName, "Test Diagram1");
+        }
+        $.post(window.location.origin + '/' + apiName, data, function (d) {
+            msgShow(goLocalization.StoredSuccessfullAtPath + " " + d + "!", "success");
+        })
+            .fail(function (d) {
+                msgShow(goLocalization.FailToStoreOnPath + " \n" + d.responseText, "danger");
+            });
+        myDiagram.isModified = false; // save and have no changes
+    }
+}
+
+
+// these functions are called when panel buttons are clicked
+
+function loadJSON(diagram, file, callback) {
+    jQuery.getJSON(file, function (jsondata) {
+        // set these kinds of Diagram properties after initialization, not now
+        diagram.addDiagramListener("InitialLayoutCompleted", function (e) { loadDiagramProperties(e, diagram); });  // defined below
+        // create the model from the data in the JavaScript object parsed from JSON text
+        //diagram.model = new go.GraphLinksModel(jsondata["nodes"], jsondata["links"]);
+        diagram.model = go.Model.fromJson(jsondata);
+        loadDiagramProperties(null, diagram);
+        diagram.model.undoManager.isEnabled = true;
+        diagram.isModified = false;
+        diagram.isReadOnly = jsondata.isReadOnly;
+        if (callback !== undefined)
+            callback();
+    });
+}
+
+// Store shared model state in the Model.modelData property
+// (will be loaded by loadDiagramProperties)
+function saveDiagramProperties(diagram) {
+    diagram.model.modelData.position = go.Point.stringify(myDiagram.position);
+}
+
+// Called by loadFile and loadJSON.
+function loadDiagramProperties(e, diagram) {
+    // set Diagram.initialPosition, not Diagram.position, to handle initialization side-effects
+    var pos = diagram.model.modelData.position;
+    if (pos) diagram.initialPosition = go.Point.parse(pos);
+}
+
+
+function nodeInfo(d) {  // Tooltip info for a node data object
+    var str = d.text + "\n\n";
+
+    if (d.details !== undefined && d.details !== null) {
+        for (var prop in d.details) {
+            str += prop + ":   " + d.details[prop] + "\n";
+        }
+    }
+    return str;
+}
+
+function onNodeClick(e) {
+    var part = e.subject.part;
+    var html = "";
+    if (!(part instanceof go.Link) && part.data.details !== undefined && part.data.details !== null) {
+
+        if (Object.prototype.hasOwnProperty.call(part.data, "text")) {
+            html += "<div class='row'><label class='col-xs-12'>" + part.data["text"] + "</label></div>";
+            html += "<div class='row'><input readonly class='col-xs-7' type='number' name='key' value='" + part.data["key"] + "' placeholder='" + goLocalization.Identity + "' title='" + goLocalization.Identity + "'  /><label class='col-xs-5'>شناسه:</label></div>";
+        }
+
+        for (var key in part.data.details) {
+            if (Object.prototype.hasOwnProperty.call(part.data.details, key)) {
+                var val = part.data.details[key];
+                var id = ("node_" + key + "_" + part.data["key"]).replace(/\s/g, '');
+
+                html += "<div class='row'><input class='col-xs-7' type='text' id='" + id + "' name='" + key + "' value='" + val + "' placeholder='" + key + "' title='" + key + "' />" + "<label class='col-xs-5'>" + key + ":</label></div>";
+            }
+        }
+        var btnId = "Save_" + part.data["key"];
+        html += "<input  type='button' id='" + btnId + "' value='" + goLocalization.Store + "'/><br><br>";
+
+        $(document).off("click", "#" + btnId);
+        $(document).on("click", "#" + btnId, function () {
+            updateNodeDataFromApi(e);
+        });
+    }
+    $("#frmNodeEditor").html(html); // set target properties placea inner Html
+}
+
+function updateNodeDataFromApi(e) {
+    var part = e.subject.part;
+
+    if (part.data.details !== undefined && part.data.details !== null) {
+        for (var key in part.data.details) {
+            if (Object.prototype.hasOwnProperty.call(part.data.details, key)) {
+                var id = ("#node_" + key + "_" + part.data["key"]).replace(/\s/g, '');
+                part.data.details[key] = $(id).val();
+            }
+        }
+        e.diagram.isModified = true;
+        msgShow(goLocalization.SuccessfullyUpdatedNode, "success");
+    }
+}
+
+function msgShow(msg, type) {
+    var alertBody = "<div class = 'alert alert-" + type + " alert-dismissable'><button type = 'button' class = 'close' data-dismiss = 'alert' aria-hidden = 'true'>&times;</button>" + msg + "</div>";
+    $("#frmNodeEditor").append(alertBody);
+}
