@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Globalization;
 using Newtonsoft.Json;
 
 namespace GoProject
@@ -15,7 +16,7 @@ namespace GoProject
             {
                 if (string.IsNullOrEmpty(Position)) return null;
                 var data = Position.Split(' ');
-                return new PointF(float.Parse(data[0]), float.Parse(data[1]));
+                return new PointF(float.Parse(data[0], CultureInfo.InvariantCulture), float.Parse(data[1], CultureInfo.InvariantCulture));
             }
 
             set

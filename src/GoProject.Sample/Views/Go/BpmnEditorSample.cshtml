@@ -73,14 +73,7 @@
                 <form id="frmNodeEditor" dir="@Localization.Direction"></form>
             </div>
 
-
-
-
-            @*@Html.Diagram(AlloyHelper.GetAvailableFieldsByUserRole(0), Model, "diagramStore")*@
-
         </div>
-
-
     </div>
 </div>
 
@@ -103,8 +96,14 @@
         });
         //----------------------------------------------------------------------------
 
-        var diagram = init('/api/goApi/GetPaletteNodes');
-        updateSnapOption(diagram);
+        // load localization
+        var diagram;
+        jQuery.getJSON(window.location.origin + "/api/goApi/GetLocalization", function (json) {
+            diagram = init('/api/goApi/GetPaletteNodes', json);
+            updateSnapOption(diagram);
+        });
+
+       
 
         $(function () {
             pageGrids.diagramsGrid.onRowSelect(function (e) {
