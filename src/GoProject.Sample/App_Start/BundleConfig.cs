@@ -11,7 +11,8 @@ namespace GoProject.Sample
             bundles.Add(new ScriptBundle("~/bundles/goJs").Include("~/Scripts/GoJs/go.js"));
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                 "~/Scripts/jquery-{version}.js",
-                "~/Scripts/jquery-ui-{version}.js"
+                "~/Scripts/jquery-ui-{version}.js",
+                "~/Scripts/bootstrap.min.js"
                 ));
 
             bundles.Add(new ScriptBundle("~/bundles/bpmnJs").Include(

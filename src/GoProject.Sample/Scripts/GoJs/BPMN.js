@@ -1260,7 +1260,7 @@ function onNodeClick(e) {
             }
         }
         var btnId = "Save_" + part.data["key"];
-        html += "<input  type='button' id='" + btnId + "' value='ذخیره'/>";
+        html += "<input  type='button' id='" + btnId + "' value='ذخیره'/><br><br>";
 
         $(document).off("click", "#" + btnId);
         $(document).on("click", "#" + btnId, function () {
@@ -1281,5 +1281,9 @@ function updateNodeDataFromApi(e) {
             }
         }
         e.diagram.isModified = true;
+
+        var msg = $("#frmNodeEditor").attr("dir") === "ltr" ? "Success! Node " + part.data["key"] + " is Updated!" : "نود " + part.data["key"] + " با موفقیت ذخیره گردید!";
+        var alertBody = "<div class = 'alert alert-success alert-dismissable'><button type = 'button' class = 'close' data-dismiss = 'alert' aria-hidden = 'true'>&times;</button>" + msg + "</div>";
+        $("#frmNodeEditor").append(alertBody);
     }
 }

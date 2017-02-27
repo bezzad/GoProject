@@ -54,7 +54,8 @@ BEGIN
 			[IsSubProcess] [BIT] NULL,
 			[Name] [NVARCHAR](150) NULL,
 			OrderWorksatation INT NOT NULL,
-			IsInput BIT NULL
+			IsInput BIT NULL,
+			ProductId INT NULL
 		)
 
 	 DECLARE @Links TABLE (
@@ -178,7 +179,8 @@ BEGIN
 				IsGroup ,
 				Name,
 				OrderWorksatation,
-				IsInput
+				IsInput,
+				ProductId
 				)
 		SELECT  
 			wtp.WorkStationToProductId AS [Key],
@@ -206,8 +208,8 @@ BEGIN
 			CASE p.TypeCodeKala 
 				WHEN 2 THEN 0 -- محصول نهایی
 				ELSE 1
-			END AS IsInput
-			--wtp.ProductId
+			END AS IsInput,
+			wtp.ProductId
 		FROM    [CAS].[dbo].[ExpenseCenter] ec        
 				INNER JOIN dbo.WorkStationToProduct wtp ON wtp.ExpenseCenterId = ec.ExpenseCenterId
 				INNER JOIN dbo.WorkStation w ON w.WorkStationId = wtp.WorkStationId
@@ -215,8 +217,8 @@ BEGIN
 				WHERE ec.ExpenseCenterId = @DiagramId
 				ORDER BY wtp.OrderWorksatation
 
-
-
+		
+		
 
 
 
@@ -233,8 +235,6 @@ BEGIN
 		WHERE eventNodes.Category = 0 -- event nodes
 				AND taskNodes.Category = 1 -- activity
 		ORDER BY eventNodes.OrderWorksatation, tasknodes.OrderWorksatation
-
-
 
 		-- Output event nodes to next task nodes links
 		INSERT INTO @Links
@@ -259,8 +259,18 @@ BEGIN
 
 
 		
-
 		-- Get Result to Application
-		SELECT * FROM @Nodes	
-		SELECT * FROM @Links
+
+			-- nodes
+			SELECT * FROM @Nodes
+		
+
+			-- node details
+			SELECT n.[Key], pv.cod AS N'کد محصول', pv.typename AS N'نوع', pv.code_desc AS N'توضیحات'
+				FROM [dbo].[ProductView] pv
+				INNER JOIN @Nodes n ON n.ProductId = pv.coding_main_id
+			
+
+			-- links			
+			SELECT * FROM @Links
 END

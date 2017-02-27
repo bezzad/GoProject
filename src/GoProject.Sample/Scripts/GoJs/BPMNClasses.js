@@ -477,7 +477,7 @@ function loadDiagramProperties(e, diagram) {
 
 
 function nodeInfo(d) {  // Tooltip info for a node data object
-    var str = "<b>" + d.text + "</b>\n\n";
+    var str = d.text + "\n\n";
 
     if (d.details !== undefined && d.details !== null) {
         for (var prop in d.details) {
