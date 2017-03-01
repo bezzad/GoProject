@@ -1,7 +1,5 @@
 ﻿@using GoProject.Properties
 
-@model GoProject.Diagram
-
 <div class="row frm">
     <div class="col-xs-2">
         @Html.Action("GoDiagramsTablePartial", "Go")
@@ -80,8 +78,8 @@
 @section scripts{
     @Scripts.Render("~/bundles/bpmnJs")
     <!-- Load Grid.Mvc libraries -->
-    <link href="@Url.Content("~/Content/Gridmvc.css")" rel="stylesheet" type="text/css" />
-    <script src="@Url.Content("~/Scripts/gridmvc.min.js")" type="text/javascript"> </script>
+    <link href="~/Content/Gridmvc.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/gridmvc.min.js" type="text/javascript"> </script>
 
     <!-- Initial this diagram dependecies -->
     <script>
